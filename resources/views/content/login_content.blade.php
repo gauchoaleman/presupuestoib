@@ -5,7 +5,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Usuario:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="user" required autofocus>
+                                <input id="user" class="form-control" name="user" required autofocus>
                             </div>
                         </div>
 
@@ -13,15 +13,12 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Clave:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" class="form-control" name="password" required>
                             </div>
                         </div>
-
-
-
-                                <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary">
                                     {{ __('Entrar') }}
-                                </button>
+                        </button>
 
 
   </form>

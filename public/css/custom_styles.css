@@ -14,8 +14,6 @@
 #home_gradient {
 background: linear-gradient(white,#d2d8d8);}
 
-a { color: orange; }
-a:hover { color: orange;}
 
 /* @group Blink */
 .blink {

@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/', function () {
+Route::get('/', function () {
   if( isset($_SESSION["logged_in"]))
     return view('home_page');
   else
-    return view('login_form');
+    return view('no_access');
 });
 
 Route::post('/login', function () {
