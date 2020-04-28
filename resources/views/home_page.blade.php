@@ -1,5 +1,0 @@
-@include('includes/head')
-@include('includes/top_bar')
-@include('content/home_page_content')
-@include('includes/bottom_bar')
-@include('includes/bottom')

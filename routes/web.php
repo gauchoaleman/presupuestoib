@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,17 +13,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  if( isset($_SESSION["logged_in"]))
-    return view('home_page');
-  else
-    return view('no_access');
+    return view('welcome');
 });
 
-Route::post('/login', function () {
-  if( isset($_SESSION["logged_in"]))
-    return view('home_page');
-  else
-    return view('login');
+Route::redirect('/hello', '/hello_world');
+
+Route::get('/hello_world', function () {
+    return "Hello world";
 });
 
-?>
+Route::view('/hello_guy', 'hello_guy', ['name' => 'Taylor']);
+
+Route::get('user/{id}', function ($id) {
+    return 'User '.$id;
+});
+
+Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
+    //
+    return $postId." ".$commentId;
+});
+
+Route::get('user_name/{name?}', function ($name = 'John') {
+    return $name;
+});
+
+Route::get('user/{id}/profile', function ($id) {
+    //
+    $url = route('profile', ['id' => $id]);
+    echo $url;
+})->name('profile');
+
+Route::get('test_controller', 'ShowPage');
