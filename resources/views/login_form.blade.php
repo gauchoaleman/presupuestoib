@@ -1,6 +1,6 @@
 <div class="container" align="center">
   <br>
-  <form method="POST" action="{{ route('login') }}">
+  <form method="POST" action="/login">
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Usuario:') }}</label>
 

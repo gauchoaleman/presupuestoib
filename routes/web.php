@@ -46,4 +46,4 @@ Route::get('user/{id}/profile', function ($id) {
 Route::get('test_controller', 'ShowPage');
 Route::get('test_controller/with_path', 'ShowPage');
 Route::get('test_controller/{id}', 'ShowPage');
-Route::get('login', 'Login');
+Route::post('login', 'Login');
