@@ -37,7 +37,7 @@
             "App\\": "app/"
         },
         "files": [
-           "app/Http/Controllers/PageFunctions.php"
+           "app/Functions/PageFunctions.php"
        ],
         "classmap": [
             "database/seeds",

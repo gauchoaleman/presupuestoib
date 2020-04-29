@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', 'ShowRoot');
+Route::any('login', 'Login');
+Route::any('logout', 'Logout');
+/************Tests****************
 Route::redirect('/hello', '/hello_world');
 
 Route::get('/hello_world', function () {
@@ -46,4 +46,4 @@ Route::get('user/{id}/profile', function ($id) {
 Route::get('test_controller', 'ShowPage');
 Route::get('test_controller/with_path', 'ShowPage');
 Route::get('test_controller/{id}', 'ShowPage');
-Route::post('login', 'Login');
+*/

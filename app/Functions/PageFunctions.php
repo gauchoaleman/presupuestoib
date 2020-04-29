@@ -1,11 +1,12 @@
 <?php
-namespace App\Functions;
+session_start();
 
 function show_page_with_menubars($uri,$message = "") {
   $ret = "";
   $ret .= view('includes/head');
   $ret .= view('includes/top_bar');
-  $ret .= $message;
+  if( $message )
+    $ret .= $message."<br>";
   $ret .= view($uri);
   $ret .= view('includes/bottom_bar');
   $ret .= view('includes/bottom');
@@ -15,9 +16,11 @@ function show_page_with_menubars($uri,$message = "") {
 function show_page_without_menubars($uri,$message = "") {
   $ret = "";
   $ret .= view('includes/head');
-  $ret .= $message;
+  if( $message )
+    $ret .= $message."<br>";
   $ret .= view($uri);
   $ret .= view('includes/bottom');
   return $ret;
 }
+
 ?>

@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Functions\Page;
 
-class ShowPage extends Controller
+class Logout extends Controller
 {
     /**
      * Handle the incoming request.
@@ -13,8 +12,9 @@ class ShowPage extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request,$id = "")
+    public function __invoke(Request $request)
     {
-      return show_page_with_menubars($request->path(),$message = "");
+        $_SESSION["logged_in"] = false;
+        return show_page_with_menubars("login_form",$message = "Se deslogueó del sistema.");
     }
 }
