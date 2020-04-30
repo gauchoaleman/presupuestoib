@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'ShowRoot');
 Route::any('login', 'Login');
 Route::any('logout', 'Logout');
+Route::any('configuration/load_paper_prices', 'Configuration\LoadPaperPrices');
 /************Tests****************
 Route::redirect('/hello', '/hello_world');
 

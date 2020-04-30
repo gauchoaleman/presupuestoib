@@ -1,1 +1,2 @@
 [ ] vertical align login
+[ ] ver extension de archivos bajados (txt en vez de csv)
