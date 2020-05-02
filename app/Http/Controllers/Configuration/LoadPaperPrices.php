@@ -24,7 +24,7 @@ class LoadPaperPrices extends Controller
 
     private function get_new_paper_prices_set_id()
     {
-      $id = DB::table('paper_prices_sets')->insertGetId([]);
+      $id = DB::table('paper_prices_sets')->insertGetId(array("created_at"=>date('Y-m-d H:i:s')));
       return $id;
     }
 
