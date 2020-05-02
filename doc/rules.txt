@@ -3,4 +3,5 @@
 * Paper weight goes in gramms
 * If there isn't set color, it is set to white ("blanco")
 * Paper sheet_price goes in Dollars
-* Timezone managment in app/Http/Controllers/Controller.php 
+* Timezone managment in app/Http/Controllers/Controller.php
+  * Check out if this can be done better
