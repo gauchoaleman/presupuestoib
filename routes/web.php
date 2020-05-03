@@ -16,6 +16,9 @@ Route::get('/', 'ShowRoot');
 Route::any('login', 'Login');
 Route::any('logout', 'Logout');
 Route::any('configuration/load_paper_prices', 'Configuration\LoadPaperPrices');
+Route::get('configuration/show_paper_prices', 'Configuration\ShowPaperPrices');
+Route::any('configuration/set_dollar_price', 'Configuration\SetDollarPrice');
+Route::any('configuration/show_dollar_prices', 'Configuration\ShowDollarPrices');
 /************Tests****************
 Route::redirect('/hello', '/hello_world');
 
