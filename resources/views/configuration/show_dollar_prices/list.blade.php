@@ -4,7 +4,7 @@ $dollar_prices = DB::table('dollar_prices')->orderBy('id', 'desc')->select('*')-
 <div class="container">
 
 <div class="card" style="width: 50rem;">
-    <div class="card-header"">Precios dólar</div>
+    <div class="card-header">Precios dólar</div>
     <div class="card-body">
 
 <table class="table table-striped">

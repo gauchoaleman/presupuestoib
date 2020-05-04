@@ -1,5 +1,6 @@
 [ ] vertical align login
 [ ] ver extension de archivos bajados (txt en vez de csv)
-[ ] al cargar lista de precios validar que archivo esté bien.
-[ ] en set_dollar_price validar que la entrada sea numérica
-[ ] en listado precios papel (paper_prices_list) poner precio en pesos
+[X] al cargar lista de precios validar que archivo esté bien.
+[X] en set_dollar_price validar que la entrada sea numérica
+[X] en listado precios papel (paper_prices_list) poner precio en pesos
+[ ] Emprolijar código
