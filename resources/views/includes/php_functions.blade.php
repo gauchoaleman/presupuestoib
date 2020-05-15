@@ -25,5 +25,43 @@ function week_event()
     return TRUE;
 }
 
+function get_latest_paper_price_set_id()
+{
+  $max_id = DB::table('paper_prices_sets')->max('id');
+  return $max_id;
+}
 
+function get_paper_types()
+{
+  $paper_types = DB::table('paper_prices')->
+  join('paper_types', 'paper_types.id', '=', 'paper_prices.paper_type_id')->
+  select('paper_types.id', 'paper_types.name')->
+  where('paper_prices.paper_prices_set_id','=', get_latest_paper_price_set_id())->
+  distinct('paper_types.id')->get();
+  return $paper_types;
+}
+
+function get_paper_colors($paper_type_id)
+{
+  $paper_colors = DB::table('paper_prices')->
+  join('paper_colors', 'paper_colors.id', '=', 'paper_prices.paper_color_id')->
+  select('paper_colors.id', 'paper_colors.name')->
+  where('paper_prices.paper_type_id','=', $paper_type_id)->
+  where('paper_prices.paper_prices_set_id','=', get_latest_paper_price_set_id())->
+  distinct('paper_colors.id')->get();
+
+  return $paper_colors;
+}
+
+function get_paper_weights($paper_type_id,$paper_color_id)
+{
+  $paper_weights = DB::table('paper_prices')->
+  select('paper_prices.weight')->
+  where('paper_prices.paper_type_id','=', $paper_type_id)->
+  where('paper_prices.paper_color_id','=', $paper_color_id)->
+  where('paper_prices.paper_prices_set_id','=', get_latest_paper_price_set_id())->
+  distinct('paper_prices.weight')->get();
+
+  return $paper_weights;
+}
 ?>

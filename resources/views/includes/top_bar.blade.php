@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -32,16 +32,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Presupuestos</span> <span class="caret"></span></a>
           <ul class="dropdown-menu">
 
-              <li class="dropdown-submenu">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Service C</span><span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                      <li><a href="#">Service C1</a></li>
-                      <li><a href="#">Service C2</a></li>
-                      <li><a href="#">Service C3</a></li>
-                      <li><a href="#">Service C4</a></li>
-                      <li><a href="#">Service C5</a></li>
-                  </ul>
-              </li>
+              <li><a href="/budget/make">Calcular</a></li>
           </ul>
       </li>
 

@@ -4,3 +4,5 @@
 [X] en set_dollar_price validar que la entrada sea numérica
 [X] en listado precios papel (paper_prices_list) poner precio en pesos
 [ ] Emprolijar código
+[ ] Sacar created_at y updated at donde no hace falta
+[ ] Ver de poner formularios para celu
