@@ -5,4 +5,4 @@
 [X] en listado precios papel (paper_prices_list) poner precio en pesos
 [ ] Emprolijar código
 [ ] Sacar created_at y updated at donde no hace falta
-[ ] Ver de poner formularios para celu
+[ ] Ver de poner formularios para celu (actualmente alguno están muy anchos.  Por ahí probar con ancho en 80% o algo así.

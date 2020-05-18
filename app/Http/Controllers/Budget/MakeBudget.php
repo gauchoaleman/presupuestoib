@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Budget;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Facades\Validator;
 
 class MakeBudget extends Controller
 {
@@ -24,41 +26,42 @@ class MakeBudget extends Controller
 
      private function form_complete()
      {
-       if( isset($_POST["paper_type"]) && isset($_POST["paper_color"]))
-        return true;
-       else 
-          return false;
+       //print_r($_POST);
+       if( isset($_POST["paper_type_id"]) && isset($_POST["paper_color_id"]) && isset($_POST["weight"]) &&
+       $_POST["paper_type_id"] && $_POST["paper_color_id"] && $_POST["weight"] ){
+        //print("true");
+        return TRUE;
+        }
+       else{
+          //print("false");
+          return FALSE;
+        }
      }
 
      private function proc(Request $request)
      {
        if( $this->form_complete() ) {
+         $messages = [
+           'width.required' => 'Debe ingresar un ancho.',
+           'width.numeric' => 'El ancho debe ser numérico (punto no coma)',
+           'height.required' => 'Debe ingresar un alto.',
+           'height.numeric' => 'El alto debe ser numérico (punto no coma)',
+           ];
+         $v = Validator::make($request->all(), [
+             'width' => 'required|numeric',
+             'height' => 'required|numeric'],
+             $messages);
+
+         if ($v->fails())
+         {
+           //return Redirect::back()->withInput(Input::all());
+           return redirect()->back()->withInput($request->input())->withErrors($v->errors());
+         }
+
          return show_page_with_menubars("budget/make/result");
        }
        else
          return show_page_with_menubars("budget/make/form");
      }
 
-     public function fetch(Request $request)
-     {
-       $select = $request->get('select');
-       $value = $request->get('value');
-       $dependent = $request->get('dependent');
-
-       if( $dependent == "color" )
-       echo $this->get_colors($value);
-       elseif( $dependent == "gramms" )
-        echo $this->get_colors($value);
-
-        $data = DB::table('country_state_city')
-        ->where($select, $value)
-        ->groupBy($dependent)
-        ->get();
-        $output = '<option value="">Select '.ucfirst($dependent).'</option>';
-        foreach($data as $row)
-        {
-          $output .= '<option value="'.$row->$dependent.'">'.$row->$dependent.'</option>';
-        }
-        echo $output;
-    }
 }

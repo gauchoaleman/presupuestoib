@@ -1,3 +1,10 @@
+<?php
+$paper_type_id = request()->get('paper_type_id')?request()->get('paper_type_id'):request()->old('paper_type_id');
+$paper_color_id = request()->get('paper_color_id')?request()->get('paper_color_id'):request()->old('paper_color_id');
+$weight = request()->get('weight')?request()->get('weight'):request()->old('weight');
+$width = request()->get('width')?request()->get('width'):request()->old('width');
+$height = request()->get('height')?request()->get('height'):request()->old('height');
+ ?>
 <div class="container">
 
 <div class="card" style="width: 50rem;">
@@ -16,7 +23,7 @@
           <option value=""></option>
           @foreach(get_paper_types() as $paper_type)
             <option value="{{$paper_type->id}}"
-              @if(isset($_POST["paper_type_id"]) && $_POST["paper_type_id"]==$paper_type->id)
+              @if($paper_type_id == $paper_type->id )
               selected
               @endif>{{$paper_type->name}}</option>
           @endforeach
@@ -28,10 +35,10 @@
         <label class="col-md-6 col-form-label text-md-right">Color:</label>
         <select id="paper_color_id" name="paper_color_id" onchange="this.form.submit()">
           <option value=""></option>
-          @if(isset($_POST["paper_type_id"]))
-            @foreach(get_paper_colors($_POST["paper_type_id"]) as $paper_color)
+          @if(isset($paper_type_id))
+            @foreach(get_paper_colors($paper_type_id) as $paper_color)
               <option value="{{$paper_color->id}}"
-                @if(isset($_POST["paper_color_id"]) && $_POST["paper_color_id"]==$paper_color->id)
+                @if($paper_color_id==$paper_color->id)
                 selected
                 @endif>{{$paper_color->name}}
 
@@ -44,12 +51,12 @@
         @enderror
 
         <label class="col-md-6 col-form-label text-md-right">Peso:</label>
-        <select id="paper_weight" name="paper_weight" onchange="this.form.submit()">
+        <select id="weight" name="weight">
           <option value=""></option>
-          @if(isset($_POST["paper_type_id"]) && isset($_POST["paper_color_id"]))
-            @foreach(get_paper_weights($_POST["paper_type_id"],$_POST["paper_color_id"]) as $paper_weight)
+          @if(isset($paper_type_id) && isset($paper_color_id))
+            @foreach(get_paper_weights($paper_type_id,$paper_color_id) as $paper_weight)
               <option value="{{$paper_weight->weight}}"
-                @if(isset($_POST["paper_weight"]) && $_POST["paper_weight"]==$paper_weight->weight)
+                @if($weight == $paper_weight->weight)
                 selected
                 @endif>
 
@@ -58,26 +65,22 @@
             @endforeach
           @endif
         </select>
-        @error('paper_weight')
+        @error('weight')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
+        <label class="col-md-6 col-form-label text-md-right">Ancho (mm):</label>
+        <input type="text" size="5" name="width" value="{{$width}}">
+        @error('width')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <label class="col-md-6 col-form-label text-md-right">Alto (mm):</label>
+        <input type="text" size="5" name="height" value="{{$height}}">
+        @error('height')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
-{{--
-<?php $type_list = get_paper_types(); ?>
-<div class="col-md-6">
-<select name="type" id="type" class="form-control input-lg dynamic" data_dependent="color">
-  @foreach($type_list as $type)
-    <option value="{{$type->id}}">{{$type->name}}</option>
-  @endforeach
-</select>
-<select name="color" id="color" class="form-control input-lg dynamic" data_dependent="gramms">
-</select>
-<select name="gramms" id="gramms" class="form-control input-lg">
-</select>
-</div>
---}}
   <div class="col-md-6">
         <button type="submit" class="btn btn-primary">
                 {{ __('Entrar') }}
