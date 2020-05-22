@@ -15,8 +15,10 @@ class MakeBudget extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     $min_width = 216;
-     $min_height = 128;
+     private $min_width = 216;
+     private $min_height = 128;
+     private $width_borders = 5+5;
+     private $height_borders = 18+8;
 
      public function __invoke(Request $request)
      {
@@ -40,30 +42,65 @@ class MakeBudget extends Controller
         }
      }
 
-     private function calculate_size($paper_width,$paper_height,$job_width,$job_height)
+     private function calculate_position($paper_width,$paper_height,$job_width,$job_height,$position)
      {
        for( $sheet_width_qty=2;$sheet_width_qty<=8;$sheet_width_qty++ ){
          for( $sheet_height_qty=2;$sheet_height_qty<=8;$sheet_height_qty++ ){
-           $sheet_width = $paper_width/$sheet_width_qty;
-           $sheet_height = $paper_height/$sheet_height_qty;
-           if( $sheet_width<$job_width || $sheet_height<$job_height || $sheet_width<$this->min_width || $sheet_height<$this->min_height )
+
+           $sheet_width = floor($paper_width/$sheet_width_qty);
+           $sheet_height = floor($paper_height/$sheet_height_qty);
+
+           $sheet_width_without_borders = $sheet_width - $this->width_borders;
+           $sheet_height_without_borders = $sheet_height - $this->height_borders;
+
+           if( $sheet_width_without_borders<$job_width || $sheet_height_without_borders<$job_height || $sheet_width<$this->min_width || $sheet_height<$this->min_height )
             continue;
-           $width_rest = $sheet_width%$job_width;
-           $height_rest = $sheet_height%$job_height;
-           $width_qty = floor($sheet_width/$job_width);
-           $height_qty = floor($sheet_height/$job_height);
-           $total_rest = $width_rest*$height_rest+$width_qty*$job_width*$height_rest+$height_qty*$job_height*$width_rest;
-           $res["width_qty"] = $width_qty;
-           $res["height_qty"] = $height_qty;
-           $res["sheet_width"] = $sheet_width;
-           $res["sheet_height"] = $sheet_height;
+
+           $width_qty = floor($sheet_width_without_borders/$job_width);
+           $height_qty = floor($sheet_height_without_borders/$job_height);
+
+           $all_aligned_job_width = $width_qty*$job_width;
+           $all_aligned_job_height = $height_qty*$job_height;
+
+           $all_aligned_job_width_with_borders = $all_aligned_job_width + $this->width_borders;
+           $all_aligned_job_height_with_borders = $all_aligned_job_height + $this->height_borders;
+
+           $width_rest = $sheet_width_without_borders%$job_width - $this->width_borders;
+           $height_rest = $sheet_height_without_borders%$job_height - $this->height_borders;
+           $total_rest = $width_rest*$height_rest+$all_aligned_job_width*$height_rest+$all_aligned_job_width*$width_rest;
+
+           if( $all_aligned_job_width_with_borders>$sheet_width ||  $all_aligned_job_height_with_borders>$sheet_height)     //If job borders don't fit in sheet
+            continue;
+
+           $res["paper_width"] = $paper_width;
+           $res["paper_height"] = $paper_height;
+
            $res["sheet_width_qty"] = $sheet_width_qty;
            $res["sheet_height_qty"] = $sheet_height_qty;
+
+           $res["sheet_width"] = $sheet_width;
+           $res["sheet_height"] = $sheet_height;
+
+           $res["width_qty"] = $width_qty;
+           $res["height_qty"] = $height_qty;
+
+           $res["width_rest"] = $width_rest;      //Bandera
+           $res["height_rest"] = $height_rest;    //Bandera
            $res["rest"] = $total_rest;
+
+           $res["position"] = $position;
+
            $ret[] = $res;
          }
        }
+       return $ret;
+     }
 
+     private function calculate_size($paper_width,$paper_height,$job_width,$job_height)
+     {
+       $normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height,"normal");
+       $lying = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying");
+       return array_merge($normal,$lying);
      }
 
      private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height)
@@ -74,12 +111,12 @@ class MakeBudget extends Controller
         where('weight', '=', $weight)->
         where('paper_prices_set_id', '=', get_latest_paper_price_set_id())->
         get();
-        print_r($sizes_result);
-        $real_width = $width+5+5;     //Adding width borders
-        $real_height = $height+18+8;    //Addding height borders
+        print_r($sizes_result); //Bandera
+        $size_res = array();
         foreach ($sizes_result as $size) {
-          $normal = calculate_size($size["width"],$size["height"],$real_width,$real_height);    //calculate normal
-          $lying = calculate_size($size["width"],$size["height"],$real_height,$real_width);    //calculate lying
+          $size_res[] = $this->calculate_size($size->width,$size->height,$width,$height);    //calculate
+          print($size->width."x".$size->height.": "); //Bandera
+          print_r($size_res); //Bandera
         }
      }
 
