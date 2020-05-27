@@ -44,29 +44,46 @@ class MakeBudget extends Controller
 
      private function calculate_position($paper_width,$paper_height,$job_width,$job_height,$position,$front_back)
      {
+       $ret = array();
        for( $sheet_width_qty=2;$sheet_width_qty<=8;$sheet_width_qty++ ){
          for( $sheet_height_qty=2;$sheet_height_qty<=8;$sheet_height_qty++ ){
 
+           //This is the sheet cut out of the big ream
            $sheet_width = floor($paper_width/$sheet_width_qty);
            $sheet_height = floor($paper_height/$sheet_height_qty);
 
+           //To calculate, we take out the borders
            $sheet_width_without_borders = $sheet_width - $this->width_borders;
            $sheet_height_without_borders = $sheet_height - $this->height_borders;
 
-           if( $sheet_width_without_borders<$job_width || $sheet_height_without_borders<$job_height || $sheet_width<$this->min_width || $sheet_height<$this->min_height )
+           //If job is greater than sheet we continue
+           if( $sheet_width_without_borders<$job_width || $sheet_height_without_borders<$job_height )
             continue;
 
+           //If sheet is liitler than min sheet size we continue
+           if( $sheet_width<$this->min_width || $sheet_height<$this->min_height )
+            continue;
+
+           //Calculate how many times the job fits in the sheet
            $width_qty = floor($sheet_width_without_borders/$job_width);
            $height_qty = floor($sheet_height_without_borders/$job_height);
 
+           //Claculate the measure of the aligned jobs
            $all_aligned_job_width = $width_qty*$job_width;
            $all_aligned_job_height = $height_qty*$job_height;
 
+           //Add the borders to the aligned jobs
            $all_aligned_job_width_with_borders = $all_aligned_job_width + $this->width_borders;
            $all_aligned_job_height_with_borders = $all_aligned_job_height + $this->height_borders;
 
+           //if borders is greater than rest we continue
+           if( $this->width_borders>$sheet_width_without_borders%$job_width || $this->height_borders>$sheet_height_without_borders%$job_height )
+            continue;
+
+           //Calculate the rest and substracting borders
            $width_rest = $sheet_width_without_borders%$job_width - $this->width_borders;
            $height_rest = $sheet_height_without_borders%$job_height - $this->height_borders;
+           //Add the rests together
            $total_rest = $width_rest*$height_rest+$all_aligned_job_width*$height_rest+$all_aligned_job_width*$width_rest;
 
            if( $all_aligned_job_width_with_borders>$sheet_width ||  $all_aligned_job_height_with_borders>$sheet_height)     //If job borders don't fit in sheet
@@ -80,6 +97,12 @@ class MakeBudget extends Controller
 
            $res["sheet_width"] = $sheet_width;
            $res["sheet_height"] = $sheet_height;
+
+           $res["job_width"] = $job_width;
+           $res["job_height"] = $job_height;
+
+           $res["sheet_width_without_borders"] = $sheet_width_without_borders;
+           $res["sheet_height_without_borders"] = $sheet_height_without_borders;
 
            $res["width_qty"] = $width_qty;
            $res["height_qty"] = $height_qty;
@@ -101,12 +124,12 @@ class MakeBudget extends Controller
      private function calculate_size($paper_width,$paper_height,$job_width,$job_height)
      {
        $normal_normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height,"normal","normal");
-       $normal = $this->calculate_position($paper_width,$paper_height,$job_width*2,$job_height,"normal","front_back_width");
-       $normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height*2,"normal","front_back_height");
-       $lying = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying","normal");
-       $lying = $this->calculate_position($paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
-       $lying = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
-       return array_merge($normal,$lying);
+       $normal_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_width*2,$job_height,"normal","front_back_width");
+       $normal_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height*2,"normal","front_back_height");
+       $lying_normal = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying","normal");
+       $lying_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
+       $lying_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
+       return array_merge($normal_normal,$normal_front_back_width,$normal_front_back_height,$lying_normal,$lying_front_back_width,$lying_front_back_height);
      }
 
      private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height)
