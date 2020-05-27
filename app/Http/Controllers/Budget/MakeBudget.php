@@ -42,7 +42,7 @@ class MakeBudget extends Controller
         }
      }
 
-     private function calculate_position($paper_width,$paper_height,$job_width,$job_height,$position)
+     private function calculate_position($paper_width,$paper_height,$job_width,$job_height,$position,$front_back)
      {
        for( $sheet_width_qty=2;$sheet_width_qty<=8;$sheet_width_qty++ ){
          for( $sheet_height_qty=2;$sheet_height_qty<=8;$sheet_height_qty++ ){
@@ -90,6 +90,8 @@ class MakeBudget extends Controller
 
            $res["position"] = $position;
 
+           $res["front_back"] = $front_back;
+
            $ret[] = $res;
          }
        }
@@ -98,8 +100,12 @@ class MakeBudget extends Controller
 
      private function calculate_size($paper_width,$paper_height,$job_width,$job_height)
      {
-       $normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height,"normal");
-       $lying = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying");
+       $normal_normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height,"normal","normal");
+       $normal = $this->calculate_position($paper_width,$paper_height,$job_width*2,$job_height,"normal","front_back_width");
+       $normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height*2,"normal","front_back_height");
+       $lying = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying","normal");
+       $lying = $this->calculate_position($paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
+       $lying = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
        return array_merge($normal,$lying);
      }
 
