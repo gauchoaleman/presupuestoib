@@ -4,6 +4,8 @@ $paper_color_id = request()->get('paper_color_id')?request()->get('paper_color_i
 $weight = request()->get('weight')?request()->get('weight'):request()->old('weight');
 $width = request()->get('width')?request()->get('width'):request()->old('width');
 $height = request()->get('height')?request()->get('height'):request()->old('height');
+$front_color_qty = request()->get('front_color_qty')?request()->get('front_color_qty'):request()->old('front_color_qty');
+$back_color_qty = request()->get('back_color_qty')?request()->get('back_color_qty'):request()->old('back_color_qty');
  ?>
 <div class="container">
 
@@ -81,38 +83,37 @@ $height = request()->get('height')?request()->get('height'):request()->old('heig
         @enderror
     </div>
 
+
+</div>
+
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right">{{ __('Colores:') }}</label>
+
+    <div class="col-md-6">
+
+        <label class="col-md-6 col-form-label text-md-right">Frente:</label>
+        <input type="text" size="5" name="front_color_qty" value="{{$front_color_qty}}">
+        @error('front_color_qty')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        <label class="col-md-6 col-form-label text-md-right">Dorso:</label>
+        <input type="text" size="5" name="back_color_qty" value="{{$back_color_qty}}">
+        @error('back_color_qty')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+
   <div class="col-md-6">
         <button type="submit" class="btn btn-primary">
                 {{ __('Entrar') }}
     </button>
   </div>
 </div>
+
+
 </form>
 
 </div>
 </div>
 </div>
-
-<script type="text/javascript">
-// jQuery Document
-$(document).ready(function(){
-  $('.dynamic').change(function(){
-    if($(this).val() != '')
-    {
-      var select = $(this).attr("id");
-      var value = $(this).val();
-      var dependent = $(this).data('dependent');
-      var _token = $('input[name="_token"]').val();
-      $.ajax({
-        url:"{{route('budget/make.fetch')}}",
-        method: "POST",
-        data: {select:select, value:value, _token:_token, dependent:dependent},
-        success:function(result)
-        {
-          $('#'+dependent).html(result);
-        }
-      })
-    }
-  });
-});
-</script>

@@ -7,5 +7,5 @@
 [ ] Sacar created_at y updated at donde no hace falta
 [ ] Ver de poner formularios para celu (actualmente alguno están muy anchos.  Por ahí probar con ancho en 80% o algo así.
 [ ] En formulario preguntar si el trabajo es de frente y dorso
-  [ ] Si es frente y dorso calcular front_back y nada measure
+  [ ] Si es frente y dorso calcular front_back y nada mas
   [ ] Si no es frente y dorso calcular los normales nada mas

@@ -60,7 +60,7 @@ class MakeBudget extends Controller
            if( $sheet_width_without_borders<$job_width || $sheet_height_without_borders<$job_height )
             continue;
 
-           //If sheet is liitler than min sheet size we continue
+           //If sheet is littler than min sheet size we continue
            if( $sheet_width<$this->min_width || $sheet_height<$this->min_height )
             continue;
 
@@ -68,7 +68,7 @@ class MakeBudget extends Controller
            $width_qty = floor($sheet_width_without_borders/$job_width);
            $height_qty = floor($sheet_height_without_borders/$job_height);
 
-           //Claculate the measure of the aligned jobs
+           //Calculate the measure of the aligned jobs
            $all_aligned_job_width = $width_qty*$job_width;
            $all_aligned_job_height = $height_qty*$job_height;
 
@@ -121,6 +121,7 @@ class MakeBudget extends Controller
        return $ret;
      }
 
+
      private function calculate_size($paper_width,$paper_height,$job_width,$job_height)
      {
        $normal_normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height,"normal","normal");
@@ -129,7 +130,10 @@ class MakeBudget extends Controller
        $lying_normal = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying","normal");
        $lying_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
        $lying_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
-       return array_merge($normal_normal,$normal_front_back_width,$normal_front_back_height,$lying_normal,$lying_front_back_width,$lying_front_back_height);
+       $merged = array_merge($normal_normal,$normal_front_back_width,$normal_front_back_height,$lying_normal,$lying_front_back_width,$lying_front_back_height);
+       aasort($merged,"rest");
+       print_r($merged);  //Bandera
+       return $merged;
      }
 
      private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height)
