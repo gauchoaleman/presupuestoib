@@ -122,21 +122,26 @@ class MakeBudget extends Controller
      }
 
 
-     private function calculate_size($paper_width,$paper_height,$job_width,$job_height)
+     private function calculate_size($paper_width,$paper_height,$job_width,$job_height,$front_color_qty,$back_color_qty)
      {
-       $normal_normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height,"normal","normal");
-       $normal_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_width*2,$job_height,"normal","front_back_width");
-       $normal_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height*2,"normal","front_back_height");
-       $lying_normal = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying","normal");
-       $lying_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
-       $lying_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
-       $merged = array_merge($normal_normal,$normal_front_back_width,$normal_front_back_height,$lying_normal,$lying_front_back_width,$lying_front_back_height);
+       if( !$back_color_qty ) { //If there is no printing on back ew calculate normal positions
+         $normal_normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height,"normal","normal");
+         $lying_normal = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying","normal");
+         $merged = array_merge($normal_normal,$lying_normal);
+       }
+       else { //If there is printing on back we use front and back positions
+         $normal_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_width*2,$job_height,"normal","front_back_width");
+         $normal_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height*2,"normal","front_back_height");
+         $lying_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
+         $lying_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
+         $merged = array_merge($normal_front_back_width,$normal_front_back_height,$lying_front_back_width,$lying_front_back_height);
+       }
        aasort($merged,"rest");
-       print_r($merged);  //Bandera
+       //print_r($merged);  //Bandera
        return $merged;
      }
 
-     private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height)
+     private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty)
      {
         $sizes_result = DB::table('paper_prices')->select('width','height')->
         where('paper_type_id', '=', $paper_type_id)->
@@ -144,13 +149,19 @@ class MakeBudget extends Controller
         where('weight', '=', $weight)->
         where('paper_prices_set_id', '=', get_latest_paper_price_set_id())->
         get();
-        print_r($sizes_result); //Bandera
+        //print_r($sizes_result); //Bandera
         $size_res = array();
+        $all_sizes = array();
         foreach ($sizes_result as $size) {
-          $size_res[] = $this->calculate_size($size->width,$size->height,$width,$height);    //calculate
-          print($size->width."x".$size->height.": "); //Bandera
-          print_r($size_res); //Bandera
+          $size_res = $this->calculate_size($size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty);    //calculate
+          //print($size->width."x".$size->height.": "); //Bandera
+          //print_r($size_res); //Bandera
+          $all_sizes = array_merge($size_res,$all_sizes);
         }
+        aasort($all_sizes,"rest");
+        //print_r($all_sizes);    //Bandera
+        $ret["all_sizes"] = $all_sizes;
+        return $ret;
      }
 
      private function proc(Request $request)
@@ -159,16 +170,18 @@ class MakeBudget extends Controller
          $messages = [
            'width.required' => 'Debe ingresar un ancho.',
            'width.integer' => 'El ancho debe ser un entero.',
+           'width.gt' => 'El ancho debe ser mayor a cero.',
            'height.required' => 'Debe ingresar un alto.',
            'height.integer' => 'El alto debe ser un entero.',
+           'height.gt' => 'El alto debe ser mayor a cero.',
            'front_color_qty.required' => 'Debe ingresar colores de frente.',
            'front_color_qty.integer' => 'La cantidad de colores de frente debe ser un entero.',
            'front_color_qty.gt' => 'La cantidad de colores de frente debe ser mayor a cero.',
            'back_color_qty.integer' => 'La cantidad de colores de dorso debe ser un entero.'
            ];
          $v = Validator::make($request->all(), [
-             'width' => 'required|integer',
-             'height' => 'required|integer',
+             'width' => 'required|integer|gt:0',
+             'height' => 'required|integer|gt:0',
              'front_color_qty' => 'required|integer|gt:0',
              'back_color_qty' => 'integer',],
              $messages);
@@ -176,12 +189,14 @@ class MakeBudget extends Controller
         if ($v->fails())
          return redirect()->back()->withInput($request->input())->withErrors($v->errors());
         else{
-          $result = $this->calculate_budget($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["height"], $_POST["width"] );
-          return show_page_with_menubars("budget/make/result");
+          $result = $this->calculate_budget($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["height"], $_POST["width"],
+          $_POST["front_color_qty"],$_POST["back_color_qty"]);
+          $data["result"]=$result;
+          return $this->show_page_with_menubars("budget/make/result","",$data);
          }
        }
        else
-         return show_page_with_menubars("budget/make/form");
+         return $this->show_page_with_menubars("budget/make/form");
      }
 
 }
