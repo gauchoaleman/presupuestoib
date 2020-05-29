@@ -6,6 +6,10 @@ $width = request()->get('width')?request()->get('width'):request()->old('width')
 $height = request()->get('height')?request()->get('height'):request()->old('height');
 $front_color_qty = request()->get('front_color_qty')?request()->get('front_color_qty'):request()->old('front_color_qty');
 $back_color_qty = request()->get('back_color_qty')?request()->get('back_color_qty'):request()->old('back_color_qty');
+if( !$front_color_qty )
+  $front_color_qty = 0;
+if( !$back_color_qty )
+  $back_color_qty = 0;
  ?>
 <div class="container">
 

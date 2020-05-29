@@ -138,7 +138,7 @@ class MakeBudget extends Controller
 
      private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height)
      {
-        $sizes_result = $users = DB::table('paper_prices')->select('height', 'width')->
+        $sizes_result = DB::table('paper_prices')->select('width','height')->
         where('paper_type_id', '=', $paper_type_id)->
         where('paper_color_id', '=', $paper_color_id)->
         where('weight', '=', $weight)->
@@ -158,13 +158,18 @@ class MakeBudget extends Controller
        if( $this->form_complete() ) {
          $messages = [
            'width.required' => 'Debe ingresar un ancho.',
-           'width.numeric' => 'El ancho debe ser numérico (punto no coma)',
+           'width.integer' => 'El ancho debe ser un entero.',
            'height.required' => 'Debe ingresar un alto.',
-           'height.numeric' => 'El alto debe ser numérico (punto no coma)',
+           'height.integer' => 'El alto debe ser un entero.',
+           'front_color_qty.required' => 'Debe ingresar colores de frente.',
+           'front_color_qty.integer' => 'La cantidad de colores de frente debe ser un entero.',
+           'back_color_qty.integer' => 'La cantidad de colores de dorso debe ser un entero.'
            ];
          $v = Validator::make($request->all(), [
-             'width' => 'required|numeric',
-             'height' => 'required|numeric'],
+             'width' => 'required|integer',
+             'height' => 'required|integer',
+             'front_color_qty' => 'required|integer',
+             'back_color_qty' => 'integer',],
              $messages);
 
         if ($v->fails())
