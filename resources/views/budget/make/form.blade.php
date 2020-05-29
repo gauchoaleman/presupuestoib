@@ -20,7 +20,7 @@ if( !$back_color_qty )
 <form method="POST">
 @csrf
 <div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">{{ __('Papel:') }}</label>
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Papel:') }}</b></label>
 
     <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">Tipo:</label>
@@ -92,7 +92,7 @@ if( !$back_color_qty )
 
 
 <div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">{{ __('Colores:') }}</label>
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Colores:') }}</b></label>
 
     <div class="col-md-6">
 

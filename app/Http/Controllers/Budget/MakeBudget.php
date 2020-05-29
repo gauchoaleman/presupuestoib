@@ -163,12 +163,13 @@ class MakeBudget extends Controller
            'height.integer' => 'El alto debe ser un entero.',
            'front_color_qty.required' => 'Debe ingresar colores de frente.',
            'front_color_qty.integer' => 'La cantidad de colores de frente debe ser un entero.',
+           'front_color_qty.gt' => 'La cantidad de colores de frente debe ser mayor a cero.',
            'back_color_qty.integer' => 'La cantidad de colores de dorso debe ser un entero.'
            ];
          $v = Validator::make($request->all(), [
              'width' => 'required|integer',
              'height' => 'required|integer',
-             'front_color_qty' => 'required|integer',
+             'front_color_qty' => 'required|integer|gt:0',
              'back_color_qty' => 'integer',],
              $messages);
 
