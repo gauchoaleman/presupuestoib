@@ -1,5 +1,5 @@
 <div class="container">
-<div class="card" style="width: 100%;">
+<div class="card" style="width: 110%;">
     <div class="card-header">Tamaños papel</div>
     <div class="card-body">
 
@@ -17,6 +17,7 @@
       <th scope="col"><div align="center">Posición</div></th>
       <th scope="col"><div align="center">Frente/Dorso</div></th>
       <th scope="col"><div align="center">Resto (mmxmm)</div></th>
+      <th scope="col"><div align="center">Motivo rechazo</div></th>
     </tr>
   </thead>
   <tbody>
@@ -80,6 +81,9 @@
   </td>
   <td>
     <div align="center">{{$size["rest"]}}</div>
+  </td>
+  <td>
+    <div align="center">{{$size["continue"]}}</div>
   </td>
   </tr>
 @endforeach
