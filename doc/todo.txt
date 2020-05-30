@@ -6,6 +6,8 @@
 [ ] Emprolijar código
 [ ] Sacar created_at y updated at donde no hace falta
 [ ] Ver de poner formularios para celu (actualmente alguno están muy anchos.  Por ahí probar con ancho en 80% o algo así.
-[ ] En formulario preguntar si el trabajo es de frente y dorso
-  [ ] Si es frente y dorso calcular front_back y nada mas
-  [ ] Si no es frente y dorso calcular los normales nada mas
+[X] En formulario preguntar si el trabajo es de frente y dorso
+  [X] Si es frente y dorso calcular front_back y nada mas
+  [X] Si no es frente y dorso calcular los normales nada mas
+[ ] Posibilidad de poner ctd. de poses
+[ ] En formulaios, poner color blanco x defecto

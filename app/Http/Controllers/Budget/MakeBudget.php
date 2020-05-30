@@ -18,7 +18,7 @@ class MakeBudget extends Controller
      private $min_width = 216;
      private $min_height = 128;
      private $width_borders = 5+5;
-     private $height_borders = 18+8;
+     private $height_borders = 18+5;
 
      public function __invoke(Request $request)
      {
@@ -47,7 +47,7 @@ class MakeBudget extends Controller
        $ret = array();
        for( $sheet_width_qty=2;$sheet_width_qty<=8;$sheet_width_qty++ ){
          for( $sheet_height_qty=2;$sheet_height_qty<=8;$sheet_height_qty++ ){
-           $continue = "-"; //Bandera
+           $continue = array(); //Bandera
            //This is the sheet cut out of the big ream
            $sheet_width = floor($paper_width/$sheet_width_qty);
            $sheet_height = floor($paper_height/$sheet_height_qty);
@@ -58,12 +58,12 @@ class MakeBudget extends Controller
 
            //If job is greater than sheet we continue
            if( $sheet_width_without_borders<$job_width || $sheet_height_without_borders<$job_height )
-            $continue = "Job greater than sheet";   //Bandera
+            $continue[] = "Job greater than sheet";   //Bandera
             //continue;
 
            //If sheet is littler than min sheet size we continue
            if( $sheet_width<$this->min_width || $sheet_height<$this->min_height )
-            $continue = "Sheet littler than min sheet";   //Bandera
+            $continue[] = "Sheet littler than min sheet";   //Bandera
             //continue;
 
            //Calculate how many times the job fits in the sheet
@@ -80,7 +80,7 @@ class MakeBudget extends Controller
 
            //if borders is greater than rest we continue
            if( $this->width_borders>$sheet_width_without_borders%$job_width || $this->height_borders>$sheet_height_without_borders%$job_height )
-            $continue = "Borders greater than rest";    //Bandera
+            $continue[] = "Borders greater than rest";    //Bandera
             //continue;
 
            //Calculate the rest and substracting borders
@@ -90,7 +90,7 @@ class MakeBudget extends Controller
            $total_rest = $width_rest*$height_rest+$all_aligned_job_width*$height_rest+$all_aligned_job_width*$width_rest;
 
            if( $all_aligned_job_width_with_borders>$sheet_width ||  $all_aligned_job_height_with_borders>$sheet_height)     //If job borders don't fit in sheet
-            $continue = "Job borders don't fit in sheet";   //Bandera
+            $continue[] = "Job borders don't fit in sheet";   //Bandera
             //continue;
 
            $res["paper_width"] = $paper_width;

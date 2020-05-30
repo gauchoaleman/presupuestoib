@@ -22,6 +22,8 @@
   </thead>
   <tbody>
 @foreach($result["all_sizes"] as $size)
+
+@if( $size["paper_width"] == 950 && $size["paper_height"]==650 && $size["sheet_width_qty"] == 2 && $size["sheet_height_qty"]==2)
   <tr>
   <td>
     <div align="center">{{$size["paper_width"]}}</div>
@@ -83,9 +85,19 @@
     <div align="center">{{$size["rest"]}}</div>
   </td>
   <td>
-    <div align="center">{{$size["continue"]}}</div>
+    <div align="center">
+      @foreach($size["continue"] as $cont)
+        {{$cont}}
+
+
+      @endforeach
+      @if( !sizeof($size["continue"]))
+      Aceptado
+      @endif
+    </div>
   </td>
   </tr>
+@endif
 @endforeach
 </tbody>
 </table>
