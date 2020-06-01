@@ -11,3 +11,4 @@
   [X] Si no es frente y dorso calcular los normales nada mas
 [ ] Posibilidad de poner ctd. de poses
 [ ] En formulaios, poner color blanco x defecto
+[ ] Si da cero el width_qty o el height_qty hacer continue

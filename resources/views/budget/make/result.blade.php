@@ -1,5 +1,5 @@
 <div class="container">
-<div class="card" style="width: 110%;">
+<div class="card" style="width: 200%;">
     <div class="card-header">Tamaños papel</div>
     <div class="card-body">
 
@@ -16,7 +16,13 @@
       <th scope="col"><div align="center">Ctd. de ejemplares alto</div></th>
       <th scope="col"><div align="center">Posición</div></th>
       <th scope="col"><div align="center">Frente/Dorso</div></th>
+      <th scope="col"><div align="center">Ancho pliego sin bordes</div></th>
+      <th scope="col"><div align="center">Alto pliego sin bordes</div></th>
       <th scope="col"><div align="center">Resto (mmxmm)</div></th>
+      <th scope="col"><div align="center">Resto ancho (mm)</div></th>
+      <th scope="col"><div align="center">Resto alto (mm)</div></th>
+      <th scope="col"><div align="center">Resto simple ancho (mm)</div></th>
+      <th scope="col"><div align="center">Resto simple alto (mm)</div></th>
       <th scope="col"><div align="center">Motivo rechazo</div></th>
     </tr>
   </thead>
@@ -82,12 +88,30 @@
     @endswitch
   </td>
   <td>
+    <div align="center">{{$size["sheet_width_without_borders"]}}</div>
+  </td>
+  <td>
+    <div align="center">{{$size["sheet_height_without_borders"]}}</div>
+  </td>
+  <td>
     <div align="center">{{$size["rest"]}}</div>
+  </td>
+  <td>
+    <div align="center">{{$size["width_rest"]}}</div>
+  </td>
+  <td>
+    <div align="center">{{$size["height_rest"]}}</div>
+  </td>
+  <td>
+    <div align="center">{{$size["simple_width_rest"]}}</div>
+  </td>
+  <td>
+    <div align="center">{{$size["simple_height_rest"]}}</div>
   </td>
   <td>
     <div align="center">
       @foreach($size["continue"] as $cont)
-        {{$cont}}
+        {{$cont}}<br>
 
 
       @endforeach

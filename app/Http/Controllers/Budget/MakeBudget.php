@@ -18,7 +18,7 @@ class MakeBudget extends Controller
      private $min_width = 216;
      private $min_height = 128;
      private $width_borders = 5+5;
-     private $height_borders = 18+5;
+     private $height_borders = 15+5;
 
      public function __invoke(Request $request)
      {
@@ -70,6 +70,10 @@ class MakeBudget extends Controller
            $width_qty = floor($sheet_width_without_borders/$job_width);
            $height_qty = floor($sheet_height_without_borders/$job_height);
 
+           //If there fits no job (widt_qty / height_qty equal cero) we continue
+           if( $width_qty == 0 || $height_qty == 0 )
+            $continue[] = "Job doesn't fit in sheet";   //Bandera
+            //continue;
            //Calculate the measure of the aligned jobs
            $all_aligned_job_width = $width_qty*$job_width;
            $all_aligned_job_height = $height_qty*$job_height;
@@ -78,14 +82,16 @@ class MakeBudget extends Controller
            $all_aligned_job_width_with_borders = $all_aligned_job_width + $this->width_borders;
            $all_aligned_job_height_with_borders = $all_aligned_job_height + $this->height_borders;
 
+           $simple_width_rest = $sheet_width_without_borders%$job_width;
+           $simple_height_rest = $sheet_height_without_borders%$job_height;
            //if borders is greater than rest we continue
-           if( $this->width_borders>$sheet_width_without_borders%$job_width || $this->height_borders>$sheet_height_without_borders%$job_height )
+           if( $this->width_borders>$simple_width_rest || $this->height_borders>$simple_height_rest )
             $continue[] = "Borders greater than rest";    //Bandera
             //continue;
 
            //Calculate the rest and substracting borders
-           $width_rest = $sheet_width_without_borders%$job_width - $this->width_borders;
-           $height_rest = $sheet_height_without_borders%$job_height - $this->height_borders;
+           $width_rest = $simple_width_rest - $this->width_borders;
+           $height_rest = $simple_height_rest - $this->height_borders;
            //Add the rests together
            $total_rest = $width_rest*$height_rest+$all_aligned_job_width*$height_rest+$all_aligned_job_width*$width_rest;
 
@@ -114,6 +120,10 @@ class MakeBudget extends Controller
            $res["width_rest"] = $width_rest;      //Bandera
            $res["height_rest"] = $height_rest;    //Bandera
            $res["rest"] = $total_rest;
+           $res["width_rest"] = $sheet_width_without_borders%$job_width - $this->width_borders;
+           $res["height_rest"] = $sheet_height_without_borders%$job_height - $this->height_borders;
+           $res["simple_width_rest"] = $simple_width_rest;
+           $res["simple_height_rest"] = $simple_height_rest;
 
            $res["position"] = $position;
 
