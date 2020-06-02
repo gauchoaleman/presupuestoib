@@ -21,15 +21,13 @@
       <th scope="col"><div align="center">Resto (mmxmm)</div></th>
       <th scope="col"><div align="center">Resto ancho (mm)</div></th>
       <th scope="col"><div align="center">Resto alto (mm)</div></th>
-      <th scope="col"><div align="center">Resto simple ancho (mm)</div></th>
-      <th scope="col"><div align="center">Resto simple alto (mm)</div></th>
       <th scope="col"><div align="center">Motivo rechazo</div></th>
     </tr>
   </thead>
   <tbody>
 @foreach($result["all_sizes"] as $size)
 
-@if( $size["paper_width"] == 950 && $size["paper_height"]==650 && $size["sheet_width_qty"] == 2 && $size["sheet_height_qty"]==2)
+{{--@if( $size["paper_width"] == 950 && $size["paper_height"]==650 && $size["sheet_width_qty"] == 2 && $size["sheet_height_qty"]==2)--}}
   <tr>
   <td>
     <div align="center">{{$size["paper_width"]}}</div>
@@ -103,12 +101,6 @@
     <div align="center">{{$size["height_rest"]}}</div>
   </td>
   <td>
-    <div align="center">{{$size["simple_width_rest"]}}</div>
-  </td>
-  <td>
-    <div align="center">{{$size["simple_height_rest"]}}</div>
-  </td>
-  <td>
     <div align="center">
       @foreach($size["continue"] as $cont)
         {{$cont}}<br>
@@ -121,7 +113,7 @@
     </div>
   </td>
   </tr>
-@endif
+{{--@endif--}}
 @endforeach
 </tbody>
 </table>

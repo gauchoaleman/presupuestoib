@@ -10,5 +10,6 @@
   [X] Si es frente y dorso calcular front_back y nada mas
   [X] Si no es frente y dorso calcular los normales nada mas
 [ ] Posibilidad de poner ctd. de poses
-[ ] En formulaios, poner color blanco x defecto
-[ ] Si da cero el width_qty o el height_qty hacer continue
+[X] En formulaios, poner color blanco x defecto
+[X] Si da cero el width_qty o el height_qty hacer continue
+[ ] Para Mama: Si se pueden poner las poses también hay que especificar el tamaño de la hoja?

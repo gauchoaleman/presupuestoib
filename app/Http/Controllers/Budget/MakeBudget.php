@@ -42,7 +42,7 @@ class MakeBudget extends Controller
         }
      }
 
-     private function calculate_position($paper_width,$paper_height,$job_width,$job_height,$position,$front_back)
+     private function calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$position,$front_back)
      {
        $ret = array();
        for( $sheet_width_qty=2;$sheet_width_qty<=8;$sheet_width_qty++ ){
@@ -82,23 +82,21 @@ class MakeBudget extends Controller
            $all_aligned_job_width_with_borders = $all_aligned_job_width + $this->width_borders;
            $all_aligned_job_height_with_borders = $all_aligned_job_height + $this->height_borders;
 
-           $simple_width_rest = $sheet_width_without_borders%$job_width;
-           $simple_height_rest = $sheet_height_without_borders%$job_height;
            //if borders is greater than rest we continue
-           if( $this->width_borders>$simple_width_rest || $this->height_borders>$simple_height_rest )
-            $continue[] = "Borders greater than rest";    //Bandera
+           /*if( $this->width_borders>$simple_width_rest || $this->height_borders>$simple_height_rest )
+            $continue[] = "Borders greater than rest";    //Bandera*/
             //continue;
 
            //Calculate the rest and substracting borders
-           $width_rest = $simple_width_rest - $this->width_borders;
-           $height_rest = $simple_height_rest - $this->height_borders;
+           $width_rest = $sheet_width_without_borders%$job_width;
+           $height_rest = $sheet_height_without_borders%$job_height;
            //Add the rests together
            $total_rest = $width_rest*$height_rest+$all_aligned_job_width*$height_rest+$all_aligned_job_width*$width_rest;
 
            if( $all_aligned_job_width_with_borders>$sheet_width ||  $all_aligned_job_height_with_borders>$sheet_height)     //If job borders don't fit in sheet
             $continue[] = "Job borders don't fit in sheet";   //Bandera
             //continue;
-
+           $res["paper_price_id"] = $paper_price_id;
            $res["paper_width"] = $paper_width;
            $res["paper_height"] = $paper_height;
 
@@ -120,10 +118,6 @@ class MakeBudget extends Controller
            $res["width_rest"] = $width_rest;      //Bandera
            $res["height_rest"] = $height_rest;    //Bandera
            $res["rest"] = $total_rest;
-           $res["width_rest"] = $sheet_width_without_borders%$job_width - $this->width_borders;
-           $res["height_rest"] = $sheet_height_without_borders%$job_height - $this->height_borders;
-           $res["simple_width_rest"] = $simple_width_rest;
-           $res["simple_height_rest"] = $simple_height_rest;
 
            $res["position"] = $position;
 
@@ -136,18 +130,18 @@ class MakeBudget extends Controller
      }
 
 
-     private function calculate_size($paper_width,$paper_height,$job_width,$job_height,$front_color_qty,$back_color_qty)
+     private function calculate_size($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$front_color_qty,$back_color_qty)
      {
        if( !$back_color_qty ) { //If there is no printing on back ew calculate normal positions
-         $normal_normal = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height,"normal","normal");
-         $lying_normal = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width,"lying","normal");
+         $normal_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,"normal","normal");
+         $lying_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width,"lying","normal");
          $merged = array_merge($normal_normal,$lying_normal);
        }
        else { //If there is printing on back we use front and back positions
-         $normal_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_width*2,$job_height,"normal","front_back_width");
-         $normal_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_width,$job_height*2,"normal","front_back_height");
-         $lying_front_back_width = $this->calculate_position($paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
-         $lying_front_back_height = $this->calculate_position($paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
+         $normal_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width*2,$job_height,"normal","front_back_width");
+         $normal_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height*2,"normal","front_back_height");
+         $lying_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
+         $lying_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
          $merged = array_merge($normal_front_back_width,$normal_front_back_height,$lying_front_back_width,$lying_front_back_height);
        }
        aasort($merged,"rest");
@@ -157,7 +151,7 @@ class MakeBudget extends Controller
 
      private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty)
      {
-        $sizes_result = DB::table('paper_prices')->select('width','height')->
+        $sizes_result = DB::table('paper_prices')->select('id','width','height')->
         where('paper_type_id', '=', $paper_type_id)->
         where('paper_color_id', '=', $paper_color_id)->
         where('weight', '=', $weight)->
@@ -167,7 +161,7 @@ class MakeBudget extends Controller
         $size_res = array();
         $all_sizes = array();
         foreach ($sizes_result as $size) {
-          $size_res = $this->calculate_size($size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty);    //calculate
+          $size_res = $this->calculate_size($size->id,$size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty);    //calculate
           //print($size->width."x".$size->height.": "); //Bandera
           //print_r($size_res); //Bandera
           $all_sizes = array_merge($size_res,$all_sizes);

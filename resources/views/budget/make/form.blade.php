@@ -6,10 +6,13 @@ $width = request()->get('width')?request()->get('width'):request()->old('width')
 $height = request()->get('height')?request()->get('height'):request()->old('height');
 $front_color_qty = request()->get('front_color_qty')?request()->get('front_color_qty'):request()->old('front_color_qty');
 $back_color_qty = request()->get('back_color_qty')?request()->get('back_color_qty'):request()->old('back_color_qty');
+$pose_qty = $back_color_qty = request()->get('pose_qty')?request()->get('pose_qty'):request()->old('pose_qty');
 if( !$front_color_qty )
   $front_color_qty = 0;
 if( !$back_color_qty )
   $back_color_qty = 0;
+if( $paper_type_id && !$paper_color_id )
+  $paper_color_id = 1;   //Color blanco x defecto
  ?>
 <div class="container">
 
@@ -86,8 +89,6 @@ if( !$back_color_qty )
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
-
-
 </div>
 
 
@@ -104,6 +105,18 @@ if( !$back_color_qty )
         <label class="col-md-6 col-form-label text-md-right">Dorso:</label>
         <input type="text" size="5" name="back_color_qty" value="{{$back_color_qty}}">
         @error('back_color_qty')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Cantidad de Poses:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <input type="text" size="5" name="front_color_qty" value="{{$pose_qty}}">
+        @error('pose_qty')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
