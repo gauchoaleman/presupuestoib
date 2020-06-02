@@ -14,6 +14,8 @@
       <th scope="col"><div align="center">Alto pliego</div></th>
       <th scope="col"><div align="center">Ctd. de ejemplares ancho</div></th>
       <th scope="col"><div align="center">Ctd. de ejemplares alto</div></th>
+      <th scope="col"><div align="center">Trabajo ancho</div></th>
+      <th scope="col"><div align="center">Trabajo alto</div></th>
       <th scope="col"><div align="center">Posición</div></th>
       <th scope="col"><div align="center">Frente/Dorso</div></th>
       <th scope="col"><div align="center">Ancho pliego sin bordes</div></th>
@@ -52,6 +54,12 @@
   </td>
   <td>
     <div align="center">{{$size["height_qty"]}}</div>
+  </td>
+  <td>
+    <div align="center">{{$size["job_width"]}}</div>
+  </td>
+  <td>
+    <div align="center">{{$size["job_height"]}}</div>
   </td>
   <td>
     <div align="center">

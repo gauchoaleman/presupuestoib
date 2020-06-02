@@ -107,4 +107,7 @@ function aasort (&$array, $key) {
   $array=$ret;
 }
 
+function get_form_value($var_name){
+  return request()->get($var_name)?request()->get($var_name):request()->old($var_name);
+}
 ?>

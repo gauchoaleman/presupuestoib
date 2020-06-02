@@ -185,19 +185,23 @@ class MakeBudget extends Controller
            'front_color_qty.required' => 'Debe ingresar colores de frente.',
            'front_color_qty.integer' => 'La cantidad de colores de frente debe ser un entero.',
            'front_color_qty.gt' => 'La cantidad de colores de frente debe ser mayor a cero.',
+           'copy_qty.required' => 'Debe ingresar cantidad de ejemplares.',
+           'copy_qty.integer' => 'La cantidad de ejemplares debe ser un entero.',
+           'copy_qty.gt' => 'La cantidad de ejemplares debe ser mayor a cero.',
            'back_color_qty.integer' => 'La cantidad de colores de dorso debe ser un entero.'
            ];
          $v = Validator::make($request->all(), [
              'width' => 'required|integer|gt:0',
              'height' => 'required|integer|gt:0',
              'front_color_qty' => 'required|integer|gt:0',
-             'back_color_qty' => 'integer',],
+             'back_color_qty' => 'integer',
+             'copy_qty' => 'required|integer|gt:0',],
              $messages);
 
         if ($v->fails())
          return redirect()->back()->withInput($request->input())->withErrors($v->errors());
         else{
-          $result = $this->calculate_budget($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["height"], $_POST["width"],
+          $result = $this->calculate_budget($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["width"], $_POST["height"],
           $_POST["front_color_qty"],$_POST["back_color_qty"]);
           $data["result"]=$result;
           return $this->show_page_with_menubars("budget/make/result","",$data);

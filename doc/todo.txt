@@ -13,3 +13,4 @@
 [X] En formulaios, poner color blanco x defecto
 [X] Si da cero el width_qty o el height_qty hacer continue
 [ ] Para Mama: Si se pueden poner las poses también hay que especificar el tamaño de la hoja?
+[ ] En A4, elige acostado no normal, mirarlo
