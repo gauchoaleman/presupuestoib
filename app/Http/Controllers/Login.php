@@ -24,10 +24,10 @@ class Login extends Controller
           return show_page_with_menubars("home_page","Login exitoso.");
         }
         else
-          return show_page_without_menubars("login_form","Login erróneo.");
+          return $this->show_page_without_menubars("login_form","Login erróneo.");
       }
       else
-        return show_page_without_menubars("login_form");
+        return $this->show_page_without_menubars("login_form");
     }
 
 }

@@ -7,6 +7,8 @@
     <ul class="nav navbar-nav">
       <li class="active"><a href="/">Home</a></li>
       &nbsp;&nbsp;
+      <li class="active"><a href="/logout">Logout</a></li>
+      &nbsp;&nbsp;
       <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Configuración</span> <span class="caret"></span></a>
           <ul class="dropdown-menu">

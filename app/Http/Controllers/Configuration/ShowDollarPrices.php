@@ -24,6 +24,6 @@ class ShowDollarPrices extends Controller
      if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]== true )
        return $this->proc($request);
      else
-       return show_page_without_menubars("no_access");
+       return $this->show_page_without_menubars("no_access");
    }
 }

@@ -25,7 +25,7 @@ class MakeBudget extends Controller
        if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]== true )
          return $this->proc($request);
        else
-         return show_page_without_menubars("no_access");
+         return $this->show_page_without_menubars("no_access");
      }
 
      private function form_complete()
@@ -42,7 +42,7 @@ class MakeBudget extends Controller
         }
      }
 
-     private function calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$position,$front_back)
+     private function calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$pose_qty,$position,$front_back)
      {
        $ret = array();
        for( $sheet_width_qty=2;$sheet_width_qty<=8;$sheet_width_qty++ ){
@@ -70,7 +70,17 @@ class MakeBudget extends Controller
            $width_qty = floor($sheet_width_without_borders/$job_width);
            $height_qty = floor($sheet_height_without_borders/$job_height);
 
-           //If there fits no job (widt_qty / height_qty equal cero) we continue
+           if( $front_back == "front_back_width" ){
+             if( $width_qty*2*$height_qty < $pose_qty )
+              $continue[] = "Pose Qty doesn't match";   //Bandera
+            //continue;
+           }
+           else if( $front_back == "front_back_height" ){
+             if( $width_qty*$height_qty*2 < $pose_qty )
+              $continue[] = "Pose Qty doesn't match";   //Bandera
+            //continue;
+           }
+           //If there fits no job (width_qty / height_qty equal cero) we continue
            if( $width_qty == 0 || $height_qty == 0 )
             $continue[] = "Job doesn't fit in sheet";   //Bandera
             //continue;
@@ -129,19 +139,18 @@ class MakeBudget extends Controller
        return $ret;
      }
 
-
-     private function calculate_size($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$front_color_qty,$back_color_qty)
+     private function calculate_size($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$front_color_qty,$back_color_qty,$pose_qty)
      {
        if( !$back_color_qty ) { //If there is no printing on back ew calculate normal positions
-         $normal_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,"normal","normal");
-         $lying_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width,"lying","normal");
+         $normal_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$pose_qty,"normal","normal");
+         $lying_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width,$pose_qty,"lying","normal");
          $merged = array_merge($normal_normal,$lying_normal);
        }
        else { //If there is printing on back we use front and back positions
-         $normal_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width*2,$job_height,"normal","front_back_width");
-         $normal_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height*2,"normal","front_back_height");
-         $lying_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height*2,$job_width,"lying","front_back_width");
-         $lying_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width*2,"lying","front_back_height");
+         $normal_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width*2,$job_height,$pose_qty,"normal","front_back_width");
+         $normal_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height*2,$pose_qty,"normal","front_back_height");
+         $lying_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height*2,$job_width,$pose_qty,"lying","front_back_width");
+         $lying_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width*2,$pose_qty,"lying","front_back_height");
          $merged = array_merge($normal_front_back_width,$normal_front_back_height,$lying_front_back_width,$lying_front_back_height);
        }
        aasort($merged,"rest");
@@ -149,7 +158,7 @@ class MakeBudget extends Controller
        return $merged;
      }
 
-     private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty)
+     private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty)
      {
         $sizes_result = DB::table('paper_prices')->select('id','width','height')->
         where('paper_type_id', '=', $paper_type_id)->
@@ -161,7 +170,7 @@ class MakeBudget extends Controller
         $size_res = array();
         $all_sizes = array();
         foreach ($sizes_result as $size) {
-          $size_res = $this->calculate_size($size->id,$size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty);    //calculate
+          $size_res = $this->calculate_size($size->id,$size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty,$pose_qty);    //calculate
           //print($size->width."x".$size->height.": "); //Bandera
           //print_r($size_res); //Bandera
           $all_sizes = array_merge($size_res,$all_sizes);
@@ -202,9 +211,9 @@ class MakeBudget extends Controller
          return redirect()->back()->withInput($request->input())->withErrors($v->errors());
         else{
           $result = $this->calculate_budget($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["width"], $_POST["height"],
-          $_POST["front_color_qty"],$_POST["back_color_qty"]);
+          $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["copy_qty"]);
           $data["result"]=$result;
-          return $this->show_page_with_menubars("budget/make/result","",$data);
+          return $this->show_page_with_menubars("budget/make/select_paper","",$data);
          }
        }
        else

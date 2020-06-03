@@ -4,7 +4,7 @@
 [X] en set_dollar_price validar que la entrada sea numérica
 [X] en listado precios papel (paper_prices_list) poner precio en pesos
 [ ] Emprolijar código
-[ ] Sacar created_at y updated at donde no hace falta
+[ ] Sacar created_at y updated donde no hace falta
 [ ] Ver de poner formularios para celu (actualmente alguno están muy anchos.  Por ahí probar con ancho en 80% o algo así.
 [X] En formulario preguntar si el trabajo es de frente y dorso
   [X] Si es frente y dorso calcular front_back y nada mas
@@ -12,5 +12,5 @@
 [ ] Posibilidad de poner ctd. de poses
 [X] En formulaios, poner color blanco x defecto
 [X] Si da cero el width_qty o el height_qty hacer continue
-[ ] Para Mama: Si se pueden poner las poses también hay que especificar el tamaño de la hoja?
-[ ] En A4, elige acostado no normal, mirarlo
+[X] Para Mama: Si se pueden poner las poses también hay que especificar el tamaño de la hoja?
+[X] En A4, elige acostado no normal, mirarlo

@@ -15,6 +15,6 @@ class Logout extends Controller
     public function __invoke(Request $request)
     {
         $_SESSION["logged_in"] = false;
-        return show_page_without_menubars("login_form",$message = "Se deslogueó del sistema.");
+        return $this->show_page_without_menubars("login_form",$message = "Se deslogueó del sistema.");
     }
 }
