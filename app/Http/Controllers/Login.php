@@ -17,11 +17,11 @@ class Login extends Controller
       global $pass_user,$password;
       //phpinfo();
       if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]== true )
-        return show_page_with_menubars("home_page","Ya estás logueado.");
+        return $this->show_page_with_menubars("home_page","Ya estás logueado.");
       elseif( isset($_POST["_token"])){
         if( $_POST["user"] == "b" && $_POST["password"] == "b" ) {
           $_SESSION["logged_in"] = true;
-          return show_page_with_menubars("home_page","Login exitoso.");
+          return $this->show_page_with_menubars("home_page","Login exitoso.");
         }
         else
           return $this->show_page_without_menubars("login_form","Login erróneo.");

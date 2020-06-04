@@ -15,6 +15,6 @@ class ShowPage extends Controller
      */
     public function __invoke(Request $request,$id = "")
     {
-      return show_page_with_menubars($request->path(),$message = "");
+      return $this->show_page_with_menubars($request->path(),$message = "");
     }
 }

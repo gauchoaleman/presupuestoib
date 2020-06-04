@@ -15,7 +15,7 @@ class ShowRoot extends Controller
     public function __invoke(Request $request)
     {
       if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] == true )
-        return show_page_with_menubars("home_page",$message = "");
+        return $this->show_page_with_menubars("home_page",$message = "");
       else
         return $this->show_page_without_menubars("no_access",$message = "");
     }

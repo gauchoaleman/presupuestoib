@@ -6,11 +6,17 @@
 [ ] Emprolijar código
 [ ] Sacar created_at y updated donde no hace falta
 [ ] Ver de poner formularios para celu (actualmente alguno están muy anchos.  Por ahí probar con ancho en 80% o algo así.
+[ ] Ver de poner menú top_bar para que ande bien en celu.
 [X] En formulario preguntar si el trabajo es de frente y dorso
   [X] Si es frente y dorso calcular front_back y nada mas
   [X] Si no es frente y dorso calcular los normales nada mas
-[ ] Posibilidad de poner ctd. de poses
+[X] Posibilidad de poner ctd. de poses
 [X] En formulaios, poner color blanco x defecto
 [X] Si da cero el width_qty o el height_qty hacer continue
 [X] Para Mama: Si se pueden poner las poses también hay que especificar el tamaño de la hoja?
 [X] En A4, elige acostado no normal, mirarlo
+Preguntas para Mama:
+[ ] Qué tipos de trabajo hay que presupuestar?
+[ ] Cuáles son todos los puntos a tener en cuenta? Cómo se calculan los puntos?
+  [ ] Acabado?
+  [ ] Etc.

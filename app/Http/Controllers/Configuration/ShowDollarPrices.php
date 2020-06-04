@@ -10,7 +10,7 @@ class ShowDollarPrices extends Controller
 {
   private function proc($request)
   {
-    return show_page_with_menubars("configuration/show_dollar_prices/list");
+    return $this->show_page_with_menubars("configuration/show_dollar_prices/list");
   }
 
   /**

@@ -36,13 +36,11 @@ class SetDollarPrice extends Controller
           return redirect()->back()->withErrors($v->errors());
       }
 
-
-
       DB::table('dollar_prices')->insert(array('amount' => $_POST['amount'],"created_at"=>date('Y-m-d H:i:s')));
-      return show_page_with_menubars("home_page","Precio dólar cargado.");
+      return $this->show_page_with_menubars("home_page","Precio dólar cargado.");
     }
     else
-      return show_page_with_menubars("configuration/set_dollar_price/form");
+      return $this->show_page_with_menubars("configuration/set_dollar_price/form");
   }
   /**
    * Handle the incoming request.

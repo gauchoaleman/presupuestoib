@@ -105,15 +105,15 @@ class LoadPaperPrices extends Controller
         //$csv_file = fopen("uploads/paper_files/test_file.txt","r"); //For testing
         $header_row = fgetcsv($csv_file,10000,",",'"'); //Loading header row
         if( !$this->check_header_row($header_row) )
-          return show_page_with_menubars("configuration/load_paper_prices/form","Archivo cargado inválido");
+          return $this->show_page_with_menubars("configuration/load_paper_prices/form","Archivo cargado inválido");
         $paper_prices_set_id = $this->get_new_paper_prices_set_id();
         for ($row = 1;($data = fgetcsv($csv_file,10000,",",'"'))   !== FALSE;$row++) {
           $count = count($data);
           $this->save_paper_price_row($paper_prices_set_id,$data);
         }
-        return show_page_with_menubars("home_page","Precios cargados.");
+        return $this->show_page_with_menubars("home_page","Precios cargados.");
       }
       else
-        return show_page_with_menubars("configuration/load_paper_prices/form");
+        return $this->show_page_with_menubars("configuration/load_paper_prices/form");
     }
 }

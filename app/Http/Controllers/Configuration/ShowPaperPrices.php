@@ -10,9 +10,9 @@ class ShowPaperPrices extends Controller
   private function proc($request)
   {
     if( isset($_GET["paper_prices_set_id"]))
-      return show_page_with_menubars("configuration/show_paper_prices/paper_prices_list");
+      return $this->show_page_with_menubars("configuration/show_paper_prices/paper_prices_list");
     else
-      return show_page_with_menubars("configuration/show_paper_prices/set_list");
+      return $this->show_page_with_menubars("configuration/show_paper_prices/set_list");
   }
   /**
    * Handle the incoming request.
