@@ -17,6 +17,79 @@
 [X] En A4, elige acostado no normal, mirarlo
 Preguntas para Mama:
 [ ] Qué tipos de trabajo hay que presupuestar?
+  Comunes
+    *Tipos de trabajo
+      Etiquetas
+      Mapas
+      Folletos
+      Volantes
+      Tarjetas
+      Postales
+      Solapas
+    *Elegir máquina manualmente
+      Cambia tamaño mínimo según máquina
+        Adast:
+          520x370
+        GTO52:
+          216x128
+        GTO46:
+          190x128
+      Cambia tamaño máximo según máquina
+        Adast:
+          650x475 el pliego (sin márgenes)
+        GTO52:
+          510x360 el pliego
+        GTO46:
+          460x325 el pliego
+    *Planchas
+      1 plancha x color
+      Si frente y dorso entran a la misma plancha son 4 Colores
+      Si es 4/1 y entran a la misma plancha se imprime 4/4
+    *Impresión
+      Arreglo
+        Se cobra x ctd. de planchas y tamaño de plancha
+      Se cobra x
+        ctd. de pliegos
+        ctd. de Colores
+        tamaño de plancha
+        Frente o Frente y dorso
+        Lavado de máquina
+          x ctd. de tintas diferente a negro en GTO46 y Adast
+          x 5to color en GTO52
+    *Acabado
+      Guillotina (se cobra por ctd. de pliegos)
+      Plegado
+        Arreglo (x ctd. de pliegues)
+        Se cobra x cantidad de pliegos y ctd. de pliegues
+      Troquelado
+        Arreglo (se cobra por dificultad (1, 2, 3, 4))
+        Se cobra x ctd. de pliegos y dificultad (1,2,3,4)
+      Perforado/Trazado
+        Arreglo (fijo)
+        Se cobra x ctd. de pliegos
+      Laca UV
+        Arreglo (fijo)
+        Se cobra x ctd. de pliegos
+  Libros
+    *Qué datos pedir
+      Páginas (siempre 1/1)
+        Cuántas
+        Tipo de papel
+        Tamaño
+      Tapa (siempre 4/0)
+        Tamaño
+        Tipo de papel
+        Con o sin Solapa
+        Acabado
+          Laca UV
+          Polipropileno (Extra, igual a precio laca)
+          Encuadernación pegada o anillado
+      Impresión
+        Interior 1/1
+      Guillotina
+
+  Revistas
 [ ] Cuáles son todos los puntos a tener en cuenta? Cómo se calculan los puntos?
   [ ] Acabado?
   [ ] Etc.
+[ ] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)

@@ -15,8 +15,42 @@ class MakeBudget extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+     $min_size["Adast"]["width"] = 520;
+     $min_size["Adast"]["height"] = 370;
+     $min_size["GTO52"]["width"] = 216;
+     $min_size["GTO52"]["height"] = 128;
+     $min_size["GTO46"]["width"] = 190;
+     $min_size["GTO46"]["height"] = 128;
+
+     $max_size["Adast"]["width"] = 650;
+     $max_size["Adast"]["height"] = 475;
+     $max_size["GTO52"]["width"] = 510;
+     $max_size["GTO52"]["height"] = 360;
+     $max_size["GTO46"]["width"] = 460;
+     $max_size["GTO46"]["height"] = 325;
+
+     $prices["guillotine"] = 123;
+
+     $prices["folding"] = 123;
+
+     $prices["punching"]["arrangement"][1] = 123;
+     $prices["punching"]["arrangement"][2] = 123;
+     $prices["punching"]["arrangement"][3] = 123;
+     $prices["punching"]["arrangement"][4] = 123;
+     $prices["punching"]["per_qty"][1] = 123;
+     $prices["punching"]["per_qty"][2] = 123;
+     $prices["punching"]["per_qty"][3] = 123;
+     $prices["punching"]["per_qty"][4] = 123;
+
+     $prices["perforating"]["arrangement"] = 123;
+     $prices["perforating"]["per_qty"] = 123;
+
+     $prices["lac"]["arrangement"] = 123;
+     $prices["lac"]["per_qty"] = 123;
+
      private $min_width = 216;
      private $min_height = 128;
+     //private $max_size = array("Adast"=>)
      private $width_borders = 5+5;
      private $height_borders = 15+5;
 
