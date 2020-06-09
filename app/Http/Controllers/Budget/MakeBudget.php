@@ -16,12 +16,14 @@ class MakeBudget extends Controller
      * @return \Illuminate\Http\Response
      */
      private $min_sizes = array("Adast"=>array("width"=>520,"height"=>370),
-                               "GTO52"=>array("width"=>216,"height"=>128),
-                               "GTO46"=>array("width"=>190,"height"=>128));
+                                "GTO52"=>array("width"=>216,"height"=>128),
+                                "GTO46"=>array("width"=>190,"height"=>128));
 
      private $max_sizes = array("Adast"=>array("width"=>650,"height"=>475),
-                               "GTO52"=>array("width"=>510,"height"=>360),
-                               "GTO46"=>array("width"=>460,"height"=>325));
+                                "GTO52"=>array("width"=>510,"height"=>360),
+                                "GTO46"=>array("width"=>460,"height"=>325));
+
+     private $price_qty = 1000;
 
      private $guillotine_price = 123;
 
@@ -41,6 +43,46 @@ class MakeBudget extends Controller
 
      private $width_borders = 5+5;
      private $height_borders = 15+5;
+
+     private function get_guillotine_price($copy_qty)
+     {
+       return $this->guillotine_price*$copy_qty/$this->price_qty;
+     }
+
+     private function get_folding_price($copy_qty,$fold_qty)
+     {
+       return $this->folding_price*($copy_qty/$this->price_qty)*$fold_qty;
+     }
+
+     private function get_punching_arrangement_price($difficulty)
+     {
+       return $this->punching_arrangement_prices[$difficulty];
+     }
+
+     private function get_punching_per_qty_price($copy_qty,$difficulty)
+     {
+       return $this->punching_arrangement_prices[$difficulty]*($copy_qty/$this->price_qty);
+     }
+
+     private function get_perforating_arrangement_price()
+     {
+       return $this->perforating_arrangement_price;
+     }
+
+     private function get_perforating_per_qty_price($copy_qty)
+     {
+       return $this->perforating_per_qty_price*($copy_qty/$this->price_qty);
+     }
+
+     private function get_lac_arrangement_price()
+     {
+       return $this->lac_arrangement_price;
+     }
+
+     private function get_lac_per_qty_price($copy_qty)
+     {
+       return $this->lac_per_qty_price*($copy_qty/$this->price_qty);
+     }
 
      public function __invoke(Request $request)
      {
