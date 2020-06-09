@@ -8,6 +8,12 @@ $front_color_qty = get_form_value("front_color_qty");
 $back_color_qty = get_form_value("back_color_qty");
 $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
+$machine = get_form_value("machine");
+$fold_qty = get_form_value("fold_qty");
+$punching_difficulty = get_form_value("punching_difficulty");
+$perforate = get_form_value("perforate");
+$lac = get_form_value("lac");
+
 /*
 $paper_type_id = request()->get('paper_type_id')?request()->get('paper_type_id'):request()->old('paper_type_id');
 $paper_color_id = request()->get('paper_color_id')?request()->get('paper_color_id'):request()->old('paper_color_id');
@@ -25,6 +31,8 @@ if( !$back_color_qty )
   $back_color_qty = 0;
 if( $paper_type_id && !$paper_color_id )
   $paper_color_id = 1;   //Color blanco x defecto
+if( !$fold_qty )
+  $fold_qty = 0;
  ?>
 <div class="container">
 
@@ -143,6 +151,88 @@ if( $paper_type_id && !$paper_color_id )
         @error('copy_qty')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Máquina:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+      <select id="machine" name="machine">
+        <option value=""></option>
+          @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+            <option value="{{$each_machine}}"
+              @if($machine == $each_machine)
+              selected
+              @endif>
+
+              {{$each_machine}}
+            </option>
+          @endforeach
+      </select>
+        @error('machine')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Cantidad de pliegues:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <input type="text" size="5" name="fold_qty" value="{{$fold_qty}}">
+        @error('fold_qty')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Dificultad troquel:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+      <select id="punching_difficulty" name="punching_difficulty">
+        <option value=""></option>
+          @foreach(array(1,2,3,4) as $each_punching_difficulty)
+            <option value="{{$each_punching_difficulty}}"
+              @if($punching_difficulty == $each_punching_difficulty)
+              selected
+              @endif>
+
+              {{$each_punching_difficulty}}
+            </option>
+          @endforeach
+      </select>
+        @error('punching_difficulty')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Perforar:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <input type="checkbox" name="perforate" value="1"
+        @if($perforate == "1")
+        checked
+        @endif>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Laca:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <input type="checkbox" name="lac" value="1"
+        @if($lac == "1")
+        checked
+        @endif>
     </div>
 </div>
 

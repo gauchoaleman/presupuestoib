@@ -9,6 +9,7 @@ $back_color_qty = get_form_value("back_color_qty");
 $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
 $paper_price_id = get_form_value("paper_price_id");
+$machine = get_form_value("machine");
 ?>
 <div class="container">
 <form method="POST">
@@ -130,6 +131,28 @@ $paper_price_id = get_form_value("paper_price_id");
       </div>
   </div>
 
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Máquina:') }}</b></label>
+
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <select id="machine" name="machine" disabled>
+          <option value=""></option>
+            @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+              <option value="{{$each_machine}}"
+                @if($machine == $each_machine)
+                selected
+                @endif>
+
+                {{$each_machine}}
+              </option>
+            @endforeach
+        </select>
+          @error('machine')
+              <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+      </div>
+  </div>
 
 
   </div>
@@ -256,7 +279,7 @@ $paper_price_id = get_form_value("paper_price_id");
 
       @endforeach
       @if( !sizeof($size["continue"]))
-      Aceptado
+      Accepted
       @endif
     </div>
   </td>

@@ -15,42 +15,30 @@ class MakeBudget extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     $min_size["Adast"]["width"] = 520;
-     $min_size["Adast"]["height"] = 370;
-     $min_size["GTO52"]["width"] = 216;
-     $min_size["GTO52"]["height"] = 128;
-     $min_size["GTO46"]["width"] = 190;
-     $min_size["GTO46"]["height"] = 128;
+     private $min_sizes = array("Adast"=>array("width"=>520,"height"=>370),
+                               "GTO52"=>array("width"=>216,"height"=>128),
+                               "GTO46"=>array("width"=>190,"height"=>128));
 
-     $max_size["Adast"]["width"] = 650;
-     $max_size["Adast"]["height"] = 475;
-     $max_size["GTO52"]["width"] = 510;
-     $max_size["GTO52"]["height"] = 360;
-     $max_size["GTO46"]["width"] = 460;
-     $max_size["GTO46"]["height"] = 325;
+     private $max_sizes = array("Adast"=>array("width"=>650,"height"=>475),
+                               "GTO52"=>array("width"=>510,"height"=>360),
+                               "GTO46"=>array("width"=>460,"height"=>325));
 
-     $prices["guillotine"] = 123;
+     private $guillotine_price = 123;
 
-     $prices["folding"] = 123;
+     private $folding_price = 123;
 
-     $prices["punching"]["arrangement"][1] = 123;
-     $prices["punching"]["arrangement"][2] = 123;
-     $prices["punching"]["arrangement"][3] = 123;
-     $prices["punching"]["arrangement"][4] = 123;
-     $prices["punching"]["per_qty"][1] = 123;
-     $prices["punching"]["per_qty"][2] = 123;
-     $prices["punching"]["per_qty"][3] = 123;
-     $prices["punching"]["per_qty"][4] = 123;
+     private $punching_arrangement_prices = array(1=>10,2=>20,3=>30,4=>40);
+     private $punching_per_qty_prices = array(1=>10,2=>20,3=>30,4=>40);
 
-     $prices["perforating"]["arrangement"] = 123;
-     $prices["perforating"]["per_qty"] = 123;
+     private $perforating_arrangement_price = 123;
+     private $perforating_per_qty_price = 123;
 
-     $prices["lac"]["arrangement"] = 123;
-     $prices["lac"]["per_qty"] = 123;
+     private $lac_arrangement_price = 123;
+     private $lac_per_qty_price = 123;
 
      private $min_width = 216;
      private $min_height = 128;
-     //private $max_size = array("Adast"=>)
+
      private $width_borders = 5+5;
      private $height_borders = 15+5;
 
@@ -76,7 +64,7 @@ class MakeBudget extends Controller
         }
      }
 
-     private function calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$pose_qty,$position,$front_back)
+     private function calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$pose_qty,$machine,$position,$front_back)
      {
        $ret = array();
        for( $sheet_width_qty=2;$sheet_width_qty<=8;$sheet_width_qty++ ){
@@ -85,6 +73,7 @@ class MakeBudget extends Controller
            //This is the sheet cut out of the big ream
            $sheet_width = floor($paper_width/$sheet_width_qty);
            $sheet_height = floor($paper_height/$sheet_height_qty);
+
 
            //To calculate, we take out the borders
            $sheet_width_without_borders = $sheet_width - $this->width_borders;
@@ -96,9 +85,14 @@ class MakeBudget extends Controller
             //continue;
 
            //If sheet is littler than min sheet size we continue
-           if( $sheet_width<$this->min_width || $sheet_height<$this->min_height )
+           if( $sheet_width<$this->min_sizes[$machine]["width"] || $sheet_height<$this->min_sizes[$machine]["height"] )
             $continue[] = "Sheet littler than min sheet";   //Bandera
             //continue;
+
+            //If sheet is bigger than max sheet size we continue
+            if( $sheet_width>$this->max_sizes[$machine]["width"] || $sheet_height>$this->max_sizes[$machine]["height"] )
+             $continue[] = "Sheet bigger than max sheet";   //Bandera
+             //continue;
 
            //Calculate how many times the job fits in the sheet
            $width_qty = floor($sheet_width_without_borders/$job_width);
@@ -173,18 +167,18 @@ class MakeBudget extends Controller
        return $ret;
      }
 
-     private function calculate_size($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$front_color_qty,$back_color_qty,$pose_qty)
+     private function calculate_size($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$front_color_qty,$back_color_qty,$pose_qty,$machine)
      {
        if( !$back_color_qty ) { //If there is no printing on back ew calculate normal positions
-         $normal_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$pose_qty,"normal","normal");
-         $lying_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width,$pose_qty,"lying","normal");
+         $normal_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$pose_qty,$machine,"normal","normal");
+         $lying_normal = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width,$pose_qty,$machine,"lying","normal");
          $merged = array_merge($normal_normal,$lying_normal);
        }
        else { //If there is printing on back we use front and back positions
-         $normal_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width*2,$job_height,$pose_qty,"normal","front_back_width");
-         $normal_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height*2,$pose_qty,"normal","front_back_height");
-         $lying_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height*2,$job_width,$pose_qty,"lying","front_back_width");
-         $lying_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width*2,$pose_qty,"lying","front_back_height");
+         $normal_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width*2,$job_height,$pose_qty,$machine,"normal","front_back_width");
+         $normal_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height*2,$pose_qty,$machine,"normal","front_back_height");
+         $lying_front_back_width = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height*2,$job_width,$pose_qty,$machine,"lying","front_back_width");
+         $lying_front_back_height = $this->calculate_position($paper_price_id,$paper_width,$paper_height,$job_height,$job_width*2,$pose_qty,$machine,"lying","front_back_height");
          $merged = array_merge($normal_front_back_width,$normal_front_back_height,$lying_front_back_width,$lying_front_back_height);
        }
        aasort($merged,"rest");
@@ -192,7 +186,7 @@ class MakeBudget extends Controller
        return $merged;
      }
 
-     private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty)
+     private function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty,$machine)
      {
         $sizes_result = DB::table('paper_prices')->select('id','width','height')->
         where('paper_type_id', '=', $paper_type_id)->
@@ -204,7 +198,7 @@ class MakeBudget extends Controller
         $size_res = array();
         $all_sizes = array();
         foreach ($sizes_result as $size) {
-          $size_res = $this->calculate_size($size->id,$size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty,$pose_qty);    //calculate
+          $size_res = $this->calculate_size($size->id,$size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty,$pose_qty,$machine);    //calculate
           //print($size->width."x".$size->height.": "); //Bandera
           //print_r($size_res); //Bandera
           $all_sizes = array_merge($size_res,$all_sizes);
@@ -231,21 +225,26 @@ class MakeBudget extends Controller
            'copy_qty.required' => 'Debe ingresar cantidad de ejemplares.',
            'copy_qty.integer' => 'La cantidad de ejemplares debe ser un entero.',
            'copy_qty.gt' => 'La cantidad de ejemplares debe ser mayor a cero.',
-           'back_color_qty.integer' => 'La cantidad de colores de dorso debe ser un entero.'
+           'back_color_qty.integer' => 'La cantidad de colores de dorso debe ser un entero.',
+           'machine.required' => 'Debe ingresar la máquina.',
+           'fold_qty.integer' => 'La cantidad de pliegues debe ser un entero.',
+           'fold_qty.gt' => 'La cantidad de pliegues debe ser mayor a cero.'
            ];
          $v = Validator::make($request->all(), [
              'width' => 'required|integer|gt:0',
              'height' => 'required|integer|gt:0',
              'front_color_qty' => 'required|integer|gt:0',
              'back_color_qty' => 'integer',
-             'copy_qty' => 'required|integer|gt:0',],
+             'copy_qty' => 'required|integer|gt:0',
+             'machine' => 'required',
+             'fold_qty' => 'integer|gt:0',],
              $messages);
 
         if ($v->fails())
          return redirect()->back()->withInput($request->input())->withErrors($v->errors());
         else{
           $result = $this->calculate_budget($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["width"], $_POST["height"],
-          $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["copy_qty"]);
+          $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["copy_qty"],$_POST["machine"]);
           $data["result"]=$result;
           return $this->show_page_with_menubars("budget/make/select_paper","",$data);
          }
