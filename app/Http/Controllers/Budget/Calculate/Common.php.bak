@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Controllers\Budget\Calculate;
+//namespace App\Http\Controllers\Budget;
+
+use App\Http\Controllers\Controller;
+
+//use App\Http\Controllers\Budget;
+use Illuminate\Http\Request;
+
+class Common extends Budget
+{
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+     public function form_complete()
+     {
+       //print_r($_POST);
+       if( isset($_POST["paper_type_id"]) && isset($_POST["paper_color_id"]) && isset($_POST["weight"]) &&
+       $_POST["paper_type_id"] && $_POST["paper_color_id"] && $_POST["weight"] ){
+        //print("true");
+        return TRUE;
+        }
+       else{
+          //print("false");
+          return FALSE;
+        }
+    }
+
+    public function __invoke(Request $request)
+    {
+      if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]== true )
+        return $this->proc($request);
+      else
+        return $this->show_page_without_menubars("no_access");
+    }
+}

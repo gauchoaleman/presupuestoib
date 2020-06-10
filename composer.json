@@ -39,6 +39,7 @@
         },
         "files": [
            "app/Functions/PageFunctions.php"
+
        ],
         "classmap": [
             "database/seeds",
