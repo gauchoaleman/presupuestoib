@@ -1,13 +1,28 @@
 <?php
 
 namespace App\Http\Controllers\Budget\Calculate;
-//namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Facades\Validator;
 
 class Common extends Controller
 {
+  private function form_complete()
+  {
+    //print_r($_POST);
+    if( isset($_POST["paper_type_id"]) && isset($_POST["paper_color_id"]) && isset($_POST["weight"]) &&
+    $_POST["paper_type_id"] && $_POST["paper_color_id"] && $_POST["weight"] ){
+     //print("true");
+     return TRUE;
+     }
+    else{
+       //print("false");
+       return FALSE;
+     }
+  }
+
   public function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty,$machine)
   {
      $sizes_result = DB::table('paper_prices')->select('id','width','height')->
@@ -68,11 +83,11 @@ class Common extends Controller
        $result = $this->calculate_budget($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["width"], $_POST["height"],
        $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["copy_qty"],$_POST["machine"]);
        $data["result"]=$result;
-       return $this->show_page_with_menubars("budget/make/select_paper","",$data);
+       return $this->show_page_with_menubars("budget/calculate/common/select_paper","",$data);
       }
     }
     else
-      return $this->show_page_with_menubars("budget/make/form");
+      return $this->show_page_with_menubars("budget/calculate/common/form");
   }
     /**
      * Handle the incoming request.
@@ -80,9 +95,11 @@ class Common extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
-    {
-        //
-        echo $this->get_guillotine_price(3000);
-    }
+     public function __invoke(Request $request)
+     {
+       if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]== true )
+         return $this->proc($request);
+       else
+         return $this->show_page_without_menubars("no_access");
+     }
 }
