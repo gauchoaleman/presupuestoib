@@ -10,9 +10,15 @@ $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
 $paper_price_id = get_form_value("paper_price_id");
 $machine = get_form_value("machine");
+$fold_qty = get_form_value("fold_qty");
+$punching_difficulty = get_form_value("punching_difficulty");
+$perforate = get_form_value("perforate");
+$lac = get_form_value("lac");
+if( !$back_color_qty )
+  $back_color_qty = 0;
 ?>
 <div class="container">
-<form method="POST">
+<form method="POST" action="/budget/calculate/common/select_paper">
   <div class="card" style="width: 50rem;">
       <div class="card-header">Datos ingresados</div>
       <div class="card-body">
@@ -154,6 +160,64 @@ $machine = get_form_value("machine");
       </div>
   </div>
 
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Cantidad de pliegues:') }}</b></label>
+
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+          <input type="text" size="5" name="fold_qty" disabled value="{{$fold_qty}}">
+          @error('fold_qty')
+              <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Dificultad troquel:') }}</b></label>
+
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <select id="punching_difficulty" name="punching_difficulty" disabled>
+          <option value=""></option>
+            @foreach(array(1,2,3,4) as $each_punching_difficulty)
+              <option value="{{$each_punching_difficulty}}"
+                @if($punching_difficulty == $each_punching_difficulty)
+                selected
+                @endif>
+
+                {{$each_punching_difficulty}}
+              </option>
+            @endforeach
+        </select>
+          @error('punching_difficulty')
+              <div class="alert alert-danger">{{ $message }}</div>
+          @enderror
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Perforar:') }}</b></label>
+
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+          <input type="checkbox" name="perforate" value="1"
+          @if($perforate == "1")
+          checked
+          @endif disabled>
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Laca:') }}</b></label>
+
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+          <input type="checkbox" name="lac" value="1"
+          @if($lac == "1")
+          checked
+          @endif disabled>
+      </div>
+  </div>
 
   </div>
   </div>
