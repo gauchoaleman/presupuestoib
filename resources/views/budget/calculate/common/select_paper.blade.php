@@ -18,7 +18,7 @@ if( !$back_color_qty )
   $back_color_qty = 0;
 ?>
 <div class="container">
-<form method="POST" action="/budget/calculate/common/select_paper">
+<form method="POST" action="/budget/calculate/common/show_result">
   <div class="card" style="width: 50rem;">
       <div class="card-header">Datos ingresados</div>
       <div class="card-body">
@@ -256,7 +256,12 @@ if( !$back_color_qty )
 {{--@if( $size["paper_width"] == 880 && $size["paper_height"]==630 && $size["sheet_width_qty"] == 2 && $size["sheet_height_qty"]==2)--}}
   <tr>
   <td>
-    <div align="center"><input type="radio" id="paper_size_id" name="paper_size_id" value="{{$size['paper_price_id']}}"></div>
+    <div align="center"><input type="radio"
+      @if ($loop->first)
+              checked
+      @endif
+
+      id="paper_data" name="paper_data" value="{{$size['paper_price_id']}}/{{$size["sheet_width_qty"]}}/{{$size["sheet_height_qty"]}}/{{$size["width_qty"]}}/{{$size["height_qty"]}}/{{$size["position"]}}/{{$size["front_back"]}}"></div>
   </td>
   <td>
     <div align="center">{{$size["paper_width"]}}</div>
