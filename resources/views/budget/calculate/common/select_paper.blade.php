@@ -31,7 +31,7 @@ if( !$back_color_qty )
       <div class="col-md-6">
           <label class="col-md-6 col-form-label text-md-right">Tipo:</label>
 
-          <select id="paper_type_id" name="paper_type_id" onchange="this.form.submit()" disabled>
+          <select id="paper_type_id" name="paper_type_id" onchange="this.form.submit()" readonly>
             <option value=""></option>
             @foreach(get_paper_types() as $paper_type)
               <option value="{{$paper_type->id}}"
@@ -45,7 +45,7 @@ if( !$back_color_qty )
           @enderror
 
           <label class="col-md-6 col-form-label text-md-right">Color:</label>
-          <select id="paper_color_id" name="paper_color_id" onchange="this.form.submit()" disabled>
+          <select id="paper_color_id" name="paper_color_id" onchange="this.form.submit()" readonly>
             <option value=""></option>
             @if(isset($paper_type_id))
               @foreach(get_paper_colors($paper_type_id) as $paper_color)
@@ -63,7 +63,7 @@ if( !$back_color_qty )
           @enderror
 
           <label class="col-md-6 col-form-label text-md-right">Peso:</label>
-          <select id="weight" name="weight" disabled>
+          <select id="weight" name="weight" readonly>
             <option value=""></option>
             @if(isset($paper_type_id) && isset($paper_color_id))
               @foreach(get_paper_weights($paper_type_id,$paper_color_id) as $paper_weight)
@@ -82,12 +82,12 @@ if( !$back_color_qty )
           @enderror
 
           <label class="col-md-6 col-form-label text-md-right">Ancho (mm):</label>
-          <input type="text" size="5" name="width" value="{{$width}}" disabled>
+          <input type="text" size="5" name="width" value="{{$width}}" readonly>
           @error('width')
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
           <label class="col-md-6 col-form-label text-md-right">Alto (mm):</label>
-          <input type="text" size="5" name="height" value="{{$height}}" disabled>
+          <input type="text" size="5" name="height" value="{{$height}}" readonly>
           @error('height')
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
@@ -101,12 +101,12 @@ if( !$back_color_qty )
       <div class="col-md-6">
 
           <label class="col-md-6 col-form-label text-md-right">Frente:</label>
-          <input type="text" size="5" name="front_color_qty" value="{{$front_color_qty}}" disabled>
+          <input type="text" size="5" name="front_color_qty" value="{{$front_color_qty}}" readonly>
           @error('front_color_qty')
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
           <label class="col-md-6 col-form-label text-md-right">Dorso:</label>
-          <input type="text" size="5" name="back_color_qty" value="{{$back_color_qty}}" disabled>
+          <input type="text" size="5" name="back_color_qty" value="{{$back_color_qty}}" readonly>
           @error('back_color_qty')
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
@@ -118,7 +118,7 @@ if( !$back_color_qty )
 
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-          <input type="text" size="5" name="pose_qty" value="{{$pose_qty}}" disabled>
+          <input type="text" size="5" name="pose_qty" value="{{$pose_qty}}" readonly>
           @error('pose_qty')
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
@@ -130,7 +130,7 @@ if( !$back_color_qty )
 
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-          <input type="text" size="5" name="copy_qty" value="{{$copy_qty}}" disabled>
+          <input type="text" size="5" name="copy_qty" value="{{$copy_qty}}" readonly>
           @error('copy_qty')
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
@@ -142,7 +142,7 @@ if( !$back_color_qty )
 
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        <select id="machine" name="machine" disabled>
+        <select id="machine" name="machine" readonly>
           <option value=""></option>
             @foreach(array("Adast","GTO52","GTO46") as $each_machine)
               <option value="{{$each_machine}}"
@@ -165,7 +165,7 @@ if( !$back_color_qty )
 
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-          <input type="text" size="5" name="fold_qty" disabled value="{{$fold_qty}}">
+          <input type="text" size="5" name="fold_qty" readonly value="{{$fold_qty}}">
           @error('fold_qty')
               <div class="alert alert-danger">{{ $message }}</div>
           @enderror
@@ -177,7 +177,7 @@ if( !$back_color_qty )
 
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        <select id="punching_difficulty" name="punching_difficulty" disabled>
+        <select id="punching_difficulty" name="punching_difficulty" readonly>
           <option value=""></option>
             @foreach(array(1,2,3,4) as $each_punching_difficulty)
               <option value="{{$each_punching_difficulty}}"
@@ -203,7 +203,7 @@ if( !$back_color_qty )
           <input type="checkbox" name="perforate" value="1"
           @if($perforate == "1")
           checked
-          @endif disabled>
+          @endif readonly>
       </div>
   </div>
 
@@ -215,7 +215,7 @@ if( !$back_color_qty )
           <input type="checkbox" name="lac" value="1"
           @if($lac == "1")
           checked
-          @endif disabled>
+          @endif readonly>
       </div>
   </div>
 

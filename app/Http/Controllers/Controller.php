@@ -71,7 +71,7 @@ class Controller extends BaseController
      public $width_borders = 5+5;
      public $height_borders = 15+5;
 
-     public function get_guillotine_price($copy_qty)
+     public function get_guillotine_price($copy_qty,$pose_qty)
      {
        return $this->guillotine_price*$copy_qty/$this->price_qty;
      }

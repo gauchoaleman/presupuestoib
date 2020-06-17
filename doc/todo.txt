@@ -92,4 +92,6 @@ Preguntas para Mama:
 [ ] Cuáles son todos los puntos a tener en cuenta? Cómo se calculan los puntos?
   [ ] Acabado?
   [ ] Etc.
+  [ ] ¿Guillotina se calcula según ctd. de ejemplares?
+  [ ] ¿Se cobra guillotina de cortar resmas?
 [ ] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)
