@@ -54,8 +54,7 @@ class Controller extends BaseController
 
      public $guillotine_price = 123;
 
-     public $folding_arrangement_price = 123;
-     public $folding_per_qty_price = 123;
+     public $folding_price = 123;
 
      public $punching_arrangement_prices = array(1=>10,2=>20,3=>30,4=>40);
      public $punching_per_qty_prices = array(1=>10,2=>20,3=>30,4=>40);
@@ -77,14 +76,9 @@ class Controller extends BaseController
        return $this->guillotine_price*$copy_qty/$this->price_qty;
      }
 
-     public function get_folding_arrangement_price($fold_qty)
+     public function get_folding_price($copy_qty,$fold_qty)
      {
-       return $this->folding_arrangement_price*$this->price_qty*$fold_qty;
-     }
-
-     public function get_folding_per_qty_price($copy_qty,$fold_qty)
-     {
-       return $this->folding_per_qty_price*($copy_qty/$this->price_qty)*$fold_qty;
+       return $this->folding_price*($copy_qty/$this->price_qty)*$fold_qty;
      }
 
      public function get_punching_arrangement_price($difficulty)
@@ -136,37 +130,37 @@ class Controller extends BaseController
 
            //If job is greater than sheet we continue
            if( $sheet_width_without_borders<$job_width || $sheet_height_without_borders<$job_height )
-            continue;
+            $continue[] = "Job greater than sheet";   //Bandera
+            //continue;
 
            //If sheet is littler than min sheet size we continue
            if( $sheet_width<$this->min_sizes[$machine]["width"] || $sheet_height<$this->min_sizes[$machine]["height"] )
-            continue;
+            $continue[] = "Sheet littler than min sheet";   //Bandera
+            //continue;
 
             //If sheet is bigger than max sheet size we continue
             if( $sheet_width>$this->max_sizes[$machine]["width"] || $sheet_height>$this->max_sizes[$machine]["height"] )
-             continue;
+             $continue[] = "Sheet bigger than max sheet";   //Bandera
+             //continue;
 
            //Calculate how many times the job fits in the sheet
            $width_qty = floor($sheet_width_without_borders/$job_width);
            $height_qty = floor($sheet_height_without_borders/$job_height);
 
-           if( $pose_qty ){
-             if( $front_back == "front_back_width" ){
-               if( $width_qty*2*$height_qty < $pose_qty )
-               continue;
-             }
-             else if( $front_back == "front_back_height" ){
-               if( $width_qty*$height_qty*2 < $pose_qty )
-               continue;
-             }
-             else{
-               if( $width_qty*$height_qty != $pose_qty )
-               continue;
-             }
+           if( $front_back == "front_back_width" ){
+             if( $width_qty*2*$height_qty < $pose_qty )
+              $continue[] = "Pose Qty doesn't match";   //Bandera
+            //continue;
+           }
+           else if( $front_back == "front_back_height" ){
+             if( $width_qty*$height_qty*2 < $pose_qty )
+              $continue[] = "Pose Qty doesn't match";   //Bandera
+            //continue;
            }
            //If there fits no job (width_qty / height_qty equal cero) we continue
            if( $width_qty == 0 || $height_qty == 0 )
-            continue;
+            $continue[] = "Job doesn't fit in sheet";   //Bandera
+            //continue;
            //Calculate the measure of the aligned jobs
            $all_aligned_job_width = $width_qty*$job_width;
            $all_aligned_job_height = $height_qty*$job_height;
@@ -187,7 +181,8 @@ class Controller extends BaseController
            $total_rest = $width_rest*$height_rest+$all_aligned_job_width*$height_rest+$all_aligned_job_width*$width_rest;
 
            if( $all_aligned_job_width_with_borders>$sheet_width ||  $all_aligned_job_height_with_borders>$sheet_height)     //If job borders don't fit in sheet
-            continue;
+            $continue[] = "Job borders don't fit in sheet";   //Bandera
+            //continue;
            $res["paper_price_id"] = $paper_price_id;
            $res["paper_width"] = $paper_width;
            $res["paper_height"] = $paper_height;

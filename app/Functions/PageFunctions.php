@@ -42,6 +42,20 @@ function get_paper_types()
   return $paper_types;
 }
 
+function get_paper_type($id)
+{
+  $paper_type = DB::table('paper_types')->select('paper_types.name')->
+  where('paper_types.id','=',$id)->first();
+  return $paper_type->name;
+}
+
+function get_paper_color($id)
+{
+  $paper_color = DB::table('paper_colors')->select('paper_colors.name')->
+  where('paper_colors.id','=',$id)->first();
+  return $paper_color->name;
+}
+
 function get_paper_colors($paper_type_id)
 {
   $paper_colors = DB::table('paper_prices')->

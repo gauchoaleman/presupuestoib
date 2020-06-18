@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Budget\Calculate\Common;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use DB;
 
 class ShowResult extends Controller
 {
@@ -21,9 +22,17 @@ class ShowResult extends Controller
          return $this->show_page_without_menubars("no_access");
      }
 
-     private function get_paper_price($paper_price_id,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty)
+     private function get_paper_price($copy_qty,$paper_price_id,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty)
      {
-       return 100;
+       $paper_price_get = DB::table('paper_prices')->
+       select('paper_prices.sheet_price')->
+       where('paper_prices.id','=', $paper_price_id)->
+       first();
+
+       $sheet_price = $paper_price_get->sheet_price;
+       $sheet_qty = ceil($copy_qty/($sheet_width_qty*$sheet_height_qty*$width_qty*$height_qty));
+       
+       return $sheet_price*$sheet_qty;
      }
 
      private function get_printing_price($copy_qty,$machine,$front_color_qty,$back_color_qty)
@@ -55,12 +64,12 @@ class ShowResult extends Controller
        $back_color_qty = $_POST["back_color_qty"];
        $fold_qty = $_POST["fold_qty"];
        $punching_difficulty = $_POST["punching_difficulty"];
-       $perforate = $_POST["perforate"];
-       $lac = $_POST["lac"];
+       $perforate = isset($_POST["perforate"])?$_POST["perforate"]:0;
+       $lac = isset($_POST["lac"])?$_POST["lac"]:0;
 
        $pose_qty = $width_qty*$height_qty;
 
-       $data["paper_price"] = $this->get_paper_price($paper_price_id,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty);
+       $data["paper_price"] = $this->get_paper_price($copy_qty,$paper_price_id,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty);
        $data["guillotine_price"] = $this->get_guillotine_price($copy_qty,$pose_qty);    //Reconfirmar si precio de guillotina es x ctd de ejemplares
        $data["printing_price"] = $this->get_printing_price($copy_qty,$machine,$front_color_qty,$back_color_qty);
        $data["plates_price"] = $this->get_plates_price($front_color_qty,$back_color_qty,$front_back);
@@ -68,8 +77,10 @@ class ShowResult extends Controller
 
        if( $fold_qty ){
          $data["fold"] = true;
-         $data["folding_price"] = $this->get_folding_price($copy_qty,$fold_qty);
-         $total += $data["folding_price"];
+         $data["folding_arrangement_price"] = $this->get_folding_arrangement_price($fold_qty);
+         $data["folding_per_qty_price"] = $this->get_folding_per_qty_price($copy_qty,$fold_qty);
+         $total += $data["folding_arrangement_price"];
+         $total += $data["folding_per_qty_price"];
        }
        else
          $data["fold"] = false;
@@ -102,7 +113,7 @@ class ShowResult extends Controller
          $data["lac"] = false;
 
        $data["total"] = $total;
-       print_r($data);
+       //print_r($data);      //Bandera
        return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
      }
 }
