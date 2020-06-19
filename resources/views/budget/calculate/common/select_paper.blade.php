@@ -144,8 +144,8 @@ if( !$back_color_qty )
       <th scope="col"><div align="center">Ctd. pliegos alto</div></th>
       <th scope="col"><div align="center">Ancho pliego</div></th>
       <th scope="col"><div align="center">Alto pliego</div></th>
-      <th scope="col"><div align="center">Ctd. de ejemplares ancho</div></th>
-      <th scope="col"><div align="center">Ctd. de ejemplares alto</div></th>
+      <th scope="col"><div align="center">Ctd. de poses ancho</div></th>
+      <th scope="col"><div align="center">Ctd. de poses alto</div></th>
       <th scope="col"><div align="center">Trabajo ancho</div></th>
       <th scope="col"><div align="center">Trabajo alto</div></th>
       <th scope="col"><div align="center">Posición</div></th>
@@ -169,7 +169,7 @@ if( !$back_color_qty )
               checked
       @endif
 
-      id="paper_data" name="paper_data" value="{{$size['paper_price_id']}}/{{$size["sheet_width_qty"]}}/{{$size["sheet_height_qty"]}}/{{$size["width_qty"]}}/{{$size["height_qty"]}}/{{$size["position"]}}/{{$size["front_back"]}}"></div>
+      id="paper_data" name="paper_data" value="{{$size['paper_price_id']}}/{{$size["sheet_width_qty"]}}/{{$size["sheet_height_qty"]}}/{{$size["pose_width_qty"]}}/{{$size["pose_height_qty"]}}/{{$size["position"]}}/{{$size["front_back"]}}"></div>
   </td>
   <td>
     <div align="center">{{$size["paper_width"]}}</div>
@@ -190,10 +190,10 @@ if( !$back_color_qty )
     <div align="center">{{$size["sheet_height"]}}</div>
   </td>
   <td>
-    <div align="center">{{$size["width_qty"]}}</div>
+    <div align="center">{{$size["pose_width_qty"]}}</div>
   </td>
   <td>
-    <div align="center">{{$size["height_qty"]}}</div>
+    <div align="center">{{$size["pose_height_qty"]}}</div>
   </td>
   <td>
     <div align="center">{{$size["job_width"]}}</div>

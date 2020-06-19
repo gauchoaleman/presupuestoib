@@ -22,13 +22,13 @@ class ShowResult extends Controller
          return $this->show_page_without_menubars("no_access");
      }
 
-     private function get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty)
+     private function get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$pose_width_qty,$pose_height_qty)
      {
-       $sheet_qty = ceil($copy_qty/($sheet_width_qty*$sheet_height_qty*$width_qty*$height_qty));
+       $sheet_qty = ceil($copy_qty/($sheet_width_qty*$sheet_height_qty*$pose_width_qty*$pose_height_qty));
        return $sheet_qty;
      }
 
-     private function get_paper_price($copy_qty,$paper_price_id,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty)
+     private function get_paper_price($copy_qty,$paper_price_id,$sheet_width_qty,$sheet_height_qty,$pose_width_qty,$pose_height_qty)
      {
        $paper_price_get = DB::table('paper_prices')->
        select('paper_prices.sheet_price')->
@@ -37,7 +37,7 @@ class ShowResult extends Controller
 
        $sheet_price = $paper_price_get->sheet_price;
 
-       return $sheet_price*$this->get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty);
+       return $sheet_price*$this->get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$pose_width_qty,$pose_height_qty);
      }
 
      private function get_printing_price($copy_qty,$machine,$front_color_qty,$back_color_qty)
@@ -58,8 +58,8 @@ class ShowResult extends Controller
        $paper_price_id = $paper_data[0];
        $sheet_width_qty = $paper_data[1];
        $sheet_height_qty = $paper_data[2];
-       $width_qty = $paper_data[3];
-       $height_qty = $paper_data[4];
+       $pose_width_qty = $paper_data[3];
+       $pose_height_qty = $paper_data[4];
        $position = $paper_data[5];
        $front_back = $paper_data[6];
 
@@ -72,15 +72,15 @@ class ShowResult extends Controller
        $perforate = isset($_POST["perforate"])?$_POST["perforate"]:0;
        $lac = isset($_POST["lac"])?$_POST["lac"]:0;
 
-       $pose_qty = $width_qty*$height_qty;
+       $pose_qty = $pose_width_qty*$pose_height_qty;
 
        $data["sheet_width_qty"] = $sheet_width_qty;
        $data["sheet_height_qty"] = $sheet_height_qty;
-       $data["width_qty"] = $width_qty;
-       $data["height_qty"] = $height_qty;
+       $data["pose_width_qty"] = $pose_width_qty;
+       $data["pose_height_qty"] = $pose_height_qty;
 
-       $data["sheet_qty"] = $this->get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty);
-       $data["paper_price"] = $this->get_paper_price($copy_qty,$paper_price_id,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty);
+       $data["sheet_qty"] = $this->get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$pose_width_qty,$pose_height_qty);
+       $data["paper_price"] = $this->get_paper_price($copy_qty,$paper_price_id,$sheet_width_qty,$sheet_height_qty,$pose_width_qty,$pose_height_qty);
        $data["guillotine_price"] = $this->get_guillotine_price($copy_qty,$pose_qty);
        $data["printing_price"] = $this->get_printing_price($copy_qty,$machine,$front_color_qty,$back_color_qty);
        $data["plates_price"] = $this->get_plates_price($front_color_qty,$back_color_qty,$front_back);

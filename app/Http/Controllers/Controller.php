@@ -66,9 +66,6 @@ class Controller extends BaseController
      public $lac_arrangement_price = 123;
      public $lac_per_qty_price = 123;
 
-     public $min_width = 216;
-     public $min_height = 128;
-
      public $width_borders = 5+5;
      public $height_borders = 15+5;
 
@@ -147,29 +144,29 @@ class Controller extends BaseController
              continue;
 
            //Calculate how many times the job fits in the sheet
-           $width_qty = floor($sheet_width_without_borders/$job_width);
-           $height_qty = floor($sheet_height_without_borders/$job_height);
+           $pose_width_qty = floor($sheet_width_without_borders/$job_width);
+           $pose_height_qty = floor($sheet_height_without_borders/$job_height);
 
            if( $pose_qty ){
              if( $front_back == "front_back_width" ){
-               if( $width_qty*2*$height_qty < $pose_qty )
+               if( $pose_width_qty*2*$pose_height_qty < $pose_qty )
                continue;
              }
              else if( $front_back == "front_back_height" ){
-               if( $width_qty*$height_qty*2 < $pose_qty )
+               if( $pose_width_qty*$pose_height_qty*2 < $pose_qty )
                continue;
              }
              else{
-               if( $width_qty*$height_qty != $pose_qty )
+               if( $pose_width_qty*$pose_height_qty != $pose_qty )
                continue;
              }
            }
            //If there fits no job (width_qty / height_qty equal cero) we continue
-           if( $width_qty == 0 || $height_qty == 0 )
+           if( $pose_width_qty == 0 || $pose_height_qty == 0 )
             continue;
            //Calculate the measure of the aligned jobs
-           $all_aligned_job_width = $width_qty*$job_width;
-           $all_aligned_job_height = $height_qty*$job_height;
+           $all_aligned_job_width = $pose_width_qty*$job_width;
+           $all_aligned_job_height = $pose_height_qty*$job_height;
 
            //Add the borders to the aligned jobs
            $all_aligned_job_width_with_borders = $all_aligned_job_width + $this->width_borders;
@@ -204,8 +201,8 @@ class Controller extends BaseController
            $res["sheet_width_without_borders"] = $sheet_width_without_borders;
            $res["sheet_height_without_borders"] = $sheet_height_without_borders;
 
-           $res["width_qty"] = $width_qty;
-           $res["height_qty"] = $height_qty;
+           $res["pose_width_qty"] = $pose_width_qty;
+           $res["pose_height_qty"] = $pose_height_qty;
 
            $res["width_rest"] = $width_rest;      //Bandera
            $res["height_rest"] = $height_rest;    //Bandera

@@ -146,9 +146,9 @@ if( !$back_color_qty )
               <label class="col-md-6 col-form-label text-md-right">Pliegos alto:</label>
               {{$sheet_height_qty}}
               <label class="col-md-6 col-form-label text-md-right">Poses ancho:</label>
-              {{$width_qty}}
+              {{$pose_width_qty}}
               <label class="col-md-6 col-form-label text-md-right">Poses alto:</label>
-              {{$height_qty}}
+              {{$pose_height_qty}}
               <label class="col-md-6 col-form-label text-md-right">Costo:</label>
               ${{number_format($paper_price*get_dollar_price(),2)}}
 
