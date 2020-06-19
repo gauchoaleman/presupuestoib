@@ -129,7 +129,7 @@ if( !$back_color_qty )
 
   </div>
   </div>
-
+<br>
 <div class="card" style="width: 200%;">
     <div class="card-header">Tamaños papel</div>
     <div class="card-body">

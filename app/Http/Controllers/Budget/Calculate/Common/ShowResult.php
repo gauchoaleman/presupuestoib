@@ -22,6 +22,12 @@ class ShowResult extends Controller
          return $this->show_page_without_menubars("no_access");
      }
 
+     private function get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty)
+     {
+       $sheet_qty = ceil($copy_qty/($sheet_width_qty*$sheet_height_qty*$width_qty*$height_qty));
+       return $sheet_qty;
+     }
+
      private function get_paper_price($copy_qty,$paper_price_id,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty)
      {
        $paper_price_get = DB::table('paper_prices')->
@@ -30,9 +36,8 @@ class ShowResult extends Controller
        first();
 
        $sheet_price = $paper_price_get->sheet_price;
-       $sheet_qty = ceil($copy_qty/($sheet_width_qty*$sheet_height_qty*$width_qty*$height_qty));
-       
-       return $sheet_price*$sheet_qty;
+
+       return $sheet_price*$this->get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty);
      }
 
      private function get_printing_price($copy_qty,$machine,$front_color_qty,$back_color_qty)
@@ -69,8 +74,14 @@ class ShowResult extends Controller
 
        $pose_qty = $width_qty*$height_qty;
 
+       $data["sheet_width_qty"] = $sheet_width_qty;
+       $data["sheet_height_qty"] = $sheet_height_qty;
+       $data["width_qty"] = $width_qty;
+       $data["height_qty"] = $height_qty;
+
+       $data["sheet_qty"] = $this->get_sheet_qty($copy_qty,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty);
        $data["paper_price"] = $this->get_paper_price($copy_qty,$paper_price_id,$sheet_width_qty,$sheet_height_qty,$width_qty,$height_qty);
-       $data["guillotine_price"] = $this->get_guillotine_price($copy_qty,$pose_qty);    //Reconfirmar si precio de guillotina es x ctd de ejemplares
+       $data["guillotine_price"] = $this->get_guillotine_price($copy_qty,$pose_qty);
        $data["printing_price"] = $this->get_printing_price($copy_qty,$machine,$front_color_qty,$back_color_qty);
        $data["plates_price"] = $this->get_plates_price($front_color_qty,$back_color_qty,$front_back);
        $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_price"]+$data["plates_price"];
