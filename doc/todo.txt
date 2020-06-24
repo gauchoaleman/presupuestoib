@@ -95,3 +95,5 @@ Preguntas para Mama:
   [ ] ¿Guillotina se calcula según ctd. de ejemplares?
   [ ] ¿Se cobra guillotina de cortar resmas?
 [ ] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)
+[ ] Demasía: 100 Druckbogen.
+[ ] Si es front_back calcular 2 poses en pliego

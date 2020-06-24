@@ -114,7 +114,10 @@ class Controller extends BaseController
        return $this->lac_per_qty_price*($copy_qty/$this->price_qty);
      }
 
-
+     public function fits_size($machine,$sheet_width,$sheet_height)
+     {
+       return $this->max_sizes[$machine]["width"]>=$sheet_width && $this->max_sizes[$machine]["height"]>=$sheet_height;
+     }
 
      public function calculate_position($paper_price_id,$paper_width,$paper_height,$job_width,$job_height,$pose_qty,$machine,$position,$front_back)
      {
