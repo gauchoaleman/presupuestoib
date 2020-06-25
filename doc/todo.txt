@@ -90,10 +90,15 @@ Preguntas para Mama:
 
   Revistas
 [ ] Cuáles son todos los puntos a tener en cuenta? Cómo se calculan los puntos?
-  [ ] Acabado?
+  [X] Acabado?
   [ ] Etc.
-  [ ] ¿Guillotina se calcula según ctd. de ejemplares?
-  [ ] ¿Se cobra guillotina de cortar resmas?
+  [X] ¿Guillotina se calcula según ctd. de ejemplares?
+  [X] ¿Se cobra guillotina de cortar resmas? No
 [ ] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)
 [ ] Demasía: 100 Druckbogen.
 [ ] Si es front_back calcular 2 poses en pliego
+[X] Reemplazar sheet_height_qty x leaf_height_qty
+[X] Reemplazar sheet_width x leaf_width y sheet_height x leaf_height
+[X] En ShowResult conseguir leaf_width y leaf_height
+[X] Reemplazar paper_width x sheet_width y paper_height x sheet_height
+[ ] Test fits_size function

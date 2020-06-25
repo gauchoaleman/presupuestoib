@@ -142,9 +142,9 @@ if( !$back_color_qty )
               <label class="col-md-6 col-form-label text-md-right">Cantidad de hojas:</label>
               {{$sheet_qty}}
               <label class="col-md-6 col-form-label text-md-right">Pliegos ancho:</label>
-              {{$sheet_width_qty}}
+              {{$leaf_width_qty}}
               <label class="col-md-6 col-form-label text-md-right">Pliegos alto:</label>
-              {{$sheet_height_qty}}
+              {{$leaf_height_qty}}
               <label class="col-md-6 col-form-label text-md-right">Poses ancho:</label>
               {{$pose_width_qty}}
               <label class="col-md-6 col-form-label text-md-right">Poses alto:</label>
