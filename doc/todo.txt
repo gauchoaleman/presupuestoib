@@ -57,7 +57,7 @@ Preguntas para Mama:
           x ctd. de tintas diferente a negro en GTO46 y Adast
           x 5to color en GTO52
     *Acabado
-      Guillotina (se cobra por ctd. de pliegos)
+      Guillotina (se cobra por ctd. de poses y copias)
       Plegado
         Arreglo (x ctd. de pliegues)
         Se cobra x cantidad de pliegos y ctd. de pliegues
@@ -95,10 +95,14 @@ Preguntas para Mama:
   [X] ¿Guillotina se calcula según ctd. de ejemplares?
   [X] ¿Se cobra guillotina de cortar resmas? No
 [ ] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)
-[ ] Demasía: 100 Druckbogen.
-[ ] Si es front_back calcular 2 poses en pliego
+[?] Demasía: 100 Druckbogen.
+[?] Si es front_back calcular doble de poses en pliego --> Verlo con Mama.
 [X] Reemplazar sheet_height_qty x leaf_height_qty
 [X] Reemplazar sheet_width x leaf_width y sheet_height x leaf_height
 [X] En ShowResult conseguir leaf_width y leaf_height
 [X] Reemplazar paper_width x sheet_width y paper_height x sheet_height
-[ ] Test fits_size function
+[ ] Test fits_size function (no funciona)
+[ ] 880x630 no debería funcionar. (tamaño trabajo: 210x300)
+[ ] Calcular poses con frente dorso * 2 al seleccionar papel (no en Show Result)
+[ ] Dorso con GTO46: Usar Tamaño trabajo (420x300), tamaño papel (950x650)
+[ ] Agregar tamaño papel en Resultado, sección papel.

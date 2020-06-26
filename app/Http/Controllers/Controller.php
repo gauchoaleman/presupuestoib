@@ -52,13 +52,15 @@ class Controller extends BaseController
 
      public $price_qty = 1000;
 
+     public $excess_leaves = 100;
+
      public $printing_prices = array("Adast"=>123,
                                      "GTO52"=>234,
                                      "GTO46"=>345);
 
-     public $plate_prices = array("Adast"=>123,
-                                  "GTO52"=>234,
-                                  "GTO46"=>345);
+     public $plate_prices = array("Adast"=>12,
+                                  "GTO52"=>23,
+                                  "GTO46"=>34);
 
 
      public $guillotine_price = 123;

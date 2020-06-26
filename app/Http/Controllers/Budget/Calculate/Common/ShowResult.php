@@ -24,17 +24,17 @@ class ShowResult extends Controller
 
      private function get_sheet_qty($copy_qty,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
      {
-       $sheet_qty = ceil($copy_qty/($leaf_width_qty*$leaf_height_qty*$pose_width_qty*$pose_height_qty));
+       $sheet_qty = ceil($copy_qty/($leaf_width_qty*$leaf_height_qty*$pose_width_qty*$pose_height_qty)+$this->excess_leaves/($leaf_width_qty*$leaf_height_qty));
        return $sheet_qty;
      }
 
      private function get_leaf_qty($copy_qty,$pose_width_qty,$pose_height_qty)
      {
-       $leaf_qty = ceil($copy_qty/($pose_width_qty*$pose_height_qty));
+       $leaf_qty = ceil($copy_qty/($pose_width_qty*$pose_height_qty))+$this->excess_leaves;
        return $leaf_qty;
      }
 
-     private function get_paper_price($copy_qty,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
+     private function get_paper_price($copy_qty,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back)
      {
        $paper_price_get = DB::table('paper_prices')->
        select('paper_prices.sheet_price')->
@@ -42,40 +42,62 @@ class ShowResult extends Controller
        first();
 
        $sheet_price = $paper_price_get->sheet_price;
+       $paper_price = $sheet_price*$this->get_sheet_qty($copy_qty,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
 
-       return $sheet_price*$this->get_sheet_qty($copy_qty,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+       return $paper_price;
      }
 
-     private function get_printing_prices_and_plate_qty($leaf_qty,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back)
+     private function get_printing_and_plate_info($leaf_qty,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back)
      {
+       $total = 0;
        if( $machine = "GTO52" ){
          if( $front_back == "front_back_width" || $front_back == "front_back_height" ){
-           $printing_prices["GTO52"] = 2*$leaf_qty*$front_color_qty*$this->printing_prices["GTO52"]/$this->price_qty;
-           $plate_qty["GTO52"] = $front_color_qty;
+           $printing["qty"]["GTO52"] = 2*$leaf_qty*$front_color_qty;
+           $printing["prices"]["GTO52"] = 2*$leaf_qty*$front_color_qty*$this->printing_prices["GTO52"]/$this->price_qty;
+           $plate["qty"]["GTO52"] = $front_color_qty;
+           $plate["prices"]["GTO52"] = $front_color_qty*$this->plate_prices["GTO52"];
+           $total += $printing["prices"]["GTO52"]+$plate["prices"]["GTO52"];
          }
          else{
-           if( $back_color_qty <= 2 && fits_size("GTO46",$leaf_width,$leaf_height) ){
-             $printing_prices["GTO46"] = $leaf_qty*$back_color_qty*$this->printing_prices["GTO46"]/$this->price_qty;
-             $plate_qty["GTO46"] = $back_color_qty;
-             $printing_prices["GTO52"] = $leaf_qty*$front_color_qty*$this->printing_prices["GTO52"]/$this->price_qty;
-             $plate_qty["GTO52"] = $front_color_qty;
+           if( $back_color_qty <= 2 && $this->fits_size("GTO46",$leaf_width,$leaf_height) ){
+             $printing["qty"]["GTO46"] = $leaf_qty*$back_color_qty;
+             $printing["prices"]["GTO46"] = $leaf_qty*$back_color_qty*$this->printing_prices["GTO46"]/$this->price_qty;
+             $plate["qty"]["GTO46"] = $back_color_qty;
+             $plate["prices"]["GTO46"] = $back_color_qty*$this->plate_prices["GTO46"];
+             $total += $printing["prices"]["GTO46"]+$plate["prices"]["GTO46"];
+
+             $printing["qty"]["GTO52"] = $leaf_qty*$front_color_qty;
+             $printing["prices"]["GTO52"] = $leaf_qty*$front_color_qty*$this->printing_prices["GTO52"]/$this->price_qty;
+             $plate["qty"]["GTO52"] = $front_color_qty;
+             $plate["prices"]["GTO52"] = $front_color_qty*$this->plate_prices["GTO52"];
+             $total += $printing["prices"]["GTO52"]+$plate["prices"]["GTO52"];
            }
            else{
-             $printing_prices["GTO52"] = $leaf_qty*($front_color_qty+$back_color_qty)*$this->printing_prices["GTO52"]/$this->price_qty;
-             $plate_qty["GTO52"] = $front_color_qty+$back_color_qty;
+             $printing["qty"]["GTO52"] = $leaf_qty*($front_color_qty+$back_color_qty);
+             $printing["prices"]["GTO52"] = $leaf_qty*($front_color_qty+$back_color_qty)*$this->printing_prices["GTO52"]/$this->price_qty;
+             $plate["qty"]["GTO52"] = $front_color_qty+$back_color_qty;
+             $plate["prices"]["GTO52"] = ($front_color_qty+$back_color_qty)*$this->plate_prices["GTO52"];
+             $total += $printing["prices"]["GTO52"]+$plate["prices"]["GTO52"];
            }
          }
        }
        else if( $machine = "GTO46" ){
-         $printing_prices["GTO46"] = $leaf_qty*($front_color_qty+$back_color_qty)*$this->printing_prices["GTO46"]/$this->price_qty;
-         $plate_qty["GTO46"] = $front_color_qty+$back_color_qty;
+         $printing["qty"]["GTO46"] = $leaf_qty*($front_color_qty+$back_color_qty);
+         $printing["prices"]["GTO46"] = $leaf_qty*($front_color_qty+$back_color_qty)*$this->printing_prices["GTO46"]/$this->price_qty;
+         $plate["qty"]["GTO46"] = $front_color_qty+$back_color_qty;
+         $plate["prices"]["GTO46"] = ($front_color_qty+$back_color_qty)*$this->plate_prices["GTO46"];
+         $total += $printing["prices"]["GTO46"]+$plate["prices"]["GTO46"];
        }
        else if( $machine = "Adast" ){
-         $printing_prices["Adast"] = $leaf_qty*($front_color_qty+$back_color_qty)*$this->printing_prices["Adast"]/$this->price_qty;
-         $plate_qty["Adast"] = $front_color_qty+$back_color_qty;
+         $printing["qty"]["Adast"] = $leaf_qty*($front_color_qty+$back_color_qty);
+         $printing["prices"]["Adast"] = $leaf_qty*($front_color_qty+$back_color_qty)*$this->printing_prices["Adast"]/$this->price_qty;
+         $plate["qty"]["Adast"] = $front_color_qty+$back_color_qty;
+         $plate["prices"]["Adast"] = ($front_color_qty+$back_color_qty)*$this->plate_prices["Adast"];
+         $total += $printing["prices"]["Adast"]+$plate["prices"]["Adast"];
        }
-       $ret["printing_prices"] = $printing_prices;
-       $ret["plate_qty"] = $plate_qty;
+       $ret["printing"] = $printing;
+       $ret["plate"] = $plate;
+       $ret["total"] = $total;
        return $ret;
      }
 
@@ -99,6 +121,12 @@ class ShowResult extends Controller
        $position = $paper_data[7];
        $front_back = $paper_data[8];
 
+       //If there is front and back, we have double pose
+       if( $front_back == "front_back_width" )
+        $pose_width_qty *= 2;
+       if( $front_back == "front_back_height" )
+        $pose_height_qty *= 2;
+
        $copy_qty = $_POST["copy_qty"];
        $machine = $_POST["machine"];
        $front_color_qty = $_POST["front_color_qty"];
@@ -120,13 +148,11 @@ class ShowResult extends Controller
 
        $data["sheet_qty"] = $sheet_qty;
        $data["leaf_qty"] = $leaf_qty;
-       $data["paper_price"] = $this->get_paper_price($copy_qty,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+       $data["paper_price"] = $this->get_paper_price($copy_qty,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back);
        $data["guillotine_price"] = $this->get_guillotine_price($copy_qty,$pose_qty);
-       $printing_prices_and_plate_qty = $this->get_printing_prices_and_plate_qty($leaf_qty,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
-       $data["printing_prices"] = $printing_prices_and_plate_qty["printing_prices"];
-       $data["plate_qty"] = $printing_prices_and_plate_qty["plate_qty"];
+       $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
        $data["plates_price"] = $this->get_plates_price($front_color_qty,$back_color_qty,$front_back);
-       $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_price"]+$data["plates_price"];
+       $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["plates_price"];
 
        if( $fold_qty ){
          $data["fold"] = true;

@@ -131,7 +131,7 @@ if( !$back_color_qty )
   </div>
 </form><br>
 
-<div class="card" style="width: 50rem;">
+<div class="card" style="width: 70rem;">
     <div class="card-header">Resultado</div>
     <div class="card-body">
 
@@ -168,10 +168,12 @@ if( !$back_color_qty )
           <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Planchas:') }}</b></label>
 
           <div class="col-md-6">
-              <label class="col-md-6 col-form-label text-md-right">Cantidad:</label>
-              X
-              <label class="col-md-6 col-form-label text-md-right">Costo:</label>
-              {{$plates_price}}
+            @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+              @if( isset($printing_and_plate_info["plate"]["qty"][$each_machine]))
+                <label class="col-md-6 col-form-label text-md-right">{{$each_machine}}: {{$printing_and_plate_info["plate"]["qty"][$each_machine]}} unidades</label>
+                ${{number_format($printing_and_plate_info["plate"]["prices"][$each_machine]*get_dollar_price(),2)}}
+              @endif
+            @endforeach
           </div>
       </div>
 
@@ -179,8 +181,13 @@ if( !$back_color_qty )
           <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Impresión:') }}</b></label>
 
           <div class="col-md-6">
-              <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-              ${{number_format($printing_price*get_dollar_price(),2)}}
+
+            @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+              @if( isset($printing_and_plate_info["printing"]["qty"][$each_machine]))
+                <label class="col-md-6 col-form-label text-md-right">{{$each_machine}}: {{$printing_and_plate_info["printing"]["qty"][$each_machine]}} copias</label>
+                ${{number_format($printing_and_plate_info["printing"]["prices"][$each_machine]*get_dollar_price(),2)}}
+              @endif
+            @endforeach
           </div>
       </div>
 
@@ -247,6 +254,16 @@ if( !$back_color_qty )
         ${{number_format($total*get_dollar_price(),2)}}
     </div>
 </div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Valor dólar:') }}</b></label>
+
+    <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        ${{number_format(get_dollar_price(),2)}}
+    </div>
+</div>
+
 </div>
 </div>
 </div>
