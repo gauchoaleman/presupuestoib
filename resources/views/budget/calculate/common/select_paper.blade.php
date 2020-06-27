@@ -190,10 +190,22 @@ if( !$back_color_qty )
     <div align="center">{{$size["leaf_height"]}}</div>
   </td>
   <td>
-    <div align="center">{{$size["pose_width_qty"]}}</div>
+    <div align="center">
+      @if( $size["front_back"] == "front_back_width")
+        {{$size["pose_width_qty"]*2}} (frente/dorso)
+      @else
+        {{$size["pose_width_qty"]}}
+      @endif
+    </div>
   </td>
   <td>
-    <div align="center">{{$size["pose_height_qty"]}}</div>
+    <div align="center">
+      @if( $size["front_back"] == "front_back_height")
+      {{$size["pose_height_qty"]*2}} (frente/dorso)
+      @else
+      {{$size["pose_height_qty"]}}
+      @endif
+    </div>
   </td>
   <td>
     <div align="center">{{$size["job_width"]}}</div>

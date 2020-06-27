@@ -232,14 +232,14 @@ class Controller extends BaseController
        return $ret;
      }
 
-     public function calculate_size($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$front_color_qty,$back_color_qty,$pose_qty,$machine)
+     public function calculate_size($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$front_color_qty,$back_color_qty,$pose_qty,$machine,$front_back=true)
      {
-       if( !$back_color_qty ) { //If there is no printing on back ew calculate normal positions
+       if( !$back_color_qty || !$front_back) { //If there is no printing on back ew calculate normal positions
          $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","normal");
          $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height,$job_width,$pose_qty,$machine,"lying","normal");
          $merged = array_merge($normal_normal,$lying_normal);
        }
-       else { //If there is printing on back we use front and back positions
+       else if($front_back){ //If there is printing on back we use front and back positions
          $normal_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width*2,$job_height,$pose_qty,$machine,"normal","front_back_width");
          $normal_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height*2,$pose_qty,$machine,"normal","front_back_height");
          $lying_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height*2,$job_width,$pose_qty,$machine,"lying","front_back_width");
@@ -247,12 +247,12 @@ class Controller extends BaseController
          $merged = array_merge($normal_front_back_width,$normal_front_back_height,$lying_front_back_width,$lying_front_back_height);
          //If no accepted sheet size, we use no front_back
          //echo(sizeof($merged)."/");   //Bandera
-         //print_r($merged);
-         if( !sizeof($merged) ){
+         //print_r($merged);    //Bandera
+         /*if( !sizeof($merged) ){
            $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","normal");
            $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height,$job_width,$pose_qty,$machine,"lying","normal");
            $merged = array_merge($normal_normal,$lying_normal);
-         }
+         }*/
        }
        aasort($merged,"rest");
        //print_r($merged);  //Bandera

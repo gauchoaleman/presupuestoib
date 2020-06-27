@@ -29,7 +29,7 @@ class FirstForm extends Controller
         }
      }
 
-     public function calculate_budget($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty,$machine)
+     public function calculate_papers($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty,$machine)
      {
         $sizes_result = DB::table('paper_prices')->select('id','width','height')->
         where('paper_type_id', '=', $paper_type_id)->
@@ -46,6 +46,16 @@ class FirstForm extends Controller
           //print_r($size_res); //Bandera
           $all_sizes = array_merge($size_res,$all_sizes);
         }
+        //If there are no sizes, we calculate normal
+        if( !sizeof($all_sizes) ){
+          foreach ($sizes_result as $size) {
+            $size_res = $this->calculate_size($size->id,$size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty,$pose_qty,$machine,false);    //calculate
+            //print($size->width."x".$size->height.": "); //Bandera
+            //print_r($size_res); //Bandera
+            $all_sizes = array_merge($size_res,$all_sizes);
+          }
+        }
+
         aasort($all_sizes,"rest");
         //print_r($all_sizes);    //Bandera
         $ret["all_sizes"] = $all_sizes;
@@ -85,7 +95,7 @@ class FirstForm extends Controller
         if ($v->fails())
          return redirect()->back()->withInput($request->input())->withErrors($v->errors());
         else{
-          $result = $this->calculate_budget($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["width"], $_POST["height"],
+          $result = $this->calculate_papers($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["width"], $_POST["height"],
           $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["copy_qty"],$_POST["machine"]);
           $data["result"]=$result;
           return $this->show_page_with_menubars("budget/calculate/common/select_paper","",$data);

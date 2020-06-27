@@ -102,7 +102,8 @@ Preguntas para Mama:
 [X] En ShowResult conseguir leaf_width y leaf_height
 [X] Reemplazar paper_width x sheet_width y paper_height x sheet_height
 [ ] Test fits_size function (no funciona)
-[ ] 880x630 no debería funcionar. (tamaño trabajo: 210x300)
-[ ] Calcular poses con frente dorso * 2 al seleccionar papel (no en Show Result)
+[X] 880x630 no debería funcionar. (tamaño trabajo: 210x300)
+[X] Calcular poses con frente dorso * 2 al seleccionar papel (no en Show Result)
+    Calculado directamente en template select_paper.blade.php
 [ ] Dorso con GTO46: Usar Tamaño trabajo (420x300), tamaño papel (950x650)
 [ ] Agregar tamaño papel en Resultado, sección papel.
