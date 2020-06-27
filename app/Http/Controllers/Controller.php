@@ -246,6 +246,8 @@ class Controller extends BaseController
          $lying_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height,$job_width*2,$pose_qty,$machine,"lying","front_back_height");
          $merged = array_merge($normal_front_back_width,$normal_front_back_height,$lying_front_back_width,$lying_front_back_height);
          //If no accepted sheet size, we use no front_back
+         //echo(sizeof($merged)."/");   //Bandera
+         //print_r($merged);
          if( !sizeof($merged) ){
            $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","normal");
            $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height,$job_width,$pose_qty,$machine,"lying","normal");
