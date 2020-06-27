@@ -59,6 +59,7 @@ class ShowResult extends Controller
            $total += $printing["prices"]["GTO52"]+$plate["prices"]["GTO52"];
          }
          else{
+           echo "fits_size:".$this->fits_size("GTO46",$leaf_width,$leaf_height);   //Bandera
            if( $back_color_qty <= 2 && $this->fits_size("GTO46",$leaf_width,$leaf_height) ){
              $printing["qty"]["GTO46"] = $leaf_qty*$back_color_qty;
              $printing["prices"]["GTO46"] = $leaf_qty*$back_color_qty*$this->printing_prices["GTO46"]/$this->price_qty;
@@ -138,9 +139,13 @@ class ShowResult extends Controller
 
        $pose_qty = $pose_width_qty*$pose_height_qty;
        $sheet_qty = $this->get_sheet_qty($copy_qty,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+       $sheet_size = $this->get_sheet_size($paper_price_id);
        $leaf_qty = $this->get_leaf_qty($copy_qty,$pose_width_qty,$pose_height_qty);
 
-
+       $data["sheet_size"] = $sheet_size;
+       print_r($data["sheet_size"]);
+       $data["leaf_width"] = $leaf_width;
+       $data["leaf_height"] = $leaf_height;
        $data["leaf_width_qty"] = $leaf_width_qty;
        $data["leaf_height_qty"] = $leaf_height_qty;
        $data["pose_width_qty"] = $pose_width_qty;

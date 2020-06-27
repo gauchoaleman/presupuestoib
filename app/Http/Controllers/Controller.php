@@ -125,8 +125,23 @@ class Controller extends BaseController
        return $this->lac_per_qty_price*($copy_qty/$this->price_qty);
      }
 
+     public function get_sheet_size($paper_price_id)
+     {
+       $sheet_size_get = DB::table('paper_prices')->
+       select('paper_prices.width','paper_prices.height')->
+       where('paper_prices.id','=', $paper_price_id)->
+       first();
+       $ret["width"] = $sheet_size_get->width;
+       $ret["height"] = $sheet_size_get->height;
+       return $ret;
+     }
+
      public function fits_size($machine,$leaf_width,$leaf_height)
      {
+       echo "max_width ".$machine.":".$this->max_sizes[$machine]["width"]."<br>";
+       echo "max_height ".$machine.":".$this->max_sizes[$machine]["height"]."<br>";
+       echo "leaf_width:".$leaf_width."<br>";
+       echo "leaf_height:".$leaf_height."<br>";
        return $this->max_sizes[$machine]["width"]>=$leaf_width && $this->max_sizes[$machine]["height"]>=$leaf_height;
      }
 
