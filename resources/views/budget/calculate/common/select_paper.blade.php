@@ -16,6 +16,9 @@ $fold_qty = get_form_value("fold_qty");
 $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");
 $lac = get_form_value("lac");
+$client_id = get_form_value("client_id");
+$client_name = get_client_name($client_id);
+$budget_name = get_form_value("budget_name");
 if( !$back_color_qty )
   $back_color_qty = 0;
 ?>
@@ -69,7 +72,7 @@ if( !$back_color_qty )
       <input type="hidden" name="pose_qty" value="{{$pose_qty}}">
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        {{$pose_qty}}
+        @if( $pose_qty ) {{$pose_qty}} @else - @endif
       </div>
   </div>
 
@@ -96,7 +99,7 @@ if( !$back_color_qty )
       <input type="hidden" name="fold_qty" value="{{$fold_qty}}">
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-          {{$fold_qty}}
+          @if( $fold_qty ) {{$fold_qty}} @else 0 @endif
       </div>
   </div>
 
@@ -105,7 +108,7 @@ if( !$back_color_qty )
       <input type="hidden" name="punching_difficulty" value="{{$punching_difficulty}}">
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        {{$punching_difficulty}}
+        @if( $punching_difficulty ) {{$punching_difficulty}} @else - @endif
       </div>
   </div>
 
@@ -124,6 +127,24 @@ if( !$back_color_qty )
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
         @if( $lac ) Si @else No @endif
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Cliente:') }}</b></label>
+      <input type="hidden" name="client_id" value="{{$client_id}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        {{$client_name}}
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Nombre presupuesto:') }}</b></label>
+      <input type="hidden" name="budget_name" value="{{$budget_name}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        {{$budget_name}}
       </div>
   </div>
 

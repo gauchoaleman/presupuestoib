@@ -2,7 +2,7 @@
 $paper_prices_sets = DB::table('paper_prices_sets')->orderBy('id', 'desc')->select('*')->get();
 ?>
 <div class="container">
-
+<br>
 <div class="card" style="width: 50rem;">
     <div class="card-header">Listado de sets</div>
     <div class="card-body">

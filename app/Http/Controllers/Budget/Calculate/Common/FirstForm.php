@@ -80,7 +80,9 @@ class FirstForm extends Controller
            'copy_qty.gt' => 'La cantidad de ejemplares debe ser mayor a cero.',
            'back_color_qty.integer' => 'La cantidad de colores de dorso debe ser un entero.',
            'machine.required' => 'Debe ingresar la máquina.',
-           'fold_qty.integer' => 'La cantidad de pliegues debe ser un entero.'
+           'fold_qty.integer' => 'La cantidad de pliegues debe ser un entero.',
+           'client_id.required' => 'Debe seleccionar un cliente.',
+           'budget_name.required' => 'Debe ingesar nombre de presupuesto.'
            ];
          $v = Validator::make($request->all(), [
              'width' => 'required|integer|gt:0',
@@ -89,7 +91,9 @@ class FirstForm extends Controller
              'back_color_qty' => 'integer',
              'copy_qty' => 'required|integer|gt:0',
              'machine' => 'required',
-             'fold_qty' => 'integer',],
+             'fold_qty' => 'integer',
+             'client_id' => 'required',
+             'budget_name' => 'required',],
              $messages);
 
         if ($v->fails())

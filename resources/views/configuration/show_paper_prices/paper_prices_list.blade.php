@@ -9,7 +9,7 @@ $dollar_price = get_dollar_price();
 
 ?>
 <div class="container">
-
+<br>
 <div class="card" style="width: 80rem;">
     <div class="card-header">Listado de precios</div>
     <div class="card-body">

@@ -103,8 +103,8 @@ Preguntas para Mama:
 [X] Reemplazar paper_width x sheet_width y paper_height x sheet_height
 [ ] Test fits_size function (no funciona)
 [X] 880x630 no debería funcionar. (tamaño trabajo: 210x300)
-[X] Calcular poses con frente dorso * 2 al seleccionar papel (no en Show Result)
-    Calculado directamente en template select_paper.blade.php
+[ ] Calcular poses con frente dorso * 2 al seleccionar papel (no en Show Result)
+    No Calcular directamente en template select_paper.blade.php sino en función de procesar tamaño.
 [?] Dorso con GTO46: Usar Tamaño trabajo (420x300), tamaño papel (950x650) --> Teóricamente no entra en GTO46, preguntar Mama.
 [ ] Agregar tamaño papel en Resultado, sección papel.
 [ ] En tabla de precios poner with antes que height

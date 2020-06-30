@@ -214,6 +214,7 @@ class Controller extends BaseController
 
            if( $all_aligned_job_width_with_borders>$leaf_width ||  $all_aligned_job_height_with_borders>$leaf_height)     //If job borders don't fit in sheet
             continue;
+            
            $res["paper_price_id"] = $paper_price_id;
            $res["sheet_width"] = $sheet_width;
            $res["sheet_height"] = $sheet_height;

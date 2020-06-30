@@ -26,6 +26,13 @@
                       <li><a href="/configuration/show_dollar_prices">Mostrar</a></li>
                   </ul>
               </li>
+              <li class="dropdown-submenu">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Clientes</span><span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a href="/configuration/add_client">Agregar</a></li>
+                      <li><a href="/configuration/show_clients">Mostrar</a></li>
+                  </ul>
+              </li>
           </ul>
       </li>
 

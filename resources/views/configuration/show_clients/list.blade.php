@@ -1,5 +1,5 @@
 <?php
-$dollar_prices = DB::table('dollar_prices')->orderBy('id', 'desc')->select('*')->get();
+$clients = DB::table('clients')->orderBy('id', 'desc')->select('*')->get();
 ?>
 <div class="container">
 <br>
@@ -10,19 +10,19 @@ $dollar_prices = DB::table('dollar_prices')->orderBy('id', 'desc')->select('*')-
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">Fecha</th>
-      <th scope="col">Costo</th>
+      <th scope="col">Fecha agregado</th>
+      <th scope="col">Nombre</th>
     </tr>
   </thead>
   <tbody>
-@foreach($dollar_prices as $dollar_price)
+@foreach($clients as $client)
   <tr>
   <td>
-    <?php $date = new DateTime($dollar_price->created_at); ?>
+    <?php $date = new DateTime($client->created_at); ?>
     {{$date->format('d/m/Y')}}
   </td>
   <td>
-    {{$dollar_price->amount}}
+    {{$client->name}}
   </td>
   </tr>
 @endforeach

@@ -42,6 +42,19 @@ function get_paper_types()
   return $paper_types;
 }
 
+function get_clients()
+{
+  $clients = DB::table('clients')->orderBy('id', 'desc')->select('id','name')->get();
+  return $clients;
+}
+
+function get_client_name($id)
+{
+  $paper_color = DB::table('clients')->select('clients.name')->
+  where('clients.id','=',$id)->first();
+  return $paper_color->name;
+}
+
 function get_paper_type($id)
 {
   $paper_type = DB::table('paper_types')->select('paper_types.name')->

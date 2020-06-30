@@ -13,6 +13,8 @@ $fold_qty = get_form_value("fold_qty");
 $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");
 $lac = get_form_value("lac");
+$client_id = get_form_value("client_id");
+$budget_name = get_form_value("budget_name");
 
 /*
 $paper_type_id = request()->get('paper_type_id')?request()->get('paper_type_id'):request()->old('paper_type_id');
@@ -233,6 +235,37 @@ if( !$fold_qty )
         @if($lac == "1")
         checked
         @endif>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Cliente:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right"><a href="/configuration/add_client">Agregar cliente</a></label><select id="client_id" name="client_id">
+        <option value=""></option>
+        @foreach(get_clients() as $client)
+          <option value="{{$client->id}}"
+            @if($client_id == $client->id )
+            selected
+            @endif>{{$client->name}}</option>
+        @endforeach
+      </select>
+      @error('client_id')
+          <div class="alert alert-danger">{{ $message }}</div>
+      @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Nombre presupuesto:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <input type="text" size="15" name="budget_name" value="{{$budget_name}}">
+        @error('budget_name')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 </div>
 
