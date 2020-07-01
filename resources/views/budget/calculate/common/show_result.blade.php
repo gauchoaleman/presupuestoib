@@ -250,12 +250,45 @@ if( !$back_color_qty )
         </div>
 @endif
 
+@if( $subtotal )
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Subtotal:') }}</b></label>
+
+          <div class="col-md-6">
+
+            <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+            ${{number_format($subtotal*get_dollar_price(),2)}}
+          </div>
+        </div>
+@endif
+@if( isset($discount_price) )
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Descuento:') }}</b></label>
+
+            <div class="col-md-6">
+
+                <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+                ${{number_format($discount_price*get_dollar_price(),2)}}
+              </div>
+        </div>
+@endif
+@if( isset($plus_price) )
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Plus:') }}</b></label>
+
+            <div class="col-md-6">
+
+                <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+                ${{number_format($plus_price*get_dollar_price(),2)}}
+              </div>
+        </div>
+@endif
 <div class="form-group row">
     <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Total:') }}</b></label>
 
     <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        ${{number_format($total*get_dollar_price(),2)}}
+        ${{number_format($total*get_dollar_price(),0)}}
     </div>
 </div>
 

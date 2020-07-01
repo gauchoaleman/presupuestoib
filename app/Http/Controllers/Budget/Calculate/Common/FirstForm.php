@@ -82,7 +82,9 @@ class FirstForm extends Controller
            'machine.required' => 'Debe ingresar la máquina.',
            'fold_qty.integer' => 'La cantidad de pliegues debe ser un entero.',
            'client_id.required' => 'Debe seleccionar un cliente.',
-           'budget_name.required' => 'Debe ingesar nombre de presupuesto.'
+           'budget_name.required' => 'Debe ingesar nombre de presupuesto.',
+           'discount_percentage.integer' => 'El descuento debe ser un entero.',
+           'plus_percentage.integer' => 'El plus debe ser un entero.',
            ];
          $v = Validator::make($request->all(), [
              'width' => 'required|integer|gt:0',
@@ -93,7 +95,9 @@ class FirstForm extends Controller
              'machine' => 'required',
              'fold_qty' => 'integer',
              'client_id' => 'required',
-             'budget_name' => 'required',],
+             'budget_name' => 'required',
+             'discount_percentage' => 'integer',
+             'plus_percentage' => 'integer',],
              $messages);
 
         if ($v->fails())

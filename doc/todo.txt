@@ -107,4 +107,7 @@ Preguntas para Mama:
     No Calcular directamente en template select_paper.blade.php sino en función de procesar tamaño.
 [?] Dorso con GTO46: Usar Tamaño trabajo (420x300), tamaño papel (950x650) --> Teóricamente no entra en GTO46, preguntar Mama.
 [ ] Agregar tamaño papel en Resultado, sección papel.
-[ ] En tabla de precios poner with antes que height
+[ ] En tabla de precios poner width antes que height
+[ ] Mirar etiquetas div en select_paper.blade.php.
+[ ] Agregar descuento
+[ ] Agregar plus

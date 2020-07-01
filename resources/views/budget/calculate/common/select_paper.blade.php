@@ -19,6 +19,9 @@ $lac = get_form_value("lac");
 $client_id = get_form_value("client_id");
 $client_name = get_client_name($client_id);
 $budget_name = get_form_value("budget_name");
+$discount_percentage = get_form_value("discount_percentage");
+$plus_percentage = get_form_value("plus_percentage");
+
 if( !$back_color_qty )
   $back_color_qty = 0;
 ?>
@@ -145,6 +148,24 @@ if( !$back_color_qty )
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
         {{$budget_name}}
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Descuento:') }}</b></label>
+      <input type="hidden" name="discount_percentage" value="{{$discount_percentage}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        {{$discount_percentage}}
+      </div>
+  </div>
+
+  <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Plus:') }}</b></label>
+      <input type="hidden" name="plus_percentage" value="{{$plus_percentage}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        {{$plus_percentage}}
       </div>
   </div>
 

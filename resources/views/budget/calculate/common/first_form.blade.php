@@ -15,18 +15,9 @@ $perforate = get_form_value("perforate");
 $lac = get_form_value("lac");
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
+$discount_percentage = get_form_value("discount_percentage");
+$plus_percentage = get_form_value("plus_percentage");
 
-/*
-$paper_type_id = request()->get('paper_type_id')?request()->get('paper_type_id'):request()->old('paper_type_id');
-$paper_color_id = request()->get('paper_color_id')?request()->get('paper_color_id'):request()->old('paper_color_id');
-$weight = request()->get('weight')?request()->get('weight'):request()->old('weight');
-$width = request()->get('width')?request()->get('width'):request()->old('width');
-$height = request()->get('height')?request()->get('height'):request()->old('height');
-$front_color_qty = request()->get('front_color_qty')?request()->get('front_color_qty'):request()->old('front_color_qty');
-$back_color_qty = request()->get('back_color_qty')?request()->get('back_color_qty'):request()->old('back_color_qty');
-$pose_qty = request()->get('pose_qty')?request()->get('pose_qty'):request()->old('pose_qty');
-$copy_qty = request()->get('copy_qty')?request()->get('copy_qty'):request()->old('copy_qty');
-*/
 if( !$front_color_qty )
   $front_color_qty = 0;
 if( !$back_color_qty )
@@ -35,9 +26,13 @@ if( $paper_type_id && !$paper_color_id )
   $paper_color_id = 1;   //Color blanco x defecto
 if( !$fold_qty )
   $fold_qty = 0;
+if( !$discount_percentage )
+  $discount_percentage = 0;
+if( !$plus_percentage )
+  $plus_percentage = 0;
  ?>
 <div class="container">
-
+<br>
 <div class="card" style="width: 50rem;">
     <div class="card-header">Calcular presupuesto</div>
     <div class="card-body">
@@ -101,7 +96,7 @@ if( !$fold_qty )
         @enderror
 
         <label class="col-md-6 col-form-label text-md-right">Ancho (mm):</label>
-        <input type="text" size="5" name="width" value="{{$width}}">
+        <input type="text" size="5" name="width" id="width" value="{{$width}}">
         @error('width')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -120,12 +115,12 @@ if( !$fold_qty )
     <div class="col-md-6">
 
         <label class="col-md-6 col-form-label text-md-right">Frente:</label>
-        <input type="text" size="5" name="front_color_qty" value="{{$front_color_qty}}">
+        <input type="text" size="5" name="front_color_qty" id="front_color_qty" value="{{$front_color_qty}}">
         @error('front_color_qty')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <label class="col-md-6 col-form-label text-md-right">Dorso:</label>
-        <input type="text" size="5" name="back_color_qty" value="{{$back_color_qty}}">
+        <input type="text" size="5" name="back_color_qty" id="back_color_qty" value="{{$back_color_qty}}">
         @error('back_color_qty')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -137,7 +132,7 @@ if( !$fold_qty )
 
     <div class="col-md-6">
       <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        <input type="text" size="5" name="pose_qty" value="{{$pose_qty}}">
+        <input type="text" size="5" name="pose_qty" id="pose_qty" value="{{$pose_qty}}">
         @error('pose_qty')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -149,7 +144,7 @@ if( !$fold_qty )
 
     <div class="col-md-6">
       <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        <input type="text" size="5" name="copy_qty" value="{{$copy_qty}}">
+        <input type="text" size="5" name="copy_qty" id="copy_qty" value="{{$copy_qty}}">
         @error('copy_qty')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -161,7 +156,7 @@ if( !$fold_qty )
 
     <div class="col-md-6">
       <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-      <select id="machine" name="machine">
+      <select id="machine" name="machine" id="machine">
         <option value=""></option>
           @foreach(array("Adast","GTO52","GTO46") as $each_machine)
             <option value="{{$each_machine}}"
@@ -184,7 +179,7 @@ if( !$fold_qty )
 
     <div class="col-md-6">
       <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        <input type="text" size="5" name="fold_qty" value="{{$fold_qty}}">
+        <input type="text" size="5" name="fold_qty" id="fold_qty" value="{{$fold_qty}}">
         @error('fold_qty')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -196,7 +191,7 @@ if( !$fold_qty )
 
     <div class="col-md-6">
       <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-      <select id="punching_difficulty" name="punching_difficulty">
+      <select id="punching_difficulty" name="punching_difficulty" id="punching_difficulty">
         <option value=""></option>
           @foreach(array(1,2,3,4) as $each_punching_difficulty)
             <option value="{{$each_punching_difficulty}}"
@@ -219,7 +214,7 @@ if( !$fold_qty )
 
     <div class="col-md-6">
       <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        <input type="checkbox" name="perforate" value="1"
+        <input type="checkbox" name="perforate" value="1" id="perforate"
         @if($perforate == "1")
         checked
         @endif>
@@ -231,7 +226,7 @@ if( !$fold_qty )
 
     <div class="col-md-6">
       <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        <input type="checkbox" name="lac" value="1"
+        <input type="checkbox" name="lac" value="1" id="lac"
         @if($lac == "1")
         checked
         @endif>
@@ -262,8 +257,32 @@ if( !$fold_qty )
 
     <div class="col-md-6">
       <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-        <input type="text" size="15" name="budget_name" value="{{$budget_name}}">
+        <input type="text" size="15" name="budget_name" id="budget_name" value="{{$budget_name}}">
         @error('budget_name')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Descuento:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <input type="text" size="5" name="discount_percentage" id="discount_percentage" value="{{$discount_percentage}}">
+        @error('discount_percentage')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Plus:') }}</b></label>
+
+    <div class="col-md-6">
+      <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
+        <input type="text" size="5" name="plus_percentage" id="plus_percentage" value="{{$plus_percentage}}">
+        @error('plus_percentage')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>

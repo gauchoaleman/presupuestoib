@@ -136,6 +136,8 @@ class ShowResult extends Controller
        $punching_difficulty = $_POST["punching_difficulty"];
        $perforate = isset($_POST["perforate"])?$_POST["perforate"]:0;
        $lac = isset($_POST["lac"])?$_POST["lac"]:0;
+       $discount_percentage = isset($_POST["discount_percentage"])?$_POST["discount_percentage"]:0;
+       $plus_percentage = isset($_POST["plus_percentage"])?$_POST["plus_percentage"]:0;
 
        $pose_qty = $pose_width_qty*$pose_height_qty;
        $sheet_qty = $this->get_sheet_qty($copy_qty,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
@@ -143,7 +145,7 @@ class ShowResult extends Controller
        $leaf_qty = $this->get_leaf_qty($copy_qty,$pose_width_qty,$pose_height_qty);
 
        $data["sheet_size"] = $sheet_size;
-       print_r($data["sheet_size"]);
+       //print_r($data["sheet_size"]);
        $data["leaf_width"] = $leaf_width;
        $data["leaf_height"] = $leaf_height;
        $data["leaf_width_qty"] = $leaf_width_qty;
@@ -156,8 +158,7 @@ class ShowResult extends Controller
        $data["paper_price"] = $this->get_paper_price($copy_qty,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back);
        $data["guillotine_price"] = $this->get_guillotine_price($copy_qty,$pose_qty);
        $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
-       $data["plates_price"] = $this->get_plates_price($front_color_qty,$back_color_qty,$front_back);
-       $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["plates_price"];
+       $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"];
 
        if( $fold_qty ){
          $data["fold"] = true;
@@ -196,6 +197,16 @@ class ShowResult extends Controller
        else
          $data["lac"] = false;
 
+       if( $discount_percentage ){
+         $data["subtotal"] = $total;
+         $data["discount_price"] = $total*$discount_percentage/100;
+         $total -= $total*$discount_percentage/100;
+       }
+       else if( $plus_percentage ){
+         $data["subtotal"] = $total;
+         $data["plus_price"] = $total*$plus_percentage/100;
+         $total += $total*$plus_percentage/100;
+       }
        $data["total"] = $total;
        //print_r($data);      //Bandera
        return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
