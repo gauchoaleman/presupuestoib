@@ -231,6 +231,7 @@ if (!$back_color_qty) {
             {{$plus_percentage}}
           </div>
         </div>
+
       </div>
     </div>
     <br>

@@ -37,7 +37,8 @@ if (!$plus_percentage) {
     $plus_percentage = 0;
 }
  ?>
-<div class="container"><br>
+<div class="container">
+  <br>
   <div class="card" style="width: 70rem;">
     <div class="card-header">
       Calcular presupuesto

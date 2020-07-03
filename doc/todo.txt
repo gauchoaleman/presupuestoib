@@ -111,4 +111,5 @@ Preguntas para Mama:
 [X] Mirar etiquetas div en select_paper.blade.php.
 [X] Agregar descuento
 [X] Agregar plus
-[ ] Ctd de poses no funciona|
+[ ] Ctd de poses no funciona
+[ ] Agregar contenido en show_result (abajo de laca).  Agregar definicion de variables en parte de arriba tambien.
