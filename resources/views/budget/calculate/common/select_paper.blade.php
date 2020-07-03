@@ -26,6 +26,7 @@ if( !$back_color_qty )
   $back_color_qty = 0;
 ?>
 <div class="container">
+<br>
 <form method="POST" action="/budget/calculate/common/show_result">
   <div class="card" style="width: 50rem;">
       <div class="card-header">Datos ingresados</div>
@@ -322,9 +323,10 @@ if( !$back_color_qty )
 </div>
 </div>
 <div class="col-md-6">
-      <button type="submit" class="btn btn-primary">
+  <button type="submit" class="btn btn-primary">
               {{ __('Entrar') }}
   </button>
+</div>
 </div>
 </form>
 </div>

@@ -109,5 +109,5 @@ Preguntas para Mama:
 [ ] Agregar tamaño papel en Resultado, sección papel.
 [ ] En tabla de precios poner width antes que height
 [ ] Mirar etiquetas div en select_paper.blade.php.
-[ ] Agregar descuento
-[ ] Agregar plus
+[X] Agregar descuento
+[X] Agregar plus

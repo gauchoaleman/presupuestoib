@@ -80,9 +80,9 @@ class Controller extends BaseController
      public $width_borders = 5+5;
      public $height_borders = 15+5;
 
-     public function get_guillotine_price($copy_qty,$pose_qty)
+     public function get_guillotine_price($copy_qty_and_excess,$pose_qty)
      {
-       return $this->guillotine_price*$copy_qty/$this->price_qty;
+       return $this->guillotine_price*$copy_qty_and_excess/$this->price_qty;
      }
 
      public function get_folding_arrangement_price($fold_qty)
@@ -90,9 +90,9 @@ class Controller extends BaseController
        return $this->folding_arrangement_price*$this->price_qty*$fold_qty;
      }
 
-     public function get_folding_per_qty_price($copy_qty,$fold_qty)
+     public function get_folding_per_qty_price($copy_qty_and_excess,$fold_qty)
      {
-       return $this->folding_per_qty_price*($copy_qty/$this->price_qty)*$fold_qty;
+       return $this->folding_per_qty_price*($copy_qty_and_excess/$this->price_qty)*$fold_qty;
      }
 
      public function get_punching_arrangement_price($difficulty)
@@ -100,9 +100,9 @@ class Controller extends BaseController
        return $this->punching_arrangement_prices[$difficulty];
      }
 
-     public function get_punching_per_qty_price($copy_qty,$difficulty)
+     public function get_punching_per_qty_price($copy_qty_and_excess,$difficulty)
      {
-       return $this->punching_arrangement_prices[$difficulty]*($copy_qty/$this->price_qty);
+       return $this->punching_arrangement_prices[$difficulty]*($copy_qty_and_excess/$this->price_qty);
      }
 
      public function get_perforating_arrangement_price()
@@ -110,9 +110,9 @@ class Controller extends BaseController
        return $this->perforating_arrangement_price;
      }
 
-     public function get_perforating_per_qty_price($copy_qty)
+     public function get_perforating_per_qty_price($copy_qty_and_excess)
      {
-       return $this->perforating_per_qty_price*($copy_qty/$this->price_qty);
+       return $this->perforating_per_qty_price*($copy_qty_and_excess/$this->price_qty);
      }
 
      public function get_lac_arrangement_price()
@@ -120,9 +120,9 @@ class Controller extends BaseController
        return $this->lac_arrangement_price;
      }
 
-     public function get_lac_per_qty_price($copy_qty)
+     public function get_lac_per_qty_price($copy_qty_and_excess)
      {
-       return $this->lac_per_qty_price*($copy_qty/$this->price_qty);
+       return $this->lac_per_qty_price*($copy_qty_and_excess/$this->price_qty);
      }
 
      public function get_sheet_size($paper_price_id)
@@ -214,7 +214,7 @@ class Controller extends BaseController
 
            if( $all_aligned_job_width_with_borders>$leaf_width ||  $all_aligned_job_height_with_borders>$leaf_height)     //If job borders don't fit in sheet
             continue;
-            
+
            $res["paper_price_id"] = $paper_price_id;
            $res["sheet_width"] = $sheet_width;
            $res["sheet_height"] = $sheet_height;

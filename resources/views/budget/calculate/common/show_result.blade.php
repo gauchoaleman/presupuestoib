@@ -140,7 +140,7 @@ if( !$back_color_qty )
 
           <div class="col-md-6">
               <label class="col-md-6 col-form-label text-md-right">Cantidad de hojas:</label>
-              {{$sheet_qty}}
+              {{$sheet_qty_and_excess}}
               <label class="col-md-6 col-form-label text-md-right">Tamaño hoja:</label>
               {{$sheet_size["width"]}}x{{$sheet_size["height"]}}
               <label class="col-md-6 col-form-label text-md-right">Pliegos ancho:</label>
