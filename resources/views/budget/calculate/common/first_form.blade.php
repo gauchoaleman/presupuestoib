@@ -333,53 +333,63 @@ if (!$plus_percentage) {
           </div>
         </div>
 
-          <div class="form-group row">
-            <label class="col-md-4 col-form-label text-md-right">
-              <b>{{ __('Nombre presupuesto:') }}</b>
-            </label>
-            <div class="col-md-6">
-              <label class="col-md-6 col-form-label text-md-right">
-                &nbsp;
-              </label>
-              <input type="text" size="15" name="budget_name" id="budget_name" value="{{$budget_name}}">
-              @error('budget_name')
-              <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Descuento:') }}</b></label>
-
-            <div class="col-md-6">
-              <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-              <input type="text" size="5" name="discount_percentage" id="discount_percentage" value="{{$discount_percentage}}">
-              @error('discount_percentage')
-              <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-md-4 col-form-label text-md-right"><b>{{ __('Plus:') }}</b></label>
-
-            <div class="col-md-6">
-              <label class="col-md-6 col-form-label text-md-right">&nbsp;</label>
-              <input type="text" size="5" name="plus_percentage" id="plus_percentage" value="{{$plus_percentage}}">
-              @error('plus_percentage')
-              <div class="alert alert-danger">{{ $message }}</div>
-              @enderror
-            </div>
-          </div>
-
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Nombre presupuesto:') }}</b>
+          </label>
           <div class="col-md-6">
-            <button type="submit" class="btn btn-primary">
-              {{ __('Entrar') }}
-            </button>
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <input type="text" size="15" name="budget_name" id="budget_name" value="{{$budget_name}}">
+            @error('budget_name')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
           </div>
+        </div>
 
-        </form>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Descuento:') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <input type="text" size="5" name="discount_percentage" id="discount_percentage" value="{{$discount_percentage}}">
+            @error('discount_percentage')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
 
-      </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Plus:') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <input type="text" size="5" name="plus_percentage" id="plus_percentage" value="{{$plus_percentage}}">
+            @error('plus_percentage')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <button type="submit" class="btn btn-primary">
+            {{ __('Entrar') }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
