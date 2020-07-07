@@ -3,7 +3,7 @@
 [X] al cargar lista de precios validar que archivo esté bien.
 [X] en set_dollar_price validar que la entrada sea numérica
 [X] en listado precios papel (paper_prices_list) poner precio en pesos
-[ ] Emprolijar código
+[ ] Emprolijar código controladores
 [ ] Sacar created_at y updated donde no hace falta
 [ ] Ver de poner formularios para celu (actualmente alguno están muy anchos.  Por ahí probar con ancho en 80% o algo así.
 [ ] Ver de poner menú top_bar para que ande bien en celu.
@@ -89,13 +89,14 @@ Preguntas para Mama:
       Guillotina
 
   Revistas
+
 [ ] Cuáles son todos los puntos a tener en cuenta? Cómo se calculan los puntos?
   [X] Acabado?
   [ ] Etc.
   [X] ¿Guillotina se calcula según ctd. de ejemplares?
   [X] ¿Se cobra guillotina de cortar resmas? No
 [ ] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)
-[?] Demasía: 100 Druckbogen.
+[X] Demasía: 100 Druckbogen.
 [X] Si es front_back calcular doble de poses en pliego --> Verlo con Mama.
 [X] Reemplazar sheet_height_qty x leaf_height_qty
 [X] Reemplazar sheet_width x leaf_width y sheet_height x leaf_height
@@ -112,4 +113,4 @@ Preguntas para Mama:
 [X] Agregar descuento
 [X] Agregar plus
 [ ] Ctd de poses no funciona
-[ ] Agregar contenido en show_result (abajo de laca).  Agregar definicion de variables en parte de arriba tambien.
+[X] Agregar contenido en show_result (abajo de laca).  Agregar definicion de variables en parte de arriba tambien.
