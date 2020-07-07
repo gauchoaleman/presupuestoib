@@ -59,8 +59,8 @@ class ShowResult extends Controller
         $total += $printing["prices"]["GTO52"]+$plate["prices"]["GTO52"];
       }
       else{
-        echo "fits_size:".$this->fits_size("GTO46",$leaf_width,$leaf_height);   //Bandera
-        if( $back_color_qty <= 2 && $this->fits_size("GTO46",$leaf_width,$leaf_height) ){
+        //echo "fits_size:".$this->fits_size("GTO46",$leaf_width,$leaf_height);   //Bandera
+        if( $back_color_qty <= 2 && $back_color_qty > 0 && $this->fits_size("GTO46",$leaf_width,$leaf_height) ){
           $printing["qty"]["GTO46"] = $leaf_qty_and_excess*$back_color_qty;
           $printing["prices"]["GTO46"] = $leaf_qty_and_excess*$back_color_qty*$this->printing_prices["GTO46"]/$this->price_qty;
           $plate["qty"]["GTO46"] = $back_color_qty;

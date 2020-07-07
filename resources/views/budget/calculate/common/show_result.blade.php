@@ -227,7 +227,7 @@ if( !$back_color_qty )
             {{$plus_percentage}}
           </div>
         </div>
-        
+
 
       </form>
     </div>
@@ -395,7 +395,7 @@ if( !$back_color_qty )
         </div>
       @endif
 
-      @if( $subtotal )
+      @if( isset($subtotal) )
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">
             <b>{{ __('Subtotal:') }}</b>
