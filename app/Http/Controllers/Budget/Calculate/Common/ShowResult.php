@@ -102,46 +102,9 @@ class ShowResult extends Controller
     return $ret;
   }
 
-  private function get_result_from_post( $input )
+  private function calculate_result($result_input)
   {
-    $paper_data = explode("/", $input["paper_data"]);
-    //print_r($paper_data);    //Bandera
-    $paper_price_id = $paper_data[0];
-    $leaf_width = $paper_data[1];
-    $leaf_height = $paper_data[2];
-    $leaf_width_qty = $paper_data[3];
-    $leaf_height_qty = $paper_data[4];
-    $pose_width_qty = $paper_data[5];
-    $pose_height_qty = $paper_data[6];
-    $position = $paper_data[7];
-    $front_back = $paper_data[8];
-
-    $copy_qty = $input["copy_qty"];
-    $machine = $input["machine"];
-    $front_color_qty = $input["front_color_qty"];
-    $back_color_qty = $input["back_color_qty"];
-    $fold_qty = $input["fold_qty"];
-    $punching_difficulty = $input["punching_difficulty"];
-    $perforate = isset($input["perforate"])?$input["perforate"]:0;
-    $lac = isset($input["lac"])?$input["lac"]:0;
-    $discount_percentage = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
-    $plus_percentage = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
-
-    $data["paper_price_id"] = $paper_price_id;
-    $data["sheet_size"] = $sheet_size;
-    //print_r($data["sheet_size"]);
-    $data["leaf_width"] = $leaf_width;
-    $data["leaf_height"] = $leaf_height;
-    $data["leaf_width_qty"] = $leaf_width_qty;
-    $data["leaf_height_qty"] = $leaf_height_qty;
-    $data["pose_width_qty"] = $pose_width_qty;
-    $data["pose_height_qty"] = $pose_height_qty;
-    $data["position"] = $position;
-    $data["front_back"] = $front_back;
-
-    $data["client_id"] = $input["client_id"];
-    $data["budget_name"] = $input["budget_name"];
-
+    extract($result_input);
     //If there is front and back, we have double pose
     if( $front_back == "front_back_width" )
       $pose_width_qty *= 2;
@@ -154,6 +117,7 @@ class ShowResult extends Controller
     $sheet_size = $this->get_sheet_size($paper_price_id);
     $leaf_qty_and_excess = $this->get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty);
 
+    $data["sheet_size"] = $sheet_size;
     $data["sheet_qty_and_excess"] = $sheet_qty_and_excess;
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
     $data["paper_price"] = $this->get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back);
@@ -169,7 +133,7 @@ class ShowResult extends Controller
       $total += $data["folding_per_qty_price"];
     }
     else
-      $data["fold"] = false;
+    $data["fold"] = false;
 
     if( $punching_difficulty ){
       $data["punch"] = true;
@@ -178,7 +142,7 @@ class ShowResult extends Controller
       $total += $data["punching_arrangement_price"]+$data["punching_per_qty_price"];
     }
     else
-      $data["punch"] = false;
+    $data["punch"] = false;
 
     if( $perforate ){
       $data["perforate"] = true;
@@ -187,7 +151,7 @@ class ShowResult extends Controller
       $total += $data["perforating_arrangement_price"]+$data["perforating_per_qty_price"];
     }
     else
-      $data["perforate"] = false;
+    $data["perforate"] = false;
 
     if( $lac ){
       $data["lac"] = true;
@@ -196,7 +160,7 @@ class ShowResult extends Controller
       $total += $data["lac_arrangement_price"]+$data["lac_per_qty_price"];
     }
     else
-      $data["lac"] = false;
+    $data["lac"] = false;
 
     if( $discount_percentage ){
       $data["subtotal"] = $total;
@@ -209,22 +173,70 @@ class ShowResult extends Controller
       $total += $total*$plus_percentage/100;
     }
     else
-      $data["subtotal"] = false;
+    $data["subtotal"] = false;
 
+    if( isset($dollar_price_id) )
+      $data["dollar_price"] = get_dollar_price($dollar_price_id);
+    else
+      $data["dollar_price"] = get_dollar_price();
     $data["total"] = $total;
     return $data;
   }
 
+  private function get_result_from_post( $input )
+  {
+    $paper_data = explode("/", $input["paper_data"]);
+    //print_r($paper_data);    //Bandera
+    $paper_price_id = $paper_data[0];
+    $leaf_width = $paper_data[1];
+    $leaf_height = $paper_data[2];
+    $leaf_width_qty = $paper_data[3];
+    $leaf_height_qty = $paper_data[4];
+    $pose_width_qty = $paper_data[5];
+    $pose_height_qty = $paper_data[6];
+    $position = $paper_data[7];
+    $front_back = $paper_data[8];
+
+    $data["copy_qty"] = $input["copy_qty"];
+    $data["machine"] = $input["machine"];
+    $data["front_color_qty"] = $input["front_color_qty"];
+    $data["back_color_qty"] = $input["back_color_qty"];
+    $data["fold_qty"] = $input["fold_qty"];
+    $data["punching_difficulty"] = $input["punching_difficulty"];
+    $data["perforate"] = isset($input["perforate"])?$input["perforate"]:0;
+    $data["lac"] = isset($input["lac"])?$input["lac"]:0;
+    $data["discount_percentage"] = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
+    $data["plus_percentage"] = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
+
+    $data["paper_price_id"] = $paper_price_id;
+    $data["leaf_width"] = $leaf_width;
+    $data["leaf_height"] = $leaf_height;
+    $data["leaf_width_qty"] = $leaf_width_qty;
+    $data["leaf_height_qty"] = $leaf_height_qty;
+    $data["pose_width_qty"] = $pose_width_qty;
+    $data["pose_height_qty"] = $pose_height_qty;
+    $data["position"] = $position;
+    $data["front_back"] = $front_back;
+
+    $data["client_id"] = $input["client_id"];
+    $data["budget_name"] = $input["budget_name"];
+    $calculated_result = $this->calculate_result($data);
+
+    return array_merge($calculated_result,$data);
+  }
+
   private function save_budget_to_database($data)
   {
-    print_r($data);
+    //print_r($data);
     $insert["paper_price_id"] = $data["paper_price_id"];
     $insert["client_id"] = $data["client_id"];
     $insert["budget_name"] = $data["budget_name"];
     $insert["leaf_width_qty"] = $data["leaf_width_qty"];
-    $insert["leaf_height_qty"] = $date["leaf_height_qty"];
+    $insert["leaf_height_qty"] = $data["leaf_height_qty"];
     $insert["pose_width_qty"] = $data["pose_width_qty"];
     $insert["pose_height_qty"] = $data["pose_height_qty"];
+    $insert["leaf_width"] = $data["leaf_width"];
+    $insert["leaf_height"] = $data["leaf_height"];
     $insert["copy_qty"] = $data["copy_qty"];
     $insert["machine"] = $data["machine"];
     $insert["front_color_qty"] = $data["front_color_qty"];
@@ -238,7 +250,6 @@ class ShowResult extends Controller
     $insert["position"] = $data["position"];
     $insert["front_back"] = $data["front_back"];
     $insert["dollar_price_id"] = get_dollar_price_id();
-
   }
 
   public function proc(Request $request)

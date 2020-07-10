@@ -48,7 +48,18 @@
                     <li><a href="/budget/calculate/book">Libro</a></li>
                     <li><a href="/budget/calculate/magazine">Revista</a></li>
                 </ul>
-            </li>          </ul>
+            </li>
+
+
+            <li class="dropdown-submenu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <span class="nav-label">Ver</span><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/budget/view/common/show_budget">Común</a></li>
+                    <li><a href="/budget/view/book">Libro</a></li>
+                    <li><a href="/budget/view/magazine">Revista</a></li>
+                </ul>
+            </li>
+          </ul>
       </li>
 
   </ul>

@@ -254,7 +254,7 @@ if( !$back_color_qty )
         <label class="col-md-6 col-form-label text-md-right">
           Costo:
         </label>
-        ${{number_format($paper_price*get_dollar_price(),2)}}
+        ${{number_format($paper_price*$dollar_price,2)}}
       </div>
     </div>
 
@@ -266,7 +266,7 @@ if( !$back_color_qty )
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        ${{number_format($guillotine_price*get_dollar_price(),2)}}
+        ${{number_format($guillotine_price*$dollar_price,2)}}
       </div>
     </div>
 
@@ -280,7 +280,7 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               {{$each_machine}}: {{$printing_and_plate_info["plate"]["qty"][$each_machine]}} unidades
             </label>
-            ${{number_format($printing_and_plate_info["plate"]["prices"][$each_machine]*get_dollar_price(),2)}}
+            ${{number_format($printing_and_plate_info["plate"]["prices"][$each_machine]*$dollar_price,2)}}
             @endif
             @endforeach
           </div>
@@ -296,7 +296,7 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               {{$each_machine}}: {{$printing_and_plate_info["printing"]["qty"][$each_machine]}} copias
             </label>
-            ${{number_format($printing_and_plate_info["printing"]["prices"][$each_machine]*get_dollar_price(),2)}}
+            ${{number_format($printing_and_plate_info["printing"]["prices"][$each_machine]*$dollar_price,2)}}
             @endif
             @endforeach
           </div>
@@ -311,11 +311,11 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               Arreglo:
             </label>
-            ${{number_format($folding_arrangement_price*get_dollar_price(),2)}}
+            ${{number_format($folding_arrangement_price*$dollar_price,2)}}
             <label class="col-md-6 col-form-label text-md-right">
               Por cantidad:
             </label>
-            ${{number_format($folding_per_qty_price*get_dollar_price(),2)}}
+            ${{number_format($folding_per_qty_price*$dollar_price,2)}}
           </div>
         </div>
         @endif
@@ -329,11 +329,11 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               Arreglo:
             </label>
-            ${{number_format($punching_arrangement_price*get_dollar_price(),2)}}
+            ${{number_format($punching_arrangement_price*$dollar_price,2)}}
             <label class="col-md-6 col-form-label text-md-right">
               Por cantidad:
             </label>
-            ${{number_format($punching_per_qty_price*get_dollar_price(),2)}}
+            ${{number_format($punching_per_qty_price*$dollar_price,2)}}
           </div>
         </div>
         @endif
@@ -347,11 +347,11 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               Arreglo:
             </label>
-            ${{number_format($perforating_arrangement_price*get_dollar_price(),2)}}
+            ${{number_format($perforating_arrangement_price*$dollar_price,2)}}
             <label class="col-md-6 col-form-label text-md-right">
               Por cantidad:
             </label>
-            ${{number_format($perforating_per_qty_price*get_dollar_price(),2)}}
+            ${{number_format($perforating_per_qty_price*$dollar_price,2)}}
           </div>
         </div>
         @endif
@@ -365,11 +365,11 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               Arreglo:
             </label>
-            ${{number_format($lac_arrangement_price*get_dollar_price(),2)}}
+            ${{number_format($lac_arrangement_price*$dollar_price,2)}}
             <label class="col-md-6 col-form-label text-md-right">
               Por cantidad:
             </label>
-            ${{number_format($lac_per_qty_price*get_dollar_price(),2)}}
+            ${{number_format($lac_per_qty_price*$dollar_price,2)}}
           </div>
         </div>
         @endif
@@ -383,7 +383,7 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            ${{number_format($subtotal*get_dollar_price(),2)}}
+            ${{number_format($subtotal*$dollar_price,2)}}
           </div>
         </div>
         @endif
@@ -397,7 +397,7 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            ${{number_format($discount_price*get_dollar_price(),2)}}
+            ${{number_format($discount_price*$dollar_price,2)}}
           </div>
         </div>
         @endif
@@ -411,7 +411,7 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            ${{number_format($plus_price*get_dollar_price(),2)}}
+            ${{number_format($plus_price*$dollar_price,2)}}
           </div>
         </div>
         @endif
@@ -424,7 +424,7 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            ${{number_format($total*get_dollar_price(),0)}}
+            ${{number_format($total*$dollar_price,0)}}
           </div>
         </div>
 
@@ -436,7 +436,7 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            ${{number_format(get_dollar_price(),2)}}
+            ${{number_format($dollar_price,2)}}
           </div>
         </div>
 
@@ -448,7 +448,7 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            ${{number_format(get_dollar_price(),2)}}
+            ${{number_format($dollar_price,2)}}
           </div>
         </div>
 

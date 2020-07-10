@@ -4,6 +4,7 @@
 [X] en set_dollar_price validar que la entrada sea numérica
 [X] en listado precios papel (paper_prices_list) poner precio en pesos
 [X] Emprolijar código controladores
+[ ] Emprolijar templates de includes
 [ ] Sacar created_at y updated donde no hace falta
 [ ] Ver de poner formularios para celu (actualmente alguno están muy anchos.  Por ahí probar con ancho en 80% o algo así.
 [ ] Ver de poner menú top_bar para que ande bien en celu.
