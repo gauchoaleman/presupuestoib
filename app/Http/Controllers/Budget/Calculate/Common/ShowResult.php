@@ -104,7 +104,6 @@ class ShowResult extends Controller
 
   private function get_result_from_post( $input )
   {
-    //print_r($_POST);   //Bandera
     $paper_data = explode("/", $input["paper_data"]);
     //print_r($paper_data);    //Bandera
     $paper_price_id = $paper_data[0];
@@ -117,12 +116,6 @@ class ShowResult extends Controller
     $position = $paper_data[7];
     $front_back = $paper_data[8];
 
-    //If there is front and back, we have double pose
-    if( $front_back == "front_back_width" )
-      $pose_width_qty *= 2;
-    if( $front_back == "front_back_height" )
-      $pose_height_qty *= 2;
-
     $copy_qty = $input["copy_qty"];
     $machine = $input["machine"];
     $front_color_qty = $input["front_color_qty"];
@@ -133,12 +126,6 @@ class ShowResult extends Controller
     $lac = isset($input["lac"])?$input["lac"]:0;
     $discount_percentage = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
     $plus_percentage = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
-
-    $pose_qty = $pose_width_qty*$pose_height_qty;
-    $copy_qty_and_excess = $copy_qty+$this->excess_leaves*$pose_qty;
-    $sheet_qty_and_excess = $this->get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
-    $sheet_size = $this->get_sheet_size($paper_price_id);
-    $leaf_qty_and_excess = $this->get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty);
 
     $data["paper_price_id"] = $paper_price_id;
     $data["sheet_size"] = $sheet_size;
@@ -152,15 +139,27 @@ class ShowResult extends Controller
     $data["position"] = $position;
     $data["front_back"] = $front_back;
 
+    $data["client_id"] = $input["client_id"];
+    $data["budget_name"] = $input["budget_name"];
+
+    //If there is front and back, we have double pose
+    if( $front_back == "front_back_width" )
+      $pose_width_qty *= 2;
+    if( $front_back == "front_back_height" )
+      $pose_height_qty *= 2;
+
+    $pose_qty = $pose_width_qty*$pose_height_qty;
+    $copy_qty_and_excess = $copy_qty+$this->excess_leaves*$pose_qty;
+    $sheet_qty_and_excess = $this->get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+    $sheet_size = $this->get_sheet_size($paper_price_id);
+    $leaf_qty_and_excess = $this->get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty);
+
     $data["sheet_qty_and_excess"] = $sheet_qty_and_excess;
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
     $data["paper_price"] = $this->get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back);
     $data["guillotine_price"] = $this->get_guillotine_price($copy_qty_and_excess,$pose_qty);
     $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
     $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"];
-
-    $data["client_id"] = $input["client_id"];
-    $data["budget_name"] = $input["budget_name"];
 
     if( $fold_qty ){
       $data["fold"] = true;
