@@ -23,6 +23,7 @@ Route::any('configuration/add_client', 'Configuration\AddClient');
 Route::any('configuration/show_clients', 'Configuration\ShowClients');
 Route::any('budget/calculate/common/first_form', 'Budget\Calculate\Common\FirstForm');
 Route::any('budget/calculate/common/show_result', 'Budget\Calculate\Common\ShowResult');
+Route::any('budget/calculate/common/show_job_paper', 'Budget\Calculate\Common\ShowResult');
 //Route::any('budget/calculate/common/select_paper', 'Budget\Calculate\Common\SelectPaper');
 
 //Route::any('budget/make', 'Budget\MakeBudget');

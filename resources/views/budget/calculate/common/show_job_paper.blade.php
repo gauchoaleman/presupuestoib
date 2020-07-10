@@ -21,7 +21,6 @@ $client_name = get_client_name($client_id);
 $budget_name = get_form_value("budget_name");
 $discount_percentage = get_form_value("discount_percentage");
 $plus_percentage = get_form_value("plus_percentage");
-$paper_data = get_form_value("paper_data");
 if( !$back_color_qty )
   $back_color_qty = 0;
 ?>
@@ -29,7 +28,7 @@ if( !$back_color_qty )
   <br>
   <h1 align="center">{{$budget_name}}</h1>
   <h2 align="center">Cliente: {{$client_name}}</h2>
-  <form method="POST" action="/budget/calculate/common/show_job_paper" target="_blank">
+  <form method="POST" action="/budget/calculate/common/show_job_paper">
     @csrf
     <div class="card" style="width: 50rem;">
       <div class="card-header">
@@ -181,8 +180,6 @@ if( !$back_color_qty )
         <input type="hidden" name="client_id" value="{{$client_id}}">
 
         <input type="hidden" name="budget_name" value="{{$budget_name}}">
-
-        <input type="hidden" name="paper_data" value="{{$paper_data}}">
 
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">
@@ -452,11 +449,9 @@ if( !$back_color_qty )
           </div>
         </div>
 
-        <div class="col-md-6">
-          <button type="submit" class="btn btn-primary" name="button_action" value="show_job_paper">
-            {{ __('Ver hoja encargo') }}
-          </button>
-        </div>
+        <script>
+          print();
+        </script>
 
       </div>
     </div>

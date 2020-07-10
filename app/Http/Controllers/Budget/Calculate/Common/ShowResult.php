@@ -102,15 +102,10 @@ class ShowResult extends Controller
     return $ret;
   }
 
-  private function get_plates_price($front_color_qty,$back_color_qty,$front_back)
-  {
-   return 100;
-  }
-
-  public function proc(Request $request)
+  private function get_result_from_post( $input )
   {
     //print_r($_POST);   //Bandera
-    $paper_data = explode("/", $_POST["paper_data"]);
+    $paper_data = explode("/", $input["paper_data"]);
     //print_r($paper_data);    //Bandera
     $paper_price_id = $paper_data[0];
     $leaf_width = $paper_data[1];
@@ -128,16 +123,16 @@ class ShowResult extends Controller
     if( $front_back == "front_back_height" )
       $pose_height_qty *= 2;
 
-    $copy_qty = $_POST["copy_qty"];
-    $machine = $_POST["machine"];
-    $front_color_qty = $_POST["front_color_qty"];
-    $back_color_qty = $_POST["back_color_qty"];
-    $fold_qty = $_POST["fold_qty"];
-    $punching_difficulty = $_POST["punching_difficulty"];
-    $perforate = isset($_POST["perforate"])?$_POST["perforate"]:0;
-    $lac = isset($_POST["lac"])?$_POST["lac"]:0;
-    $discount_percentage = isset($_POST["discount_percentage"])?$_POST["discount_percentage"]:0;
-    $plus_percentage = isset($_POST["plus_percentage"])?$_POST["plus_percentage"]:0;
+    $copy_qty = $input["copy_qty"];
+    $machine = $input["machine"];
+    $front_color_qty = $input["front_color_qty"];
+    $back_color_qty = $input["back_color_qty"];
+    $fold_qty = $input["fold_qty"];
+    $punching_difficulty = $input["punching_difficulty"];
+    $perforate = isset($input["perforate"])?$input["perforate"]:0;
+    $lac = isset($input["lac"])?$input["lac"]:0;
+    $discount_percentage = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
+    $plus_percentage = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
 
     $pose_qty = $pose_width_qty*$pose_height_qty;
     $copy_qty_and_excess = $copy_qty+$this->excess_leaves*$pose_qty;
@@ -208,8 +203,20 @@ class ShowResult extends Controller
       $data["plus_price"] = $total*$plus_percentage/100;
       $total += $total*$plus_percentage/100;
     }
+    else
+      $data["subtotal"] = false;
+
     $data["total"] = $total;
+    return $data;
+  }
+
+  public function proc(Request $request)
+  {
+    $data = $this->get_result_from_post($_POST);
     //print_r($data);      //Bandera
-    return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
+    if( $_POST["button_action"] == "show_job_paper" )
+      return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
+    else if( $_POST["button_action"] == "show_result" )
+      return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
   }
 }

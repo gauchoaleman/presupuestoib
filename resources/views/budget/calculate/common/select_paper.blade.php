@@ -488,8 +488,8 @@ if (!$back_color_qty) {
       </div>
     </div>
     <div class="col-md-6">
-      <button type="submit" class="btn btn-primary">
-        {{ __('Entrar') }}
+      <button type="submit" class="btn btn-primary" name="button_action" value="show_result">
+        {{ __('Ver resultado') }}
       </button>
     </div>
   </form>

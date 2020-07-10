@@ -3,7 +3,7 @@
 [X] al cargar lista de precios validar que archivo esté bien.
 [X] en set_dollar_price validar que la entrada sea numérica
 [X] en listado precios papel (paper_prices_list) poner precio en pesos
-[ ] Emprolijar código controladores
+[X] Emprolijar código controladores
 [ ] Sacar created_at y updated donde no hace falta
 [ ] Ver de poner formularios para celu (actualmente alguno están muy anchos.  Por ahí probar con ancho en 80% o algo así.
 [ ] Ver de poner menú top_bar para que ande bien en celu.
@@ -112,5 +112,5 @@ Preguntas para Mama:
 [X] Mirar etiquetas div en select_paper.blade.php.
 [X] Agregar descuento
 [X] Agregar plus
-[ ] Ctd de poses no funciona
+[x] Ctd de poses no funciona
 [X] Agregar contenido en show_result (abajo de laca).  Agregar definicion de variables en parte de arriba tambien.
