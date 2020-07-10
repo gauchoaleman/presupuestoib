@@ -140,6 +140,7 @@ class ShowResult extends Controller
     $sheet_size = $this->get_sheet_size($paper_price_id);
     $leaf_qty_and_excess = $this->get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty);
 
+    $data["paper_price_id"] = $paper_price_id;
     $data["sheet_size"] = $sheet_size;
     //print_r($data["sheet_size"]);
     $data["leaf_width"] = $leaf_width;
@@ -148,6 +149,8 @@ class ShowResult extends Controller
     $data["leaf_height_qty"] = $leaf_height_qty;
     $data["pose_width_qty"] = $pose_width_qty;
     $data["pose_height_qty"] = $pose_height_qty;
+    $data["position"] = $position;
+    $data["front_back"] = $front_back;
 
     $data["sheet_qty_and_excess"] = $sheet_qty_and_excess;
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
@@ -155,6 +158,9 @@ class ShowResult extends Controller
     $data["guillotine_price"] = $this->get_guillotine_price($copy_qty_and_excess,$pose_qty);
     $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
     $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"];
+
+    $data["client_id"] = $input["client_id"];
+    $data["budget_name"] = $input["budget_name"];
 
     if( $fold_qty ){
       $data["fold"] = true;
@@ -210,13 +216,41 @@ class ShowResult extends Controller
     return $data;
   }
 
+  private function save_budget_to_database($data)
+  {
+    print_r($data);
+    $insert["paper_price_id"] = $data["paper_price_id"];
+    $insert["client_id"] = $data["client_id"];
+    $insert["budget_name"] = $data["budget_name"];
+    $insert["leaf_width_qty"] = $data["leaf_width_qty"];
+    $insert["leaf_height_qty"] = $date["leaf_height_qty"];
+    $insert["pose_width_qty"] = $data["pose_width_qty"];
+    $insert["pose_height_qty"] = $data["pose_height_qty"];
+    $insert["copy_qty"] = $data["copy_qty"];
+    $insert["machine"] = $data["machine"];
+    $insert["front_color_qty"] = $data["front_color_qty"];
+    $insert["back_color_qty"] = $data["back_color_qty"];
+    $insert["fold_qty"] = $data["fold_qty"];
+    $insert["punching_difficulty"] = $data["punching_difficulty"];
+    $insert["perforate"] = $data["perforate"];
+    $insert["lac"] = $data["lac"];
+    $insert["discount_percentage"] = $data["discount_percentage"];
+    $insert["plus_percentage"] = $data["plus_percentage"];
+    $insert["position"] = $data["position"];
+    $insert["front_back"] = $data["front_back"];
+    $insert["dollar_price_id"] = get_dollar_price_id();
+
+  }
+
   public function proc(Request $request)
   {
     $data = $this->get_result_from_post($_POST);
     //print_r($data);      //Bandera
     if( $_POST["button_action"] == "show_job_paper" )
       return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
-    else if( $_POST["button_action"] == "show_result" )
+    else if( $_POST["button_action"] == "show_result" ){
+      $this->save_budget_to_database($data);
       return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
+    }
   }
 }

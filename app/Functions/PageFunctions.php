@@ -98,6 +98,11 @@ function get_dollar_price() {
   return $max_dollar_price->amount;
 }
 
+function get_dollar_price_id() {
+  $max_dollar_price = DB::table('dollar_prices')->orderBy('id', 'desc')->select('id')->first();
+  return $max_dollar_price_id->id;
+}
+
 function aasort (&$array, $key) {
   $sorter=array();
   $ret=array();
