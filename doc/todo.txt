@@ -110,6 +110,7 @@ Preguntas para Mama:
 [?] Dorso con GTO46: Usar Tamaño trabajo (420x300), tamaño papel (950x650) --> Teóricamente no entra en GTO46, preguntar Mama.
 [X] Agregar tamaño papel en Resultado, sección papel.
 [ ] En tabla de precios papel poner width antes que height
+[ ] En show_result no muestra poses con frente/dorso (mutiplicado x 2)
 [X] Mirar etiquetas div en select_paper.blade.php.
 [X] Agregar descuento
 [X] Agregar plus

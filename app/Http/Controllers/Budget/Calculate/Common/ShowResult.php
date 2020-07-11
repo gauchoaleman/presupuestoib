@@ -117,6 +117,8 @@ class ShowResult extends Controller
     $sheet_size = $this->get_sheet_size($paper_price_id);
     $leaf_qty_and_excess = $this->get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty);
 
+    $data["pose_width_qty"] = $pose_width_qty;
+    $data["pose_height_qty"] = $pose_height_qty;
     $data["sheet_size"] = $sheet_size;
     $data["sheet_qty_and_excess"] = $sheet_qty_and_excess;
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
@@ -222,7 +224,7 @@ class ShowResult extends Controller
     $data["budget_name"] = $input["budget_name"];
     $calculated_result = $this->calculate_result($data);
 
-    return array_merge($calculated_result,$data);
+    return array_merge($data,$calculated_result);
   }
 
   private function save_budget_to_database($data)

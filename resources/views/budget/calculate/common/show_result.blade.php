@@ -246,11 +246,11 @@ if( !$back_color_qty )
         <label class="col-md-6 col-form-label text-md-right">
           Poses ancho:
         </label>
-        {{$pose_width_qty}}
+        {{$pose_width_qty}}@if( $front_back == "front_back_width" ) Frente/Dorso @endif
         <label class="col-md-6 col-form-label text-md-right">
           Poses alto:
         </label>
-        {{$pose_height_qty}}
+        {{$pose_height_qty}}@if( $front_back == "front_back_height" ) Frente/Dorso @endif
         <label class="col-md-6 col-form-label text-md-right">
           Costo:
         </label>
