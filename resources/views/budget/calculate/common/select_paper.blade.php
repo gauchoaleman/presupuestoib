@@ -386,19 +386,17 @@ if (!$back_color_qty) {
               </td>
               <td>
                 <div align="center">
+                  {{$size["pose_width_qty"]}}
                   @if( $size["front_back"] == "front_back_width")
-                    {{$size["pose_width_qty"]*2}} (frente/dorso)
-                  @else
-                    {{$size["pose_width_qty"]}}
+                    (frente/dorso)
                   @endif
                 </div>
               </td>
               <td>
                 <div align="center">
+                  {{$size["pose_height_qty"]}}
                   @if( $size["front_back"] == "front_back_height")
-                    {{$size["pose_height_qty"]*2}} (frente/dorso)
-                  @else
-                    {{$size["pose_height_qty"]}}
+                    (frente/dorso)
                   @endif
                 </div>
               </td>

@@ -123,4 +123,10 @@ function aasort (&$array, $key) {
 function get_form_value($var_name){
   return request()->get($var_name)?request()->get($var_name):request()->old($var_name);
 }
+
+function swap(&$x, &$y) {
+  $tmp=$x;
+  $x=$y;
+  $y=$tmp;
+}
 ?>

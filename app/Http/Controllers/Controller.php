@@ -148,6 +148,15 @@ class Controller extends BaseController
   public function calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,$position,$front_back)
   {
     $ret = array();
+
+    if( $position == "lying" )
+      swap($job_width,$job_height);
+
+    if( $front_back == "front_back_width" )
+      $job_width *= 2;
+    if( $front_back == "front_back_height" )
+      $job_height *= 2;
+
     for( $leaf_width_qty=2;$leaf_width_qty<=8;$leaf_width_qty++ ){
       for( $leaf_height_qty=2;$leaf_height_qty<=8;$leaf_height_qty++ ){
         $continue = array(); //Bandera
@@ -241,9 +250,21 @@ class Controller extends BaseController
 
         $res["front_back"] = $front_back;
         $res["continue"] = $continue;
+
+        if( $front_back == "front_back_width" ){
+          $res["job_width"] /= 2;
+          $res["pose_width_qty"] *= 2;
+        }
+        if( $front_back == "front_back_height" ){
+          $res["job_height"] /= 2;
+          $res["pose_height_qty"] *= 2;
+        }
+
         $ret[] = $res;
       }
     }
+
+
     return $ret;
   }
 
@@ -251,14 +272,14 @@ class Controller extends BaseController
   {
     if( !$back_color_qty || !$front_back) { //If there is no printing on back ew calculate normal positions
       $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","normal");
-      $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height,$job_width,$pose_qty,$machine,"lying","normal");
+      $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"lying","normal");
       $merged = array_merge($normal_normal,$lying_normal);
     }
     else if($front_back){ //If there is printing on back we use front and back positions
-      $normal_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width*2,$job_height,$pose_qty,$machine,"normal","front_back_width");
-      $normal_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height*2,$pose_qty,$machine,"normal","front_back_height");
-      $lying_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height*2,$job_width,$pose_qty,$machine,"lying","front_back_width");
-      $lying_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height,$job_width*2,$pose_qty,$machine,"lying","front_back_height");
+      $normal_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","front_back_width");
+      $normal_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","front_back_height");
+      $lying_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"lying","front_back_width");
+      $lying_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"lying","front_back_height");
       $merged = array_merge($normal_front_back_width,$normal_front_back_height,$lying_front_back_width,$lying_front_back_height);
       //If no accepted sheet size, we use no front_back
       //echo(sizeof($merged)."/");   //Bandera

@@ -105,11 +105,6 @@ class ShowResult extends Controller
   private function calculate_result($result_input)
   {
     extract($result_input);
-    //If there is front and back, we have double pose
-    if( $front_back == "front_back_width" )
-      $pose_width_qty *= 2;
-    if( $front_back == "front_back_height" )
-      $pose_height_qty *= 2;
 
     $pose_qty = $pose_width_qty*$pose_height_qty;
     $copy_qty_and_excess = $copy_qty+$this->excess_leaves*$pose_qty;
