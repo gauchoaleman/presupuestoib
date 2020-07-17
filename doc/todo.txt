@@ -47,30 +47,50 @@ Preguntas para Mama:
       Si frente y dorso entran a la misma plancha son 4 Colores
       Si es 4/1 y entran a la misma plancha se imprime 4/4
     *Impresión
-      Arreglo
-        Se cobra x ctd. de planchas y tamaño de plancha
-      Se cobra x
+[ ]   Arreglo
+        Se cobra x ctd. de planchas y tamaño de plancha (máquina)
+          (5 planchas es *5 según tamaño plancha)
+[ ]   Lavado de máquina (Fijo)
+        Ingresar ctd. de lavados (todos los lavados valen lo mismo (350 x el momento))
+[ ]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
+        Multiplicar por costo Kg CMYK o Pantone (precio varía)
+
+[X]   Impresión en si:
+        Se cobra x
         ctd. de pliegos
         ctd. de Colores
         tamaño de plancha
         Frente o Frente y dorso
-        Lavado de máquina
-          x ctd. de tintas diferente a negro en GTO46 y Adast
-          x 5to color en GTO52
+[ ]     Mirar ShowResult, línea 54 a 59 (tiene que multiplicar *2 o no?)
     *Acabado
-      Guillotina (se cobra por ctd. de poses y copias)
-      Plegado
+[x]   Guillotina (se cobra por ctd. de poses y copias).  Falta tener en cuenta ctd. de poses.
+
+[X]   Plegado
         Arreglo (x ctd. de pliegues)
         Se cobra x cantidad de pliegos y ctd. de pliegues
-      Troquelado
+[x]   Troquelado
         Arreglo (se cobra por dificultad (1, 2, 3, 4))
         Se cobra x ctd. de pliegos y dificultad (1,2,3,4)
-      Perforado/Trazado
+[ ]     Descartonar x millar
+[X]   Perforado
         Arreglo (fijo)
         Se cobra x ctd. de pliegos
-      Laca UV
+[ ]   Trazado (despues de perforar)
         Arreglo (fijo)
         Se cobra x ctd. de pliegos
+[X]   Laca UV
+        Arreglo (fijo)
+        Se cobra x ctd. de pliegos
+[ ]   Compilar
+        Manual o x máquina
+        X ctd. de pliegos (x millar)
+[ ]   Acabados varios
+        Ingresar monto en pesos
+[ ]  *Montage
+      Ingresar monto en pesos
+[ ]  *Envío
+      Ingresar monto en pesos
+
   Libros
     *Qué datos pedir
       Páginas (siempre 1/1)
@@ -103,16 +123,19 @@ Preguntas para Mama:
 [X] Reemplazar sheet_width x leaf_width y sheet_height x leaf_height
 [X] En ShowResult conseguir leaf_width y leaf_height
 [X] Reemplazar paper_width x sheet_width y paper_height x sheet_height
-[ ] Test fits_size function (no funciona)
+[ ] Test fits_size function
 [X] 880x630 no debería funcionar. (tamaño trabajo: 210x300)
-[ ] Calcular poses con frente dorso * 2 al seleccionar papel (no en Show Result)
+[X] Calcular poses con frente dorso * 2 al seleccionar papel (no en Show Result)
     No Calcular directamente en template select_paper.blade.php sino en función de procesar tamaño.
 [?] Dorso con GTO46: Usar Tamaño trabajo (420x300), tamaño papel (950x650) --> Teóricamente no entra en GTO46, preguntar Mama.
 [X] Agregar tamaño papel en Resultado, sección papel.
 [ ] En tabla de precios papel poner width antes que height
-[ ] En show_result no muestra poses con frente/dorso (mutiplicado x 2)
+[X] En show_result no muestra poses con frente/dorso (mutiplicado x 2)
 [X] Mirar etiquetas div en select_paper.blade.php.
 [X] Agregar descuento
 [X] Agregar plus
 [x] Ctd de poses no funciona
 [X] Agregar contenido en show_result (abajo de laca).  Agregar definicion de variables en parte de arriba tambien.
+[ ] En mostrar clientes cambiar "Precios dólar" por "Listado clientes"
+[ ] En presupuesto ingresar nombres de tintas Pantone (colores especiales), máximo 3 colores especiales (ingresar código Pantone)
+[ ] Sacar precios/descuento/plus de hoja trabajo
