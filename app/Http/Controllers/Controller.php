@@ -58,6 +58,10 @@ class Controller extends BaseController
                                   "GTO52"=>234,
                                   "GTO46"=>345);
 
+  public $printing_arrangement_prices = array("Adast"=>123,
+                                              "GTO52"=>234,
+                                              "GTO46"=>345);
+
   public $plate_prices = array("Adast"=>12,
                                "GTO52"=>23,
                                "GTO46"=>34);

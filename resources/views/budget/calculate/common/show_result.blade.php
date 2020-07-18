@@ -292,12 +292,18 @@ if( !$back_color_qty )
           </label>
           <div class="col-md-6">
             @foreach(array("Adast","GTO52","GTO46") as $each_machine)
-            @if( isset($printing_and_plate_info["printing"]["qty"][$each_machine]))
-            <label class="col-md-6 col-form-label text-md-right">
-              {{$each_machine}}: {{$printing_and_plate_info["printing"]["qty"][$each_machine]}} copias
-            </label>
-            ${{number_format($printing_and_plate_info["printing"]["prices"][$each_machine]*$dollar_price,2)}}
-            @endif
+              @if( isset($printing_and_plate_info["printing"]["qty"][$each_machine]))
+              <label class="col-md-6 col-form-label text-md-right">
+                {{$each_machine}}: {{$printing_and_plate_info["printing"]["qty"][$each_machine]}} copias
+              </label>
+              ${{number_format($printing_and_plate_info["printing"]["printing_prices"][$each_machine]*$dollar_price,2)}}
+
+              <label class="col-md-6 col-form-label text-md-right">
+                Arreglo {{$each_machine}}:
+              </label>
+              ${{number_format($printing_and_plate_info["printing"]["arrangement_prices"][$each_machine]*$dollar_price,2)}}
+
+              @endif
             @endforeach
           </div>
         </div>
