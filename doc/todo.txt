@@ -75,7 +75,7 @@ Preguntas para Mama:
 [X]   Perforado
         Arreglo (fijo)
         Se cobra x ctd. de pliegos
-[ ]   Trazado (despues de perforar)
+[X]   Trazado (despues de perforar)
         Arreglo (fijo)
         Se cobra x ctd. de pliegos
 [X]   Laca UV

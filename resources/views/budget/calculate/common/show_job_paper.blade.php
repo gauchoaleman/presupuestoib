@@ -18,6 +18,7 @@ $machine = get_form_value("machine");
 $fold_qty = get_form_value("fold_qty");
 $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");
+$tracing = get_form_value("tracing");
 $lac = get_form_value("lac");
 $client_id = get_form_value("client_id");
 $client_name = get_client_name($client_id);
@@ -311,13 +312,33 @@ if( !$back_color_qty )
           </label>
           <div class="col-md-6">
             @foreach(array("Adast","GTO52","GTO46") as $each_machine)
-            @if( isset($printing_and_plate_info["printing"]["qty"][$each_machine]))
-            <label class="col-md-6 col-form-label text-md-right">
-              {{$each_machine}}: {{$printing_and_plate_info["printing"]["qty"][$each_machine]}} copias
-            </label>
-            ${{number_format($printing_and_plate_info["printing"]["prices"][$each_machine]*get_dollar_price(),2)}}
-            @endif
+              @if( isset($printing_and_plate_info["printing"]["qty"][$each_machine]))
+              <label class="col-md-6 col-form-label text-md-right">
+                {{$each_machine}}: {{$printing_and_plate_info["printing"]["qty"][$each_machine]}} copias
+              </label>
+              ${{number_format($printing_and_plate_info["printing"]["printing_prices"][$each_machine]*$dollar_price,2)}}
+
+              <label class="col-md-6 col-form-label text-md-right">
+                Arreglo {{$each_machine}}:
+              </label>
+              ${{number_format($printing_and_plate_info["printing"]["arrangement_prices"][$each_machine]*$dollar_price,2)}}
+
+              @endif
             @endforeach
+
+            @if($ink_prices["cmyk"])
+              <label class="col-md-6 col-form-label text-md-right">
+                Tinta CMYK:
+              </label>
+              ${{number_format($ink_prices["cmyk"]*$dollar_price,2)}}
+            @endif
+            @if($ink_prices["pantone"])
+              <label class="col-md-6 col-form-label text-md-right">
+                Tinta Pantone:
+              </label>
+              ${{number_format($ink_prices["pantone"]*$dollar_price,2)}}
+            @endif
+
           </div>
         </div>
 
