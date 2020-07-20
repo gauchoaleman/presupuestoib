@@ -65,7 +65,8 @@ class Controller extends BaseController
   public $plate_prices = array("Adast"=>12,
                                "GTO52"=>23,
                                "GTO46"=>34);
-
+  public $cmyk_ink_kilo_price = 10;
+  public $pantone_ink_kilo_price = 30;
 
   public $guillotine_price = 123;
 
@@ -74,6 +75,7 @@ class Controller extends BaseController
 
   public $punching_arrangement_prices = array(1=>10,2=>20,3=>30,4=>40);
   public $punching_per_qty_prices = array(1=>10,2=>20,3=>30,4=>40);
+  public $break_out_price = 123;
 
   public $perforating_arrangement_price = 123;
   public $perforating_per_qty_price = 123;
@@ -109,6 +111,11 @@ class Controller extends BaseController
     return $this->punching_arrangement_prices[$difficulty]*($copy_qty_and_excess/$this->price_qty);
   }
 
+  public function get_break_out_per_qty_price($copy_qty_and_excess)
+  {
+    return $this->break_out_price*($copy_qty_and_excess/$this->price_qty);
+  }
+
   public function get_perforating_arrangement_price()
   {
     return $this->perforating_arrangement_price;
@@ -137,6 +144,27 @@ class Controller extends BaseController
     first();
     $ret["width"] = $sheet_size_get->width;
     $ret["height"] = $sheet_size_get->height;
+    return $ret;
+  }
+
+  public function get_pantone_color_qty($pantone_1,$pantone_2,$pantone_3)
+  {
+    $ret = 0;
+    $pantone_1?$ret++:nop;
+    $pantone_2?$ret++:nop;
+    $pantone_3?$ret++:nop;
+    return $ret;
+  }
+
+  public function get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$pantone_1,$pantone_2,$pantone_3)
+  {
+    $pantone_color_qty = $this->get_pantone_color_qty($pantone_1,$pantone_2,$pantone_3);
+    $cmyk_color_qty = $front_color_qty+$back_color_qty-$pantone_color_qty;
+    //print("pantone_color_qty:".$pantone_color_qty);     //Bandera
+    //print("cmyk_color_qty:".$cmyk_color_qty);        //Bandera
+    $ret["cmyk"] = $cmyk_color_qty*$leaf_width*$leaf_height*$leaf_qty_and_excess*0.005*$this->cmyk_ink_kilo_price;
+    $ret["pantone"] = $pantone_color_qty*$leaf_width*$leaf_height*$leaf_qty_and_excess*0.005*$this->pantone_ink_kilo_price;
+    $ret["total"] = $ret["cmyk"] + $ret["pantone"];
     return $ret;
   }
 

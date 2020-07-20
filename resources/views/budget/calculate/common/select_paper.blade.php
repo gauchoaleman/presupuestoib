@@ -8,6 +8,9 @@ $width = get_form_value("width");
 $height = get_form_value("height");
 $front_color_qty = get_form_value("front_color_qty");
 $back_color_qty = get_form_value("back_color_qty");
+$pantone_1 = get_form_value("pantone_1");
+$pantone_2 = get_form_value("pantone_2");
+$pantone_3 = get_form_value("pantone_3");
 $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
 $paper_price_id = get_form_value("paper_price_id");
@@ -86,6 +89,25 @@ if (!$back_color_qty) {
             </label>
             <input type="hidden" name="back_color_qty" value="{{$back_color_qty}}">
             {{$back_color_qty}}
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 1:
+            </label>
+            <input type="hidden" name="pantone_1" value="{{$pantone_1}}">
+            {{$pantone_1}}
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 2:
+            </label>
+            <input type="hidden" name="pantone_2" value="{{$pantone_2}}">
+            {{$pantone_2}}
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 3:
+            </label>
+            <input type="hidden" name="pantone_3" value="{{$pantone_3}}">
+            {{$pantone_3}}
+
           </div>
         </div>
 

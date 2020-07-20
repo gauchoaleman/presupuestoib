@@ -47,12 +47,12 @@ Preguntas para Mama:
       Si frente y dorso entran a la misma plancha son 4 Colores
       Si es 4/1 y entran a la misma plancha se imprime 4/4
     *Impresión
-[ ]   Arreglo
+[X]   Arreglo
         Se cobra x ctd. de planchas y tamaño de plancha (máquina)
           (5 planchas es *5 según tamaño plancha)
 [ ]   Lavado de máquina (Fijo)
         Ingresar ctd. de lavados (todos los lavados valen lo mismo (350 x el momento))
-[ ]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
+[X]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
         Multiplicar por costo Kg CMYK o Pantone (precio varía)
 
 [X]   Impresión en si:
@@ -63,7 +63,7 @@ Preguntas para Mama:
         Frente o Frente y dorso
 [ ]     Mirar ShowResult, línea 54 a 59 (tiene que multiplicar *2 o no?)
     *Acabado
-[x]   Guillotina (se cobra por ctd. de poses y copias).  Falta tener en cuenta ctd. de poses.
+[X]   Guillotina (se cobra por ctd. de poses y copias).
 
 [X]   Plegado
         Arreglo (x ctd. de pliegues)

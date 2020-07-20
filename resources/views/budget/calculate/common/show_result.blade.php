@@ -8,6 +8,9 @@ $width = get_form_value("width");
 $height = get_form_value("height");
 $front_color_qty = get_form_value("front_color_qty");
 $back_color_qty = get_form_value("back_color_qty");
+$pantone_1 = get_form_value("pantone_1");
+$pantone_2 = get_form_value("pantone_2");
+$pantone_3 = get_form_value("pantone_3");
 $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
 $paper_price_id = get_form_value("paper_price_id");
@@ -84,6 +87,24 @@ if( !$back_color_qty )
             </label>
             <input type="hidden" name="back_color_qty" value="{{$back_color_qty}}">
             {{$back_color_qty}}
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 1:
+            </label>
+            <input type="hidden" name="pantone_1" value="{{$pantone_1}}">
+            {{$pantone_1}}
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 2:
+            </label>
+            <input type="hidden" name="pantone_2" value="{{$pantone_2}}">
+            {{$pantone_2}}
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 3:
+            </label>
+            <input type="hidden" name="pantone_3" value="{{$pantone_3}}">
+            {{$pantone_3}}
           </div>
         </div>
 
@@ -305,6 +326,20 @@ if( !$back_color_qty )
 
               @endif
             @endforeach
+
+            @if($ink_prices["cmyk"])
+              <label class="col-md-6 col-form-label text-md-right">
+                Tinta CMYK:
+              </label>
+              ${{number_format($ink_prices["cmyk"]*$dollar_price,2)}}
+            @endif
+            @if($ink_prices["pantone"])
+              <label class="col-md-6 col-form-label text-md-right">
+                Tinta Pantone:
+              </label>
+              ${{number_format($ink_prices["pantone"]*$dollar_price,2)}}
+            @endif
+
           </div>
         </div>
 
@@ -340,6 +375,10 @@ if( !$back_color_qty )
               Por cantidad:
             </label>
             ${{number_format($punching_per_qty_price*$dollar_price,2)}}
+            <label class="col-md-6 col-form-label text-md-right">
+              Descartonar:
+            </label>
+            ${{number_format($break_out_per_qty_price*$dollar_price,2)}}
           </div>
         </div>
         @endif
@@ -431,18 +470,6 @@ if( !$back_color_qty )
               &nbsp;
             </label>
             ${{number_format($total*$dollar_price,0)}}
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Valor dólar:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            ${{number_format($dollar_price,2)}}
           </div>
         </div>
 

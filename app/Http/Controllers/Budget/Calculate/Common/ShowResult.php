@@ -128,7 +128,8 @@ class ShowResult extends Controller
     $data["paper_price"] = $this->get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back);
     $data["guillotine_price"] = $this->get_guillotine_price($copy_qty_and_excess,$pose_qty);
     $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
-    $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"];
+    $data["ink_prices"] = $this->get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$pantone_1,$pantone_2,$pantone_3);
+    $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["ink_prices"]["total"];
 
     if( $fold_qty ){
       $data["fold"] = true;
@@ -144,7 +145,8 @@ class ShowResult extends Controller
       $data["punch"] = true;
       $data["punching_arrangement_price"] = $this->get_punching_arrangement_price($punching_difficulty);
       $data["punching_per_qty_price"] = $this->get_punching_per_qty_price($copy_qty_and_excess,$punching_difficulty);
-      $total += $data["punching_arrangement_price"]+$data["punching_per_qty_price"];
+      $data["break_out_per_qty_price"] = $this->get_break_out_per_qty_price($copy_qty_and_excess);
+      $total += $data["punching_arrangement_price"]+$data["punching_per_qty_price"]+$data["break_out_per_qty_price"];
     }
     else
     $data["punch"] = false;
@@ -206,6 +208,9 @@ class ShowResult extends Controller
     $data["machine"] = $input["machine"];
     $data["front_color_qty"] = $input["front_color_qty"];
     $data["back_color_qty"] = $input["back_color_qty"];
+    $data["pantone_1"] = $input["pantone_1"];
+    $data["pantone_2"] = $input["pantone_2"];
+    $data["pantone_3"] = $input["pantone_3"];
     $data["fold_qty"] = $input["fold_qty"];
     $data["punching_difficulty"] = $input["punching_difficulty"];
     $data["perforate"] = isset($input["perforate"])?$input["perforate"]:0;
@@ -232,7 +237,7 @@ class ShowResult extends Controller
 
   private function save_budget_to_database($data)
   {
-    //print_r($data);
+    //print_r($data);   //Bandera
     $insert["paper_price_id"] = $data["paper_price_id"];
     $insert["client_id"] = $data["client_id"];
     $insert["budget_name"] = $data["budget_name"];
@@ -246,6 +251,9 @@ class ShowResult extends Controller
     $insert["machine"] = $data["machine"];
     $insert["front_color_qty"] = $data["front_color_qty"];
     $insert["back_color_qty"] = $data["back_color_qty"];
+    $insert["pantone_1"] = $data["pantone_1"];
+    $insert["pantone_2"] = $data["pantone_2"];
+    $insert["pantone_3"] = $data["pantone_3"];
     $insert["fold_qty"] = $data["fold_qty"];
     $insert["punching_difficulty"] = $data["punching_difficulty"];
     $insert["perforate"] = $data["perforate"];

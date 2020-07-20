@@ -6,6 +6,9 @@ $width = get_form_value("width");
 $height = get_form_value("height");
 $front_color_qty = get_form_value("front_color_qty");
 $back_color_qty = get_form_value("back_color_qty");
+$pantone_1 = get_form_value("pantone_1");
+$pantone_2 = get_form_value("pantone_2");
+$pantone_3 = get_form_value("pantone_3");
 $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
 $machine = get_form_value("machine");
@@ -163,6 +166,37 @@ if (!$plus_percentage) {
                 {{ $message }}
               </div>
             @enderror
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 1:
+            </label>
+            <input type="text" size="5" name="pantone_1" id="pantone_1" value="{{$pantone_1}}">
+            @error('pantone_1')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 2:
+            </label>
+            <input type="text" size="5" name="pantone_2" id="pantone_2" value="{{$pantone_2}}">
+            @error('pantone_2')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone 3:
+            </label>
+            <input type="text" size="5" name="pantone_3" id="pantone_3" value="{{$pantone_3}}">
+            @error('pantone_3')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+
           </div>
         </div>
 
