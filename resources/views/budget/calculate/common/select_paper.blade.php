@@ -18,6 +18,7 @@ $machine = get_form_value("machine");
 $fold_qty = get_form_value("fold_qty");
 $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");
+$tracing = get_form_value("tracing");
 $lac = get_form_value("lac");
 $client_id = get_form_value("client_id");
 $client_name = get_client_name($client_id);
@@ -186,6 +187,19 @@ if (!$back_color_qty) {
               &nbsp;
             </label>
             @if( $perforate ) Si @else No @endif
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Trazado:') }}</b>
+          </label>
+          <input type="hidden" name="tracing" value="{{$tracing}}">
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            @if( $tracing ) Si @else No @endif
           </div>
         </div>
 

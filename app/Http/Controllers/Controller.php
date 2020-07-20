@@ -80,6 +80,9 @@ class Controller extends BaseController
   public $perforating_arrangement_price = 123;
   public $perforating_per_qty_price = 123;
 
+  public $tracing_arrangement_price = 100;
+  public $tracing_per_qty_price = 100;
+
   public $lac_arrangement_price = 123;
   public $lac_per_qty_price = 123;
 
@@ -126,6 +129,16 @@ class Controller extends BaseController
     return $this->perforating_per_qty_price*($copy_qty_and_excess/$this->price_qty);
   }
 
+  public function get_tracing_arrangement_price()
+  {
+    return $this->tracing_arrangement_price;
+  }
+
+  public function get_tracing_per_qty_price($copy_qty_and_excess)
+  {
+    return $this->tracing_per_qty_price*($copy_qty_and_excess/$this->price_qty);
+  }
+
   public function get_lac_arrangement_price()
   {
     return $this->lac_arrangement_price;
@@ -150,9 +163,9 @@ class Controller extends BaseController
   public function get_pantone_color_qty($pantone_1,$pantone_2,$pantone_3)
   {
     $ret = 0;
-    $pantone_1?$ret++:nop;
-    $pantone_2?$ret++:nop;
-    $pantone_3?$ret++:nop;
+    $pantone_1?$ret++:assert(true);;
+    $pantone_2?$ret++:assert(true);;
+    $pantone_3?$ret++:assert(true);;
     return $ret;
   }
 

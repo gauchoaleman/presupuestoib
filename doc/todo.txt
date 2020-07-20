@@ -68,10 +68,10 @@ Preguntas para Mama:
 [X]   Plegado
         Arreglo (x ctd. de pliegues)
         Se cobra x cantidad de pliegos y ctd. de pliegues
-[x]   Troquelado
+[X]   Troquelado
         Arreglo (se cobra por dificultad (1, 2, 3, 4))
         Se cobra x ctd. de pliegos y dificultad (1,2,3,4)
-[ ]     Descartonar x millar
+[X]     Descartonar x millar
 [X]   Perforado
         Arreglo (fijo)
         Se cobra x ctd. de pliegos

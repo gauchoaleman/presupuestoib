@@ -15,6 +15,7 @@ $machine = get_form_value("machine");
 $fold_qty = get_form_value("fold_qty");
 $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");
+$tracing = get_form_value("tracing");
 $lac = get_form_value("lac");
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
@@ -317,6 +318,22 @@ if (!$plus_percentage) {
             </label>
             <input type="checkbox" name="perforate" value="1" id="perforate"
               @if($perforate == "1")
+              checked
+              @endif
+            >
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Trazado:') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <input type="checkbox" name="tracing" value="1" id="tracing"
+              @if($tracing == "1")
               checked
               @endif
             >

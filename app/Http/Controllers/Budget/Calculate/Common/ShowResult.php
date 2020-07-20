@@ -160,6 +160,15 @@ class ShowResult extends Controller
     else
     $data["perforate"] = false;
 
+    if( $tracing ){
+      $data["tracing"] = true;
+      $data["tracing_arrangement_price"] = $this->get_tracing_arrangement_price();
+      $data["tracing_per_qty_price"] = $this->get_tracing_per_qty_price($copy_qty_and_excess);
+      $total += $data["tracing_arrangement_price"]+$data["tracing_per_qty_price"];
+    }
+    else
+    $data["perforate"] = false;
+
     if( $lac ){
       $data["lac"] = true;
       $data["lac_arrangement_price"] = $this->get_lac_arrangement_price();
@@ -214,6 +223,7 @@ class ShowResult extends Controller
     $data["fold_qty"] = $input["fold_qty"];
     $data["punching_difficulty"] = $input["punching_difficulty"];
     $data["perforate"] = isset($input["perforate"])?$input["perforate"]:0;
+    $data["tracing"] = isset($input["tracing"])?$input["tracing"]:0;
     $data["lac"] = isset($input["lac"])?$input["lac"]:0;
     $data["discount_percentage"] = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
     $data["plus_percentage"] = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
