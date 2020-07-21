@@ -35,9 +35,12 @@ if( !$back_color_qty )
   <h2 align="center">Cliente: {{$client_name}}</h2>
   <form method="POST" action="/budget/calculate/common/show_job_paper" target="_blank">
     @csrf
-    <div class="card" style="width: 50rem;">
+    <input type="hidden" name="paper_data" value="{{$paper_data}}">
+    @include('budget.calculate.common.job_detail')
+    <br>
+    <div class="card" style="width: 70rem;">
       <div class="card-header">
-        Detalle trabajo
+        Resultado
       </div>
       <div class="card-body">
         <div class="form-group row">
@@ -46,277 +49,64 @@ if( !$back_color_qty )
           </label>
           <div class="col-md-6">
             <label class="col-md-6 col-form-label text-md-right">
-              Tipo:
+              Cantidad de hojas:
             </label>
-            <input type="hidden" name="paper_type_id" value="{{$paper_type_id}}">
-            {{$paper_type}}
+            {{$sheet_qty_and_excess}}
             <label class="col-md-6 col-form-label text-md-right">
-              Color:
+              Tamaño hoja:
             </label>
-            <input type="hidden" name="paper_color_id" value="{{$paper_color_id}}">
-            {{$paper_color}}
+            {{$sheet_size["width"]}}x{{$sheet_size["height"]}}
             <label class="col-md-6 col-form-label text-md-right">
-              Peso:
+              Pliegos ancho:
             </label>
-            <input type="hidden" name="weight" value="{{$weight}}">
-            {{$weight}}
+            {{$leaf_width_qty}}
             <label class="col-md-6 col-form-label text-md-right">
-              Ancho (mm):
+              Pliegos alto:
             </label>
-            <input type="hidden" name="width" value="{{$width}}">
-            {{$width}}
+            {{$leaf_height_qty}}
             <label class="col-md-6 col-form-label text-md-right">
-              Alto (mm):
+              Tamaño pliego:
             </label>
-            <input type="hidden" name="height" value="{{$height}}">
-            {{$height}}
+            {{$leaf_width}}x{{$leaf_height}}
+            <label class="col-md-6 col-form-label text-md-right">
+              Poses ancho:
+            </label>
+            {{$pose_width_qty}}@if( $front_back == "front_back_width" ) Frente/Dorso @endif
+            <label class="col-md-6 col-form-label text-md-right">
+              Poses alto:
+            </label>
+            {{$pose_height_qty}}@if( $front_back == "front_back_height" ) Frente/Dorso @endif
+            <label class="col-md-6 col-form-label text-md-right">
+              Costo:
+            </label>
+            ${{number_format($paper_price*$dollar_price,2)}}
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Colores:') }}</b>
+            <b>{{ __('Guillotina:') }}</b>
           </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              Frente:
-            </label>
-            <input type="hidden" name="front_color_qty" value="{{$front_color_qty}}">
-            {{$front_color_qty}}
-            <label class="col-md-6 col-form-label text-md-right">
-              Dorso:
-            </label>
-            <input type="hidden" name="back_color_qty" value="{{$back_color_qty}}">
-            {{$back_color_qty}}
-
-            <label class="col-md-6 col-form-label text-md-right">
-              Pantone 1:
-            </label>
-            <input type="hidden" name="pantone_1" value="{{$pantone_1}}">
-            {{$pantone_1}}
-
-            <label class="col-md-6 col-form-label text-md-right">
-              Pantone 2:
-            </label>
-            <input type="hidden" name="pantone_2" value="{{$pantone_2}}">
-            {{$pantone_2}}
-
-            <label class="col-md-6 col-form-label text-md-right">
-              Pantone 3:
-            </label>
-            <input type="hidden" name="pantone_3" value="{{$pantone_3}}">
-            {{$pantone_3}}
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Cantidad de Poses:') }}</b>
-          </label>
-          <input type="hidden" name="pose_qty" value="{{$pose_qty}}">
           <div class="col-md-6">
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            {{$pose_qty}}
+            ${{number_format($guillotine_price*$dollar_price,2)}}
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Cantidad de ejemplares:') }}</b>
+            <b>{{ __('Planchas:') }}</b>
           </label>
-          <input type="hidden" name="copy_qty" value="{{$copy_qty}}">
           <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            {{$copy_qty}}
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Máquina:') }}</b>
-          </label>
-          <input type="hidden" name="machine" value="{{$machine}}">
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            {{$machine}}
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Cantidad de pliegues:') }}</b>
-          </label>
-          <input type="hidden" name="fold_qty" value="{{$fold_qty}}">
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            {{$fold_qty}}
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Dificultad troquel:') }}</b>
-          </label>
-          <input type="hidden" name="punching_difficulty" value="{{$punching_difficulty}}">
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            {{$punching_difficulty}}
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Perforar:') }}</b>
-          </label>
-          <input type="hidden" name="perforate" value="{{$perforate}}">
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            @if( $perforate ) Si @else No @endif
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Trazado:') }}</b>
-          </label>
-          <input type="hidden" name="tracing" value="{{$tracing}}">
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            @if( $tracing ) Si @else No @endif
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Laca:') }}</b>
-          </label>
-          <input type="hidden" name="lac" value="{{$lac}}">
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            @if( $lac ) Si @else No @endif
-          </div>
-        </div>
-
-        <input type="hidden" name="client_id" value="{{$client_id}}">
-
-        <input type="hidden" name="budget_name" value="{{$budget_name}}">
-
-        <input type="hidden" name="paper_data" value="{{$paper_data}}">
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Descuento:') }}</b>
-          </label>
-          <input type="hidden" name="discount_percentage" value="{{$discount_percentage}}">
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            {{$discount_percentage}}
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Plus:') }}</b>
-          </label>
-          <input type="hidden" name="plus_percentage" value="{{$plus_percentage}}">
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            {{$plus_percentage}}
-          </div>
-        </div>
-
-    </div>
-  </div>
-  <br>
-  <div class="card" style="width: 70rem;">
-    <div class="card-header">
-      Resultado
-  </div>
-  <div class="card-body">
-    <div class="form-group row">
-      <label class="col-md-4 col-form-label text-md-right">
-        <b>{{ __('Papel:') }}</b>
-      </label>
-      <div class="col-md-6">
-        <label class="col-md-6 col-form-label text-md-right">
-          Cantidad de hojas:
-        </label>
-        {{$sheet_qty_and_excess}}
-        <label class="col-md-6 col-form-label text-md-right">
-          Tamaño hoja:
-        </label>
-        {{$sheet_size["width"]}}x{{$sheet_size["height"]}}
-        <label class="col-md-6 col-form-label text-md-right">
-          Pliegos ancho:
-        </label>
-        {{$leaf_width_qty}}
-        <label class="col-md-6 col-form-label text-md-right">
-          Pliegos alto:
-        </label>
-        {{$leaf_height_qty}}
-        <label class="col-md-6 col-form-label text-md-right">
-          Tamaño pliego:
-        </label>
-        {{$leaf_width}}x{{$leaf_height}}
-        <label class="col-md-6 col-form-label text-md-right">
-          Poses ancho:
-        </label>
-        {{$pose_width_qty}}@if( $front_back == "front_back_width" ) Frente/Dorso @endif
-        <label class="col-md-6 col-form-label text-md-right">
-          Poses alto:
-        </label>
-        {{$pose_height_qty}}@if( $front_back == "front_back_height" ) Frente/Dorso @endif
-        <label class="col-md-6 col-form-label text-md-right">
-          Costo:
-        </label>
-        ${{number_format($paper_price*$dollar_price,2)}}
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label class="col-md-4 col-form-label text-md-right">
-        <b>{{ __('Guillotina:') }}</b>
-      </label>
-      <div class="col-md-6">
-        <label class="col-md-6 col-form-label text-md-right">
-          &nbsp;
-        </label>
-        ${{number_format($guillotine_price*$dollar_price,2)}}
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label class="col-md-4 col-form-label text-md-right">
-        <b>{{ __('Planchas:') }}</b>
-      </label>
-      <div class="col-md-6">
-        @foreach(array("Adast","GTO52","GTO46") as $each_machine)
-          @if( isset($printing_and_plate_info["plate"]["qty"][$each_machine]))
-            <label class="col-md-6 col-form-label text-md-right">
-              {{$each_machine}}: {{$printing_and_plate_info["plate"]["qty"][$each_machine]}} unidades
-            </label>
-            ${{number_format($printing_and_plate_info["plate"]["prices"][$each_machine]*$dollar_price,2)}}
-            @endif
+            @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+              @if( isset($printing_and_plate_info["plate"]["qty"][$each_machine]))
+                <label class="col-md-6 col-form-label text-md-right">
+                  {{$each_machine}}: {{$printing_and_plate_info["plate"]["qty"][$each_machine]}} unidades
+                </label>
+                ${{number_format($printing_and_plate_info["plate"]["prices"][$each_machine]*$dollar_price,2)}}
+              @endif
             @endforeach
           </div>
         </div>
@@ -358,139 +148,139 @@ if( !$back_color_qty )
         </div>
 
         @if( $fold )
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Plegado:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              Arreglo:
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Plegado:') }}</b>
             </label>
-            ${{number_format($folding_arrangement_price*$dollar_price,2)}}
-            <label class="col-md-6 col-form-label text-md-right">
-              Por cantidad:
-            </label>
-            ${{number_format($folding_per_qty_price*$dollar_price,2)}}
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                Arreglo:
+              </label>
+              ${{number_format($folding_arrangement_price*$dollar_price,2)}}
+              <label class="col-md-6 col-form-label text-md-right">
+                Por cantidad:
+              </label>
+              ${{number_format($folding_per_qty_price*$dollar_price,2)}}
+            </div>
           </div>
-        </div>
         @endif
 
         @if( $punch )
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Troquelado:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              Arreglo:
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Troquelado:') }}</b>
             </label>
-            ${{number_format($punching_arrangement_price*$dollar_price,2)}}
-            <label class="col-md-6 col-form-label text-md-right">
-              Por cantidad:
-            </label>
-            ${{number_format($punching_per_qty_price*$dollar_price,2)}}
-            <label class="col-md-6 col-form-label text-md-right">
-              Descartonar:
-            </label>
-            ${{number_format($break_out_per_qty_price*$dollar_price,2)}}
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                Arreglo:
+              </label>
+              ${{number_format($punching_arrangement_price*$dollar_price,2)}}
+              <label class="col-md-6 col-form-label text-md-right">
+                Por cantidad:
+              </label>
+              ${{number_format($punching_per_qty_price*$dollar_price,2)}}
+              <label class="col-md-6 col-form-label text-md-right">
+                Descartonar:
+              </label>
+              ${{number_format($break_out_per_qty_price*$dollar_price,2)}}
+            </div>
           </div>
-        </div>
         @endif
 
         @if( $perforate )
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Perforado:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              Arreglo:
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Perforado:') }}</b>
             </label>
-            ${{number_format($perforating_arrangement_price*$dollar_price,2)}}
-            <label class="col-md-6 col-form-label text-md-right">
-              Por cantidad:
-            </label>
-            ${{number_format($perforating_per_qty_price*$dollar_price,2)}}
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                Arreglo:
+              </label>
+              ${{number_format($perforating_arrangement_price*$dollar_price,2)}}
+              <label class="col-md-6 col-form-label text-md-right">
+                Por cantidad:
+              </label>
+              ${{number_format($perforating_per_qty_price*$dollar_price,2)}}
+            </div>
           </div>
-        </div>
         @endif
 
         @if( $tracing )
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Trazado:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              Arreglo:
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Trazado:') }}</b>
             </label>
-            ${{number_format($tracing_arrangement_price*$dollar_price,2)}}
-            <label class="col-md-6 col-form-label text-md-right">
-              Por cantidad:
-            </label>
-            ${{number_format($tracing_per_qty_price*$dollar_price,2)}}
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                Arreglo:
+              </label>
+              ${{number_format($tracing_arrangement_price*$dollar_price,2)}}
+              <label class="col-md-6 col-form-label text-md-right">
+                Por cantidad:
+              </label>
+              ${{number_format($tracing_per_qty_price*$dollar_price,2)}}
+            </div>
           </div>
-        </div>
         @endif
 
         @if( $lac )
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Laqueado:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              Arreglo:
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Laqueado:') }}</b>
             </label>
-            ${{number_format($lac_arrangement_price*$dollar_price,2)}}
-            <label class="col-md-6 col-form-label text-md-right">
-              Por cantidad:
-            </label>
-            ${{number_format($lac_per_qty_price*$dollar_price,2)}}
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                Arreglo:
+              </label>
+              ${{number_format($lac_arrangement_price*$dollar_price,2)}}
+              <label class="col-md-6 col-form-label text-md-right">
+                Por cantidad:
+              </label>
+              ${{number_format($lac_per_qty_price*$dollar_price,2)}}
+            </div>
           </div>
-        </div>
         @endif
 
         @if( $subtotal )
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Subtotal:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Subtotal:') }}</b>
             </label>
-            ${{number_format($subtotal*$dollar_price,2)}}
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                &nbsp;
+              </label>
+              ${{number_format($subtotal*$dollar_price,2)}}
+            </div>
           </div>
-        </div>
         @endif
 
         @if( isset($discount_price) )
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Descuento:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Descuento:') }}</b>
             </label>
-            ${{number_format($discount_price*$dollar_price,2)}}
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                &nbsp;
+              </label>
+              ${{number_format($discount_price*$dollar_price,2)}}
+            </div>
           </div>
-        </div>
         @endif
 
         @if( isset($plus_price) )
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Plus:') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Plus:') }}</b>
             </label>
-            ${{number_format($plus_price*$dollar_price,2)}}
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                &nbsp;
+              </label>
+              ${{number_format($plus_price*$dollar_price,2)}}
+            </div>
           </div>
-        </div>
         @endif
 
         <div class="form-group row">

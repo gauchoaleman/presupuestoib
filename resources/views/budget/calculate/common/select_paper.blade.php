@@ -33,6 +33,7 @@ if (!$back_color_qty) {
 <div class="container">
   <br>
   <form method="POST" action="/budget/calculate/common/show_result">
+    @csrf
     @include('budget.calculate.common.job_detail')
     <br>
     <div class="card" style="width: 200%;">
