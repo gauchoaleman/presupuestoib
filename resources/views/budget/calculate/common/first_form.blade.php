@@ -19,6 +19,9 @@ $tracing = get_form_value("tracing");
 $lac = get_form_value("lac");
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
+$various_finishing = get_form_value("various_finishing");
+$mounting = get_form_value("mounting");
+$shipping = get_form_value("shipping");
 $discount_percentage = get_form_value("discount_percentage");
 $plus_percentage = get_form_value("plus_percentage");
 
@@ -288,7 +291,7 @@ if (!$plus_percentage) {
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            <select id="punching_difficulty" name="punching_difficulty" id="punching_difficulty">
+            <select name="punching_difficulty" id="punching_difficulty">
               <option value=""></option>
               @foreach(array(1,2,3,4) as $each_punching_difficulty)
                 <option value="{{$each_punching_difficulty}}"
@@ -395,6 +398,57 @@ if (!$plus_percentage) {
             </label>
             <input type="text" size="15" name="budget_name" id="budget_name" value="{{$budget_name}}">
             @error('budget_name')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Acabados varios (importe en pesos):') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <input type="text" size="5" name="various_finishing" id="various_finishing" value="{{$various_finishing}}">
+            @error('various_finishing')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Montaje (importe en pesos):') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <input type="text" size="5" name="mounting" id="mounting" value="{{$mounting}}">
+            @error('mounting')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Envío (importe en pesos):') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <input type="text" size="5" name="shipping" id="shipping" value="{{$shipping}}">
+            @error('shipping')
               <div class="alert alert-danger">
                 {{ $message }}
               </div>

@@ -23,6 +23,9 @@ $lac = get_form_value("lac");
 $client_id = get_form_value("client_id");
 $client_name = get_client_name($client_id);
 $budget_name = get_form_value("budget_name");
+$various_finishing = get_form_value("various_finishing");
+$mounting = get_form_value("mounting");
+$shipping = get_form_value("shipping");
 $discount_percentage = get_form_value("discount_percentage");
 $plus_percentage = get_form_value("plus_percentage");
 

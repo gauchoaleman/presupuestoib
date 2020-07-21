@@ -23,6 +23,9 @@ $lac = get_form_value("lac");
 $client_id = get_form_value("client_id");
 $client_name = get_client_name($client_id);
 $budget_name = get_form_value("budget_name");
+/*$various_finishing = get_form_value("various_finishing");
+$mounting = get_form_value("mounting");
+$shipping = get_form_value("shipping");*/
 $discount_percentage = get_form_value("discount_percentage");
 $plus_percentage = get_form_value("plus_percentage");
 $paper_data = get_form_value("paper_data");
@@ -237,6 +240,48 @@ if( !$back_color_qty )
                 Por cantidad:
               </label>
               ${{number_format($lac_per_qty_price*$dollar_price,2)}}
+            </div>
+          </div>
+        @endif
+
+        @if( $various_finishing )
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Acabados varios:') }}</b>
+            </label>
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                &nbsp;
+              </label>
+              ${{number_format($various_finishing*$dollar_price,2)}}
+            </div>
+          </div>
+        @endif
+
+        @if( $mounting )
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Montaje:') }}</b>
+            </label>
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                &nbsp;
+              </label>
+              ${{number_format($mounting*$dollar_price,2)}}
+            </div>
+          </div>
+        @endif
+
+        @if( $shipping )
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label text-md-right">
+              <b>{{ __('Envío:') }}</b>
+            </label>
+            <div class="col-md-6">
+              <label class="col-md-6 col-form-label text-md-right">
+                &nbsp;
+              </label>
+              ${{number_format($shipping*$dollar_price,2)}}
             </div>
           </div>
         @endif

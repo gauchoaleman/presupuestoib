@@ -81,9 +81,6 @@ Preguntas para Mama:
 [X]   Laca UV
         Arreglo (fijo)
         Se cobra x ctd. de pliegos
-[ ]   Compilar
-        Manual o x máquina
-        X ctd. de pliegos (x millar)
 [ ]   Acabados varios
         Ingresar monto en pesos
 [ ]  *Montage
@@ -108,8 +105,14 @@ Preguntas para Mama:
       Impresión
         Interior 1/1
       Guillotina
-
+[ ]   Compilar
+        Manual o x máquina
+        X ctd. de pliegos (x millar)
   Revistas
+[ ]   Compilar
+        Manual o x máquina
+        X ctd. de pliegos (x millar)
+
 
 [ ] Cuáles son todos los puntos a tener en cuenta? Cómo se calculan los puntos?
   [X] Acabado?
@@ -137,5 +140,7 @@ Preguntas para Mama:
 [x] Ctd de poses no funciona
 [X] Agregar contenido en show_result (abajo de laca).  Agregar definicion de variables en parte de arriba tambien.
 [ ] En mostrar clientes cambiar "Precios dólar" por "Listado clientes"
-[ ] En presupuesto ingresar nombres de tintas Pantone (colores especiales), máximo 3 colores especiales (ingresar código Pantone)
+[X] En presupuesto ingresar nombres de tintas Pantone (colores especiales), máximo 3 colores especiales (ingresar código Pantone)
 [ ] Sacar precios/descuento/plus de hoja trabajo
+[ ] Muestra mal importes ingresados en show_result en detalle trabajo
+[ ] Tamaño de letra en job_paper + grande
