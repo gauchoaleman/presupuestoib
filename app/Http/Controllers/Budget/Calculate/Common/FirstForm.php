@@ -18,14 +18,14 @@ class FirstForm extends Controller
   private function form_complete()
   {
     if( isset($_POST["paper_type_id"]) && isset($_POST["paper_color_id"]) && isset($_POST["weight"]) &&
-    $_POST["paper_type_id"] && $_POST["paper_color_id"] && $_POST["weight"] ){
+    $_POST["paper_type_id"] && $_POST["paper_color_id"] ){
       return TRUE;
     }
     else
       return FALSE;
   }
 
-  public function calculate_papers($paper_type_id, $paper_color_id, $weight, $width, $height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty,$machine)
+  public function calculate_papers($paper_type_id, $paper_color_id, $weight, $pose_width, $pose_height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty,$machine)
   {
     $sizes_result = DB::table('paper_prices')->select('id','width','height')->
     where('paper_type_id', '=', $paper_type_id)->
@@ -37,7 +37,7 @@ class FirstForm extends Controller
     $size_res = array();
     $all_sizes = array();
     foreach ($sizes_result as $size) {
-      $size_res = $this->calculate_size($size->id,$size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty,$pose_qty,$machine);    //calculate
+      $size_res = $this->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine);    //calculate
       //print($size->width."x".$size->height.": "); //Bandera
       //print_r($size_res); //Bandera
       $all_sizes = array_merge($size_res,$all_sizes);
@@ -45,7 +45,7 @@ class FirstForm extends Controller
     //If there are no sizes, we calculate normal
     if( !sizeof($all_sizes) ){
       foreach ($sizes_result as $size) {
-        $size_res = $this->calculate_size($size->id,$size->width,$size->height,$width,$height,$front_color_qty,$back_color_qty,$pose_qty,$machine,false);    //calculate
+        $size_res = $this->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine,false);    //calculate
         //print($size->width."x".$size->height.": "); //Bandera
         //print_r($size_res); //Bandera
         $all_sizes = array_merge($size_res,$all_sizes);
@@ -62,12 +62,12 @@ class FirstForm extends Controller
   {
     if( $this->form_complete() ){
       $messages = [
-        'width.required' => 'Debe ingresar un ancho.',
-        'width.integer' => 'El ancho debe ser un entero.',
-        'width.gt' => 'El ancho debe ser mayor a cero.',
-        'height.required' => 'Debe ingresar un alto.',
-        'height.integer' => 'El alto debe ser un entero.',
-        'height.gt' => 'El alto debe ser mayor a cero.',
+        'pose_width.required' => 'Debe ingresar un ancho.',
+        'pose_width.integer' => 'El ancho debe ser un entero.',
+        'pose_width.gt' => 'El ancho debe ser mayor a cero.',
+        'pose_height.required' => 'Debe ingresar un alto.',
+        'pose_height.integer' => 'El alto debe ser un entero.',
+        'pose_height.gt' => 'El alto debe ser mayor a cero.',
         'front_color_qty.required' => 'Debe ingresar colores de frente.',
         'front_color_qty.integer' => 'La cantidad de colores de frente debe ser un entero.',
         'front_color_qty.gt' => 'La cantidad de colores de frente debe ser mayor a cero.',
@@ -83,8 +83,8 @@ class FirstForm extends Controller
         'plus_percentage.integer' => 'El plus debe ser un entero.',
       ];
       $v = Validator::make($request->all(), [
-        'width' => 'required|integer|gt:0',
-        'height' => 'required|integer|gt:0',
+        'pose_width' => 'required|integer|gt:0',
+        'pose_height' => 'required|integer|gt:0',
         'front_color_qty' => 'required|integer|gt:0',
         'back_color_qty' => 'integer',
         'copy_qty' => 'required|integer|gt:0',
@@ -100,7 +100,7 @@ class FirstForm extends Controller
       if ($v->fails())
         return redirect()->back()->withInput($request->input())->withErrors($v->errors());
       else{
-        $result = $this->calculate_papers($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["width"], $_POST["height"],
+        $result = $this->calculate_papers($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["pose_width"], $_POST["pose_height"],
         $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["copy_qty"],$_POST["machine"]);
         $data["result"]=$result;
         return $this->show_page_with_menubars("budget/calculate/common/select_paper","",$data);

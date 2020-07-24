@@ -227,9 +227,10 @@ class ShowResult extends Controller
     $data["perforate"] = isset($input["perforate"])?$input["perforate"]:0;
     $data["tracing"] = isset($input["tracing"])?$input["tracing"]:0;
     $data["lac"] = isset($input["lac"])?$input["lac"]:0;
-    $data["various_finishing"] = isset($input["various_finishing"])?$input["various_finishing"]/get_dollar_price():0;
-    $data["mounting"] = isset($input["mounting"])?$input["mounting"]/get_dollar_price():0;
-    $data["shipping"] = isset($input["shipping"])?$input["shipping"]/get_dollar_price():0;
+    //print_r($input);
+    $data["various_finishing"] = $input["various_finishing"]?$input["various_finishing"]/get_dollar_price():0;
+    $data["mounting"] = $input["mounting"]?$input["mounting"]/get_dollar_price():0;
+    $data["shipping"] = $input["shipping"]?$input["shipping"]/get_dollar_price():0;
     $data["discount_percentage"] = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
     $data["plus_percentage"] = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
 

@@ -2,8 +2,8 @@
 $paper_type_id = get_form_value("paper_type_id");
 $paper_color_id = get_form_value("paper_color_id");
 $weight = get_form_value("weight");
-$width = get_form_value("width");
-$height = get_form_value("height");
+$pose_width = get_form_value("pose_width");
+$pose_height = get_form_value("pose_height");
 $front_color_qty = get_form_value("front_color_qty");
 $back_color_qty = get_form_value("back_color_qty");
 $pantone_1 = get_form_value("pantone_1");
@@ -129,8 +129,8 @@ if (!$plus_percentage) {
             <label class="col-md-6 col-form-label text-md-right">
               Ancho (mm):
             </label>
-            <input type="text" size="5" name="width" id="width" value="{{$width}}">
-            @error('width')
+            <input type="text" size="5" name="pose_width" id="pose_width" value="{{$pose_width}}">
+            @error('pose_width')
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
@@ -138,8 +138,8 @@ if (!$plus_percentage) {
             <label class="col-md-6 col-form-label text-md-right">
               Alto (mm):
             </label>
-            <input type="text" size="5" name="height" value="{{$height}}">
-            @error('height')
+            <input type="text" size="5" name="pose_height" id="pose_height" value="{{$pose_height}}">
+            @error('pose_height')
               <div class="alert alert-danger">
                 {{ $message }}
               </div>

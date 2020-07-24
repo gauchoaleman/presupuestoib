@@ -29,13 +29,13 @@
         <label class="col-md-6 col-form-label text-md-right">
           Ancho (mm):
         </label>
-        <input type="hidden" name="width" value="{{$width}}">
-        {{$width}}
+        <input type="hidden" name="pose_width" value="{{$pose_width}}">
+        {{$pose_width}}
         <label class="col-md-6 col-form-label text-md-right">
           Alto (mm):
         </label>
-        <input type="hidden" name="height" value="{{$height}}">
-        {{$height}}
+        <input type="hidden" name="pose_height" value="{{$pose_height}}">
+        {{$pose_height}}
       </div>
     </div>
 

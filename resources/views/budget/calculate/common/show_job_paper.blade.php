@@ -4,8 +4,8 @@ $paper_type = get_paper_type($paper_type_id);
 $paper_color_id = get_form_value("paper_color_id");
 $paper_color = get_paper_color($paper_color_id);
 $weight = get_form_value("weight");
-$width = get_form_value("width");
-$height = get_form_value("height");
+$pose_width = get_form_value("pose_width");
+$pose_height = get_form_value("pose_height");
 $front_color_qty = get_form_value("front_color_qty");
 $back_color_qty = get_form_value("back_color_qty");
 $pantone_1 = get_form_value("pantone_1");
@@ -62,13 +62,13 @@ if( !$back_color_qty )
             <label class="col-md-6 col-form-label text-md-right">
               Ancho (mm):
             </label>
-            <input type="hidden" name="width" value="{{$width}}">
-            {{$width}}
+            <input type="hidden" name="pose_width" value="{{$pose_width}}">
+            {{$pose_width}}
             <label class="col-md-6 col-form-label text-md-right">
               Alto (mm):
             </label>
-            <input type="hidden" name="height" value="{{$height}}">
-            {{$height}}
+            <input type="hidden" name="pose_height" value="{{$pose_height}}">
+            {{$pose_height}}
           </div>
         </div>
 
@@ -517,10 +517,10 @@ if( !$back_color_qty )
         Cantidad: {{$copy_qty}}
       </div>
       <div class="form-group row">
-        Formato: {{$width}}x{{$height}}
+        Formato: {{$pose_width}}x{{$pose_height}}
       </div>
       <div class="form-group row">
-        Colores: {{$front_color_qty}}-{{$back_color_qty}} @if($pantone_1||$pantone2||$pantone3)Pantone: {{$pantone_1}} {{$pantone_2}} {{$pantone_3}}@endif
+        Colores: {{$front_color_qty}}-{{$back_color_qty}} @if($pantone_1||$pantone_2||$pantone_3)Pantone: {{$pantone_1}} {{$pantone_2}} {{$pantone_3}}@endif
       </div>
       <div class="form-group row">
         Papel: {{$sheet_qty_and_excess}} hojas. {{$paper_type}} {{$weight}}gr. {{$sheet_size["width"]}}x{{$sheet_size["height"]}}<br>
