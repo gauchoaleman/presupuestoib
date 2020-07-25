@@ -1,36 +1,7 @@
 <?php
-$paper_type_id = get_form_value("paper_type_id");
 $paper_type = get_paper_type($paper_type_id);
-$paper_color_id = get_form_value("paper_color_id");
 $paper_color = get_paper_color($paper_color_id);
-$weight = get_form_value("weight");
-$pose_width = get_form_value("pose_width");
-$pose_height = get_form_value("pose_height");
-$front_color_qty = get_form_value("front_color_qty");
-$back_color_qty = get_form_value("back_color_qty");
-$pantone_1 = get_form_value("pantone_1");
-$pantone_2 = get_form_value("pantone_2");
-$pantone_3 = get_form_value("pantone_3");
-$pose_qty = get_form_value("pose_qty");
-$copy_qty = get_form_value("copy_qty");
-$paper_price_id = get_form_value("paper_price_id");
-$machine = get_form_value("machine");
-$fold_qty = get_form_value("fold_qty");
-$punching_difficulty = get_form_value("punching_difficulty");
-$perforate = get_form_value("perforate");
-$tracing = get_form_value("tracing");
-$lac = get_form_value("lac");
-$client_id = get_form_value("client_id");
 $client_name = get_client_name($client_id);
-$budget_name = get_form_value("budget_name");
-/*$various_finishing = get_form_value("various_finishing");
-$mounting = get_form_value("mounting");
-$shipping = get_form_value("shipping");*/
-$discount_percentage = get_form_value("discount_percentage");
-$plus_percentage = get_form_value("plus_percentage");
-$paper_data = get_form_value("paper_data");
-if( !$back_color_qty )
-  $back_color_qty = 0;
 ?>
 <div class="container">
   <br>
@@ -39,7 +10,7 @@ if( !$back_color_qty )
   <form method="POST" action="/budget/calculate/common/show_job_paper" target="_blank">
     @csrf
     <input type="hidden" name="paper_data" value="{{$paper_data}}">
-    @include('budget.calculate.common.job_detail')
+    @include('budget.calculate.common.show_result.job_detail')
     <br>
     <div class="card" style="width: 70rem;">
       <div class="card-header">

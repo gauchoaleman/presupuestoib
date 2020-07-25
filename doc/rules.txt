@@ -6,3 +6,4 @@
 * Timezone managment in app/Http/Controllers/Controller.php
   * Check out if this can be done better
 * Navbar: http://bootstrapessentials.com/fulldocs/components/navbar/navbar-submenu/
+* In show_result display entered prices without multiplicating by dollar value (the values come in pesos)

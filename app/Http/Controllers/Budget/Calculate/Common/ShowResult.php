@@ -119,9 +119,10 @@ class ShowResult extends Controller
     $sheet_qty_and_excess = $this->get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
     $sheet_size = $this->get_sheet_size($paper_price_id);
     $leaf_qty_and_excess = $this->get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty);
-
+    /*
     $data["pose_width_qty"] = $pose_width_qty;
     $data["pose_height_qty"] = $pose_height_qty;
+    */
     $data["sheet_size"] = $sheet_size;
     $data["sheet_qty_and_excess"] = $sheet_qty_and_excess;
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
@@ -135,11 +136,10 @@ class ShowResult extends Controller
       $data["fold"] = true;
       $data["folding_arrangement_price"] = $this->get_folding_arrangement_price($fold_qty);
       $data["folding_per_qty_price"] = $this->get_folding_per_qty_price($copy_qty_and_excess,$fold_qty);
-      $total += $data["folding_arrangement_price"];
-      $total += $data["folding_per_qty_price"];
+      $total += $data["folding_arrangement_price"]+$data["folding_per_qty_price"];
     }
     else
-    $data["fold"] = false;
+      $data["fold"] = false;
 
     if( $punching_difficulty ){
       $data["punch"] = true;
@@ -205,50 +205,29 @@ class ShowResult extends Controller
   {
     $paper_data = explode("/", $input["paper_data"]);
     //print_r($paper_data);    //Bandera
-    $paper_price_id = $paper_data[0];
-    $leaf_width = $paper_data[1];
-    $leaf_height = $paper_data[2];
-    $leaf_width_qty = $paper_data[3];
-    $leaf_height_qty = $paper_data[4];
-    $pose_width_qty = $paper_data[5];
-    $pose_height_qty = $paper_data[6];
-    $position = $paper_data[7];
-    $front_back = $paper_data[8];
+    $input["paper_price_id"] = $paper_data[0];
+    $input["leaf_width"] = $paper_data[1];
+    $input["leaf_height"] = $paper_data[2];
+    $input["leaf_width_qty"] = $paper_data[3];
+    $input["leaf_height_qty"] = $paper_data[4];
+    $input["pose_width_qty"] = $paper_data[5];
+    $input["pose_height_qty"] = $paper_data[6];
+    $input["position"] = $paper_data[7];
+    $input["front_back"] = $paper_data[8];
 
-    $data["copy_qty"] = $input["copy_qty"];
-    $data["machine"] = $input["machine"];
-    $data["front_color_qty"] = $input["front_color_qty"];
-    $data["back_color_qty"] = $input["back_color_qty"];
-    $data["pantone_1"] = $input["pantone_1"];
-    $data["pantone_2"] = $input["pantone_2"];
-    $data["pantone_3"] = $input["pantone_3"];
-    $data["fold_qty"] = $input["fold_qty"];
-    $data["punching_difficulty"] = $input["punching_difficulty"];
-    $data["perforate"] = isset($input["perforate"])?$input["perforate"]:0;
-    $data["tracing"] = isset($input["tracing"])?$input["tracing"]:0;
-    $data["lac"] = isset($input["lac"])?$input["lac"]:0;
-    //print_r($input);
-    $data["various_finishing"] = $input["various_finishing"]?$input["various_finishing"]/get_dollar_price():0;
-    $data["mounting"] = $input["mounting"]?$input["mounting"]/get_dollar_price():0;
-    $data["shipping"] = $input["shipping"]?$input["shipping"]/get_dollar_price():0;
-    $data["discount_percentage"] = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
-    $data["plus_percentage"] = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
+    $input["perforate"] = isset($input["perforate"])?$input["perforate"]:0;
+    $input["tracing"] = isset($input["tracing"])?$input["tracing"]:0;
+    $input["lac"] = isset($input["lac"])?$input["lac"]:0;
 
-    $data["paper_price_id"] = $paper_price_id;
-    $data["leaf_width"] = $leaf_width;
-    $data["leaf_height"] = $leaf_height;
-    $data["leaf_width_qty"] = $leaf_width_qty;
-    $data["leaf_height_qty"] = $leaf_height_qty;
-    $data["pose_width_qty"] = $pose_width_qty;
-    $data["pose_height_qty"] = $pose_height_qty;
-    $data["position"] = $position;
-    $data["front_back"] = $front_back;
+    $input["various_finishing"] = $input["various_finishing"]?$input["various_finishing"]/get_dollar_price():0;
+    $input["mounting"] = $input["mounting"]?$input["mounting"]/get_dollar_price():0;
+    $input["shipping"] = $input["shipping"]?$input["shipping"]/get_dollar_price():0;
+    $input["discount_percentage"] = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
+    $input["plus_percentage"] = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
 
-    $data["client_id"] = $input["client_id"];
-    $data["budget_name"] = $input["budget_name"];
-    $calculated_result = $this->calculate_result($data);
+    $calculated_result = $this->calculate_result($input);
 
-    return array_merge($data,$calculated_result);
+    return array_merge($input,$calculated_result);
   }
 
   private function save_budget_to_database($data)

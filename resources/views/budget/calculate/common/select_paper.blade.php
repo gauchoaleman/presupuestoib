@@ -37,7 +37,7 @@ if (!$back_color_qty) {
   <br>
   <form method="POST" action="/budget/calculate/common/show_result">
     @csrf
-    @include('budget.calculate.common.job_detail')
+    @include('budget.calculate.common.select_paper.job_detail')
     <br>
     <div class="card" style="width: 200%;">
       <div class="card-header">Tamaños papel</div>
