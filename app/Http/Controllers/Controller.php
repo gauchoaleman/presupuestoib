@@ -190,17 +190,17 @@ class Controller extends BaseController
     return $this->max_sizes[$machine]["width"]>=$leaf_width && $this->max_sizes[$machine]["height"]>=$leaf_height;
   }
 
-  public function calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,$position,$front_back)
+  public function calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,$position,$front_back)
   {
     $ret = array();
-
+    echo $machine;      //Bandera
     if( $position == "lying" )
-      swap($job_width,$job_height);
+      swap($pose_width,$pose_height);
 
     if( $front_back == "front_back_width" )
-      $job_width *= 2;
+      $pose_width *= 2;
     if( $front_back == "front_back_height" )
-      $job_height *= 2;
+      $pose_height *= 2;
 
     for( $leaf_width_qty=2;$leaf_width_qty<=8;$leaf_width_qty++ ){
       for( $leaf_height_qty=2;$leaf_height_qty<=8;$leaf_height_qty++ ){
@@ -214,25 +214,29 @@ class Controller extends BaseController
         $leaf_height_without_borders = $leaf_height - $this->height_borders;
 
         //If job is greater than sheet we continue
-        if( $leaf_width_without_borders<$job_width || $leaf_height_without_borders<$job_height )
-          continue;
+        if( $leaf_width_without_borders<$pose_width || $leaf_height_without_borders<$pose_height )
+          $continue[] = "Job greater than sheet";   //Bandera
+          //continue;
 
         //If sheet is littler than min sheet size we continue
         if( $leaf_width<$this->min_sizes[$machine]["width"] || $leaf_height<$this->min_sizes[$machine]["height"] )
-          continue;
+          $continue[] = "Sheet littler than min sheet";   //Bandera
+          //continue;
 
         //If sheet is bigger than max sheet size we continue
         if( $leaf_width>$this->max_sizes[$machine]["width"] || $leaf_height>$this->max_sizes[$machine]["height"] )
-          continue;
+          $continue[] = "Sheet bigger than max sheet";   //Bandera
+           //continue;
 
          //Calculate how many times the job fits in the sheet
-        $pose_width_qty = floor($leaf_width_without_borders/$job_width);
-        $pose_height_qty = floor($leaf_height_without_borders/$job_height);
+        $pose_width_qty = floor($leaf_width_without_borders/$pose_width);
+        $pose_height_qty = floor($leaf_height_without_borders/$pose_height);
 
         if( $pose_qty ){
           if( $front_back == "front_back_width" ){
             if( $pose_width_qty*2*$pose_height_qty != $pose_qty )
-              continue;
+              $continue[] = "Pose Qty doesn't match";   //Bandera
+              //continue;
           }
           else if( $front_back == "front_back_height" ){
             if( $pose_width_qty*$pose_height_qty*2 != $pose_qty )
@@ -240,19 +244,21 @@ class Controller extends BaseController
           }
           else{
             if( $pose_width_qty*$pose_height_qty != $pose_qty )
-              continue;
+              $continue[] = "Pose Qty doesn't match";   //Bandera
+              //continue;
           }
         }
         //If there fits no job (width_qty / height_qty equal cero) we continue
         if( $pose_width_qty == 0 || $pose_height_qty == 0 )
-          continue;
+          $continue[] = "Pose doesn't fit in sheet";   //Bandera
+          //continue;
         //Calculate the measure of the aligned jobs
-        $all_aligned_job_width = $pose_width_qty*$job_width;
-        $all_aligned_job_height = $pose_height_qty*$job_height;
+        $all_aligned_pose_width = $pose_width_qty*$pose_width;
+        $all_aligned_pose_height = $pose_height_qty*$pose_height;
 
         //Add the borders to the aligned jobs
-        $all_aligned_job_width_with_borders = $all_aligned_job_width + $this->width_borders;
-        $all_aligned_job_height_with_borders = $all_aligned_job_height + $this->height_borders;
+        $all_aligned_pose_width_with_borders = $all_aligned_pose_width + $this->width_borders;
+        $all_aligned_pose_height_with_borders = $all_aligned_pose_height + $this->height_borders;
 
          //if borders is greater than rest we continue
          /* if( $this->width_borders>$simple_width_rest || $this->height_borders>$simple_height_rest )
@@ -260,13 +266,15 @@ class Controller extends BaseController
           //continue;
 
         //Calculate the rest and substracting borders
-        $width_rest = $leaf_width_without_borders%$job_width;
-        $height_rest = $leaf_height_without_borders%$job_height;
+        $width_rest = $leaf_width_without_borders%$pose_width;
+        $height_rest = $leaf_height_without_borders%$pose_height;
         //Add the rests together
-        $total_rest = $width_rest*$height_rest+$all_aligned_job_width*$height_rest+$all_aligned_job_width*$width_rest;
+        $total_rest = $width_rest*$height_rest+$all_aligned_pose_width*$height_rest+$all_aligned_pose_width*$width_rest;
 
-        if( $all_aligned_job_width_with_borders>$leaf_width ||  $all_aligned_job_height_with_borders>$leaf_height)     //If job borders don't fit in sheet
-          continue;
+        //If job borders don't fit in sheet
+        if( $all_aligned_pose_width_with_borders>$leaf_width ||  $all_aligned_pose_height_with_borders>$leaf_height)
+          $continue[] = "Pose borders don't fit in sheet";   //Bandera
+          //continue;
 
         $res["paper_price_id"] = $paper_price_id;
         $res["sheet_width"] = $sheet_width;
@@ -278,8 +286,8 @@ class Controller extends BaseController
         $res["leaf_width"] = $leaf_width;
         $res["leaf_height"] = $leaf_height;
 
-        $res["job_width"] = $job_width;
-        $res["job_height"] = $job_height;
+        $res["pose_width"] = $pose_width;
+        $res["pose_height"] = $pose_height;
 
         $res["leaf_width_without_borders"] = $leaf_width_without_borders;
         $res["leaf_height_without_borders"] = $leaf_height_without_borders;
@@ -297,11 +305,11 @@ class Controller extends BaseController
         $res["continue"] = $continue;
 
         if( $front_back == "front_back_width" ){
-          $res["job_width"] /= 2;
+          $res["pose_width"] /= 2;
           $res["pose_width_qty"] *= 2;
         }
         if( $front_back == "front_back_height" ){
-          $res["job_height"] /= 2;
+          $res["pose_height"] /= 2;
           $res["pose_height_qty"] *= 2;
         }
 
@@ -313,25 +321,25 @@ class Controller extends BaseController
     return $ret;
   }
 
-  public function calculate_size($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$front_color_qty,$back_color_qty,$pose_qty,$machine,$front_back=true)
+  public function calculate_size($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine,$front_back=true)
   {
     if( !$back_color_qty || !$front_back) { //If there is no printing on back ew calculate normal positions
-      $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","normal");
-      $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"lying","normal");
+      $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"normal","normal");
+      $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"lying","normal");
       $merged = array_merge($normal_normal,$lying_normal);
     }
     else if($front_back){ //If there is printing on back we use front and back positions
-      $normal_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","front_back_width");
-      $normal_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","front_back_height");
-      $lying_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"lying","front_back_width");
-      $lying_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"lying","front_back_height");
+      $normal_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"normal","front_back_width");
+      $normal_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"normal","front_back_height");
+      $lying_front_back_width = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"lying","front_back_width");
+      $lying_front_back_height = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"lying","front_back_height");
       $merged = array_merge($normal_front_back_width,$normal_front_back_height,$lying_front_back_width,$lying_front_back_height);
       //If no accepted sheet size, we use no front_back
       //echo(sizeof($merged)."/");   //Bandera
       //print_r($merged);    //Bandera
       /*if( !sizeof($merged) ){
-          $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_width,$job_height,$pose_qty,$machine,"normal","normal");
-          $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$job_height,$job_width,$pose_qty,$machine,"lying","normal");
+          $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"normal","normal");
+          $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"lying","normal");
           $merged = array_merge($normal_normal,$lying_normal);
         }*/
     }

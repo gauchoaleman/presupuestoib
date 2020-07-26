@@ -206,12 +206,12 @@ if (!$back_color_qty) {
               </td>
               <td>
                 <div align="center">
-                  {{$size["job_width"]}}
+                  {{$size["pose_width"]}}
                 </div>
               </td>
               <td>
                 <div align="center">
-                  {{$size["job_height"]}}
+                  {{$size["pose_height"]}}
                 </div>
               </td>
               <td>

@@ -263,7 +263,7 @@ class ShowResult extends Controller
   public function proc(Request $request)
   {
     $data = $this->get_result_from_post($_POST);
-    //print_r($data);      //Bandera
+    print_r($data);      //Bandera
     if( $_POST["button_action"] == "show_job_paper" )
       return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
     else if( $_POST["button_action"] == "show_result" ){

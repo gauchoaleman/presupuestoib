@@ -145,3 +145,4 @@ Preguntas para Mama:
 [X] Muestra mal importes ingresados en show_result en detalle trabajo
 [X] Tamaño de letra en job_paper + grande
 [ ] Guardado en base de datos
+[ ] Al elegir Adast/GTO46 no hay papel compatible
