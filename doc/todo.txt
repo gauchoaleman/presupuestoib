@@ -148,4 +148,6 @@ Preguntas para Mama:
 [ ] Al elegir Adast/GTO46 no hay papel compatible
 [ ]   Preguntarle a mamá la política con poses normales
 [ ]   Ver con Mama trabajos Adast.
-[ ] Si no encuentra papel adecuado, poner texto con link hacia atrás.
+[X] Si no encuentra papel adecuado, poner texto con link hacia atrás.
+[ ] Ver si se puede seleccionar 2 tipos de papel para libros/revistas
+[ ] Corregir select_paper.blade.php

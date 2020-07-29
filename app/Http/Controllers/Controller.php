@@ -43,7 +43,7 @@ class Controller extends BaseController
   }
 
   public $continue_if_invalid_size = true;
-  public $min_sizes = array("Adast"=>array("width"=>520,"height"=>370),
+  public $min_sizes = array("Adast"=>array("width"=>210,"height"=>120),
                             "GTO52"=>array("width"=>216,"height"=>128),
                             "GTO46"=>array("width"=>190,"height"=>128));
 
@@ -194,7 +194,7 @@ class Controller extends BaseController
   public function calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,$position,$front_back)
   {
     $ret = array();
-    echo $machine;      //Bandera
+    //echo $machine;      //Bandera
     if( $position == "lying" )
       swap($pose_width,$pose_height);
 

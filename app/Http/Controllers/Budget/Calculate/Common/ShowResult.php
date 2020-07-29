@@ -201,20 +201,26 @@ class ShowResult extends Controller
     return $data;
   }
 
+  private function extract_paper_data( $paper_data )
+  {
+    $extracted_paper_data = explode("/", $paper_data);
+    //print_r($paper_data);    //Bandera
+    $ret["paper_price_id"] = $extracted_paper_data[0];
+    $ret["leaf_width"] = $extracted_paper_data[1];
+    $ret["leaf_height"] = $extracted_paper_data[2];
+    $ret["leaf_width_qty"] = $extracted_paper_data[3];
+    $ret["leaf_height_qty"] = $extracted_paper_data[4];
+    $ret["pose_width_qty"] = $extracted_paper_data[5];
+    $ret["pose_height_qty"] = $extracted_paper_data[6];
+    $ret["position"] = $extracted_paper_data[7];
+    $ret["front_back"] = $extracted_paper_data[8];
+    return $ret;
+  }
+
   private function get_result_from_post( $input )
   {
-    $paper_data = explode("/", $input["paper_data"]);
+    $paper_data_input = $this->extract_paper_data($input["paper_data"]);
     //print_r($paper_data);    //Bandera
-    $input["paper_price_id"] = $paper_data[0];
-    $input["leaf_width"] = $paper_data[1];
-    $input["leaf_height"] = $paper_data[2];
-    $input["leaf_width_qty"] = $paper_data[3];
-    $input["leaf_height_qty"] = $paper_data[4];
-    $input["pose_width_qty"] = $paper_data[5];
-    $input["pose_height_qty"] = $paper_data[6];
-    $input["position"] = $paper_data[7];
-    $input["front_back"] = $paper_data[8];
-
     $input["perforate"] = isset($input["perforate"])?$input["perforate"]:0;
     $input["tracing"] = isset($input["tracing"])?$input["tracing"]:0;
     $input["lac"] = isset($input["lac"])?$input["lac"]:0;
@@ -225,7 +231,7 @@ class ShowResult extends Controller
     $input["discount_percentage"] = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
     $input["plus_percentage"] = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
 
-    $calculated_result = $this->calculate_result($input);
+    $calculated_result = $this->calculate_result(array_merge($input,$paper_data_input));
 
     return array_merge($input,$calculated_result);
   }
@@ -234,34 +240,28 @@ class ShowResult extends Controller
   {
     print("Input for database:");   //Bandera
     print_r($data);   //Bandera
-    $insert_array["paper_price_id"] = $data["paper_price_id"];
-    $insert_array["client_id"] = $data["client_id"];
-    $insert_array["budget_name"] = $data["budget_name"];
-    $insert_array["leaf_width_qty"] = $data["leaf_width_qty"];
-    $insert_array["leaf_height_qty"] = $data["leaf_height_qty"];
-    $insert_array["pose_width_qty"] = $data["pose_width_qty"];
-    $insert_array["pose_height_qty"] = $data["pose_height_qty"];
-    $insert_array["leaf_width"] = $data["leaf_width"];
-    $insert_array["leaf_height"] = $data["leaf_height"];
-    $insert_array["copy_qty"] = $data["copy_qty"];
-    $insert_array["machine"] = $data["machine"];
-    $insert_array["front_color_qty"] = $data["front_color_qty"];
-    $insert_array["back_color_qty"] = $data["back_color_qty"];
-    $insert_array["pantone_1"] = $data["pantone_1"];
-    $insert_array["pantone_2"] = $data["pantone_2"];
-    $insert_array["pantone_3"] = $data["pantone_3"];
-    $insert_array["fold_qty"] = $data["fold_qty"];
-    $insert_array["punching_difficulty"] = $data["punching_difficulty"];
-    $insert_array["perforate"] = $data["perforate"];
-    $insert_array["lac"] = $data["lac"];
-    $insert_array["various_finishing"] = $data["various_finishing"];
-    $insert_array["mounting"] = $data["mounting"];
-    $insert_array["shipping"] = $data["shipping"];
-    $insert_array["discount_percentage"] = $data["discount_percentage"];
-    $insert_array["plus_percentage"] = $data["plus_percentage"];
-    $insert_array["position"] = $data["position"];
-    $insert_array["front_back"] = $data["front_back"];
-    $insert_array["dollar_price_id"] = get_dollar_price_id();
+
+    $paper_data_input = $this->extract_paper_data($data["paper_data"]);
+    $data_input["client_id"] = $data["client_id"];
+    $data_input["budget_name"] = $data["budget_name"];
+    $data_input["copy_qty"] = $data["copy_qty"];
+    $data_input["machine"] = $data["machine"];
+    $data_input["front_color_qty"] = $data["front_color_qty"];
+    $data_input["back_color_qty"] = $data["back_color_qty"];
+    $data_input["pantone_1"] = $data["pantone_1"];
+    $data_input["pantone_2"] = $data["pantone_2"];
+    $data_input["pantone_3"] = $data["pantone_3"];
+    $data_input["fold_qty"] = $data["fold_qty"];
+    $data_input["punching_difficulty"] = $data["punching_difficulty"];
+    $data_input["perforate"] = $data["perforate"];
+    $data_input["lac"] = $data["lac"];
+    $data_input["various_finishing"] = $data["various_finishing"];
+    $data_input["mounting"] = $data["mounting"];
+    $data_input["shipping"] = $data["shipping"];
+    $data_input["discount_percentage"] = $data["discount_percentage"];
+    $data_input["plus_percentage"] = $data["plus_percentage"];
+    $data_input["dollar_price_id"] = get_dollar_price_id();
+    $insert_array = array_merge($data_input,$paper_data_input);
     print("Insert array:");     //Bandera
     print_r($insert_array);     //Bandera
   }
@@ -269,11 +269,12 @@ class ShowResult extends Controller
   public function proc(Request $request)
   {
     $data = $this->get_result_from_post($_POST);
-    print_r($data);      //Bandera
+    print("_POST:");       //Bandera
+    print_r($_POST);      //Bandera
     if( $_POST["button_action"] == "show_job_paper" )
       return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
     else if( $_POST["button_action"] == "show_result" ){
-      $this->save_budget_to_database($data);
+      $this->save_budget_to_database($_POST);
       return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
     }
   }
