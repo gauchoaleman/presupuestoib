@@ -42,6 +42,7 @@ class Controller extends BaseController
     return $ret;
   }
 
+  public $continue_if_invalid_size = true;
   public $min_sizes = array("Adast"=>array("width"=>520,"height"=>370),
                             "GTO52"=>array("width"=>216,"height"=>128),
                             "GTO46"=>array("width"=>190,"height"=>128));
@@ -214,19 +215,29 @@ class Controller extends BaseController
         $leaf_height_without_borders = $leaf_height - $this->height_borders;
 
         //If job is greater than sheet we continue
-        if( $leaf_width_without_borders<$pose_width || $leaf_height_without_borders<$pose_height )
-          $continue[] = "Job greater than sheet";   //Bandera
+        if( $leaf_width_without_borders<$pose_width || $leaf_height_without_borders<$pose_height ){
+          if( $this->continue_if_invalid_size )
+            continue;
+          else
+            $continue[] = "Pose greater than sheet";   //Bandera;
+        }
           //continue;
 
         //If sheet is littler than min sheet size we continue
-        if( $leaf_width<$this->min_sizes[$machine]["width"] || $leaf_height<$this->min_sizes[$machine]["height"] )
-          $continue[] = "Sheet littler than min sheet";   //Bandera
-          //continue;
+        if( $leaf_width<$this->min_sizes[$machine]["width"] || $leaf_height<$this->min_sizes[$machine]["height"] ){
+          if( $this->continue_if_invalid_size )
+            continue;
+          else
+            $continue[] = "Sheet littler than min sheet";   //Bandera;
+        }
 
         //If sheet is bigger than max sheet size we continue
-        if( $leaf_width>$this->max_sizes[$machine]["width"] || $leaf_height>$this->max_sizes[$machine]["height"] )
-          $continue[] = "Sheet bigger than max sheet";   //Bandera
-           //continue;
+        if( $leaf_width>$this->max_sizes[$machine]["width"] || $leaf_height>$this->max_sizes[$machine]["height"] ){
+          if( $this->continue_if_invalid_size )
+            continue;
+          else
+            $continue[] = "Sheet bigger than max sheet";   //Bandera;
+        }
 
          //Calculate how many times the job fits in the sheet
         $pose_width_qty = floor($leaf_width_without_borders/$pose_width);
@@ -234,24 +245,37 @@ class Controller extends BaseController
 
         if( $pose_qty ){
           if( $front_back == "front_back_width" ){
-            if( $pose_width_qty*2*$pose_height_qty != $pose_qty )
-              $continue[] = "Pose Qty doesn't match";   //Bandera
-              //continue;
+            if( $pose_width_qty*2*$pose_height_qty != $pose_qty ){
+              if( $this->continue_if_invalid_size )
+                continue;
+              else
+                $continue[] = "Pose Qty doesn't match";   //Bandera;
+            }
           }
           else if( $front_back == "front_back_height" ){
-            if( $pose_width_qty*$pose_height_qty*2 != $pose_qty )
-              continue;
+            if( $pose_width_qty*$pose_height_qty*2 != $pose_qty ){
+              if( $this->continue_if_invalid_size )
+                continue;
+              else
+                $continue[] = "Pose Qty doesn't match";   //Bandera;
+            }
           }
           else{
-            if( $pose_width_qty*$pose_height_qty != $pose_qty )
-              $continue[] = "Pose Qty doesn't match";   //Bandera
-              //continue;
+            if( $pose_width_qty*$pose_height_qty != $pose_qty ){
+              if( $this->continue_if_invalid_size )
+                continue;
+              else
+                $continue[] = "Pose Qty doesn't match";   //Bandera;
+            }
           }
         }
         //If there fits no job (width_qty / height_qty equal cero) we continue
-        if( $pose_width_qty == 0 || $pose_height_qty == 0 )
-          $continue[] = "Pose doesn't fit in sheet";   //Bandera
-          //continue;
+        if( $pose_width_qty == 0 || $pose_height_qty == 0 ){
+          if( $this->continue_if_invalid_size )
+            continue;
+          else
+            $continue[] = "Pose doesn't fit in sheet";   //Bandera;
+        }
         //Calculate the measure of the aligned jobs
         $all_aligned_pose_width = $pose_width_qty*$pose_width;
         $all_aligned_pose_height = $pose_height_qty*$pose_height;
@@ -272,9 +296,12 @@ class Controller extends BaseController
         $total_rest = $width_rest*$height_rest+$all_aligned_pose_width*$height_rest+$all_aligned_pose_width*$width_rest;
 
         //If job borders don't fit in sheet
-        if( $all_aligned_pose_width_with_borders>$leaf_width ||  $all_aligned_pose_height_with_borders>$leaf_height)
-          $continue[] = "Pose borders don't fit in sheet";   //Bandera
-          //continue;
+        if( $all_aligned_pose_width_with_borders>$leaf_width ||  $all_aligned_pose_height_with_borders>$leaf_height){
+          if( $this->continue_if_invalid_size )
+            continue;
+          else
+            $continue[] = "Pose borders don't fit in sheet";   //Bandera;
+        }
 
         $res["paper_price_id"] = $paper_price_id;
         $res["sheet_width"] = $sheet_width;
@@ -337,11 +364,12 @@ class Controller extends BaseController
       //If no accepted sheet size, we use no front_back
       //echo(sizeof($merged)."/");   //Bandera
       //print_r($merged);    //Bandera
-      /*if( !sizeof($merged) ){
+      if( !sizeof($merged) ){
+          //echo "Banderazo";   //Bandera
           $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"normal","normal");
           $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,"lying","normal");
           $merged = array_merge($normal_normal,$lying_normal);
-        }*/
+        }
     }
     aasort($merged,"rest");
     //print_r($merged);  //Bandera

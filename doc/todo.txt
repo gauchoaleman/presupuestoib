@@ -146,3 +146,6 @@ Preguntas para Mama:
 [X] Tamaño de letra en job_paper + grande
 [ ] Guardado en base de datos
 [ ] Al elegir Adast/GTO46 no hay papel compatible
+[ ]   Preguntarle a mamá la política con poses normales
+[ ]   Ver con Mama trabajos Adast.
+[ ] Si no encuentra papel adecuado, poner texto con link hacia atrás.

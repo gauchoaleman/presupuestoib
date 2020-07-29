@@ -232,32 +232,38 @@ class ShowResult extends Controller
 
   private function save_budget_to_database($data)
   {
-    //print_r($data);   //Bandera
-    $insert["paper_price_id"] = $data["paper_price_id"];
-    $insert["client_id"] = $data["client_id"];
-    $insert["budget_name"] = $data["budget_name"];
-    $insert["leaf_width_qty"] = $data["leaf_width_qty"];
-    $insert["leaf_height_qty"] = $data["leaf_height_qty"];
-    $insert["pose_width_qty"] = $data["pose_width_qty"];
-    $insert["pose_height_qty"] = $data["pose_height_qty"];
-    $insert["leaf_width"] = $data["leaf_width"];
-    $insert["leaf_height"] = $data["leaf_height"];
-    $insert["copy_qty"] = $data["copy_qty"];
-    $insert["machine"] = $data["machine"];
-    $insert["front_color_qty"] = $data["front_color_qty"];
-    $insert["back_color_qty"] = $data["back_color_qty"];
-    $insert["pantone_1"] = $data["pantone_1"];
-    $insert["pantone_2"] = $data["pantone_2"];
-    $insert["pantone_3"] = $data["pantone_3"];
-    $insert["fold_qty"] = $data["fold_qty"];
-    $insert["punching_difficulty"] = $data["punching_difficulty"];
-    $insert["perforate"] = $data["perforate"];
-    $insert["lac"] = $data["lac"];
-    $insert["discount_percentage"] = $data["discount_percentage"];
-    $insert["plus_percentage"] = $data["plus_percentage"];
-    $insert["position"] = $data["position"];
-    $insert["front_back"] = $data["front_back"];
-    $insert["dollar_price_id"] = get_dollar_price_id();
+    print("Input for database:");   //Bandera
+    print_r($data);   //Bandera
+    $insert_array["paper_price_id"] = $data["paper_price_id"];
+    $insert_array["client_id"] = $data["client_id"];
+    $insert_array["budget_name"] = $data["budget_name"];
+    $insert_array["leaf_width_qty"] = $data["leaf_width_qty"];
+    $insert_array["leaf_height_qty"] = $data["leaf_height_qty"];
+    $insert_array["pose_width_qty"] = $data["pose_width_qty"];
+    $insert_array["pose_height_qty"] = $data["pose_height_qty"];
+    $insert_array["leaf_width"] = $data["leaf_width"];
+    $insert_array["leaf_height"] = $data["leaf_height"];
+    $insert_array["copy_qty"] = $data["copy_qty"];
+    $insert_array["machine"] = $data["machine"];
+    $insert_array["front_color_qty"] = $data["front_color_qty"];
+    $insert_array["back_color_qty"] = $data["back_color_qty"];
+    $insert_array["pantone_1"] = $data["pantone_1"];
+    $insert_array["pantone_2"] = $data["pantone_2"];
+    $insert_array["pantone_3"] = $data["pantone_3"];
+    $insert_array["fold_qty"] = $data["fold_qty"];
+    $insert_array["punching_difficulty"] = $data["punching_difficulty"];
+    $insert_array["perforate"] = $data["perforate"];
+    $insert_array["lac"] = $data["lac"];
+    $insert_array["various_finishing"] = $data["various_finishing"];
+    $insert_array["mounting"] = $data["mounting"];
+    $insert_array["shipping"] = $data["shipping"];
+    $insert_array["discount_percentage"] = $data["discount_percentage"];
+    $insert_array["plus_percentage"] = $data["plus_percentage"];
+    $insert_array["position"] = $data["position"];
+    $insert_array["front_back"] = $data["front_back"];
+    $insert_array["dollar_price_id"] = get_dollar_price_id();
+    print("Insert array:");     //Bandera
+    print_r($insert_array);     //Bandera
   }
 
   public function proc(Request $request)

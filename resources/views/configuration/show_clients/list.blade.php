@@ -5,7 +5,7 @@ $clients = DB::table('clients')->orderBy('id', 'desc')->select('*')->get();
   <br>
   <div class="card" style="width: 50rem;">
     <div class="card-header">
-      Precios dólar
+      Listado clientes
     </div>
     <div class="card-body">
       <table class="table table-striped">
