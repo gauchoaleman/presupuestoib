@@ -106,6 +106,10 @@ function get_dollar_price_id() {
   return $max_dollar_price_id->id;
 }
 
+function pesos_to_dollars($pesos,$dollar_price_id=0) {
+  return $pesos?$pesos/get_dollar_price($dollar_price_id):0;
+}
+
 function aasort (&$array, $key) {
   $sorter=array();
   $ret=array();

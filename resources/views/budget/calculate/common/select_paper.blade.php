@@ -145,8 +145,6 @@ if (!$back_color_qty) {
             </thead>
             <tbody>
               @foreach($result["all_sizes"] as $size)
-
-              {{--@if( $size["sheet_width"] == 880 && $size["sheet_height"]==630 && $size["leaf_width_qty"] == 2 && $size["leaf_height_qty"]==2)--}}
               <tr>
                 <td>
                   <div align="center">
@@ -193,103 +191,102 @@ if (!$back_color_qty) {
                     {{$size["pose_width_qty"]}}
                     @if( $size["front_back"] == "front_back_width")
                       (frente/dorso)
-                      @endif
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      {{$size["pose_height_qty"]}}
-                      @if( $size["front_back"] == "front_back_height")
-                      (frente/dorso)
-                      @endif
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      {{$size["pose_width"]}}
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      {{$size["pose_height"]}}
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      @switch($size["position"])
+                    @endif
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    {{$size["pose_height_qty"]}}
+                    @if( $size["front_back"] == "front_back_height")
+                    (frente/dorso)
+                    @endif
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    {{$size["pose_width"]}}
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    {{$size["pose_height"]}}
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    @switch($size["position"])
                       @case("normal")
-                      Normal
-                      @break
-
+                        Normal
+                        @break
                       @case("lying")
-                      Acostado
-                      @break
-
+                        Acostado
+                        @break
                       @default
-                      -
-                      @endswitch
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      @switch($size["front_back"])
+                        -
+                        @break
+                    @endswitch
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    @switch($size["front_back"])
                       @case("normal")
-                      Normal
-                      @break
+                        Normal
+                        @break
                       @case("front_back_width")
-                      Frente/Dorso a lo ancho
-                      @break
+                        Frente/Dorso a lo ancho
+                        @break
                       @case("front_back_height")
-                      Frente/Dorso a lo alto
-                      @break
+                        Frente/Dorso a lo alto
+                        @break
                       @default
-                      -
-                      @endswitch
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      {{$size["leaf_width_without_borders"]}}
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      {{$size["leaf_height_without_borders"]}}
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      {{$size["rest"]}}
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      {{$size["width_rest"]}}
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      {{$size["height_rest"]}}
-                    </div>
-                  </td>
-                  <td>
-                    <div align="center">
-                      @foreach($size["continue"] as $cont)
-                      {{$cont}}<br>
-                      @endforeach
-                      @if( !sizeof($size["continue"]))
-                      Accepted
-                      @endif
-                    </div>
-                  </td>
-                </tr>
-                {{--@endif--}}
-                @endforeach
-              </tbody>
-            </table>
-          @else
-            No hay resultados para ésos parámetros. <a href="javascript:history.back()">Click acá</a> para volver.
-          @endif
+                        -
+                        @break
+                    @endswitch
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    {{$size["leaf_width_without_borders"]}}
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    {{$size["leaf_height_without_borders"]}}
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    {{$size["rest"]}}
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    {{$size["width_rest"]}}
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    {{$size["height_rest"]}}
+                  </div>
+                </td>
+                <td>
+                  <div align="center">
+                    @foreach($size["continue"] as $cont)
+                    {{$cont}}<br>
+                    @endforeach
+                    @if( !sizeof($size["continue"]))
+                    Accepted
+                    @endif
+                  </div>
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        @else
+          No hay resultados para ésos parámetros. <a href="javascript:history.back()">Click acá</a> para volver.
+        @endif
       </div>
     </div>
     <div class="col-md-6">

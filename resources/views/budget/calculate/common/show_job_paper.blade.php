@@ -1,7 +1,7 @@
 <?php
-$paper_type = get_paper_type($paper_type_id);
-$paper_color = get_paper_color($paper_color_id);
-$client_name = get_client_name($client_id);
+$paper_type = get_paper_type($all_input["paper_type_id"]);
+$paper_color = get_paper_color($all_input["paper_color_id"]);
+$client_name = get_client_name($all_input["client_id"]);
 ?>
 <div class="container">
   <br>
@@ -19,27 +19,28 @@ $client_name = get_client_name($client_id);
           Cliente: {{$client_name}}
         </div>
         <div class="form-group row">
-          Trabajo: {{$budget_name}}
+          Trabajo: {{$all_input["budget_name"]}}
         </div>
         <div class="form-group row">
-          Cantidad: {{$copy_qty}}
+          Cantidad: {{$all_input["copy_qty"]}}
         </div>
         <div class="form-group row">
-          Formato: {{$pose_width}}x{{$pose_height}}
+          Formato: {{$all_input["pose_width"]}}x{{$all_input["pose_height"]}}
         </div>
         <div class="form-group row">
-          Colores: {{$front_color_qty}}-{{$back_color_qty}} @if($pantone_1||$pantone_2||$pantone_3)Pantone: {{$pantone_1}} {{$pantone_2}} {{$pantone_3}}@endif
+          Colores: {{$all_input["front_color_qty"]}}-{{$all_input["back_color_qty"]}}
+          @if($all_input["pantone_1"]||$all_input["pantone_2"]||$all_input["pantone_3"])Pantone: {{$all_input["pantone_1"]}} {{$all_input["pantone_2"]}} {{$all_input["pantone_3"]}}@endif
         </div>
         <div class="form-group row">
-          Papel: {{$sheet_qty_and_excess}} hojas. {{$paper_type}} {{$weight}}gr. {{$sheet_size["width"]}}x{{$sheet_size["height"]}}<br>
-          cortar a: {{$leaf_width}}x{{$leaf_height}}
+          Papel: {{$result["sheet_qty_and_excess"]}} hojas. {{$paper_type}} {{$all_input["weight"]}}gr. {{$result["sheet_size"]["width"]}}x{{$result["sheet_size"]["height"]}}<br>
+          cortar a: {{$all_input["leaf_width"]}}x{{$all_input["leaf_height"]}}
         </div>
         <div class="form-group row">
-          Máquina: {{$machine}}
+          Máquina: {{$all_input["machine"]}}
         </div>
-        @if( $fold_qty || $punching_difficulty || $perforate || $tracing || $lac )
+        @if( $all_input["fold_qty"] || $all_input["punching_difficulty"] || $all_input["perforate"] || $all_input["tracing"] || $all_input["lac"] )
           <div class="form-group row">
-            Acabado: @if($fold_qty)Plegado, @endif @if($punching_difficulty)Troquelado, @endif @if($perforate)Perforado, @endif @if($tracing)Trazado, @endif @if($lac)Laca @endif
+            Acabado: @if($all_input["fold_qty"])Plegado @endif @if($all_input["punching_difficulty"])Troquelado @endif @if($all_input["perforate"])Perforado @endif @if($all_input["tracing"])Trazado @endif @if($all_input["lac"])Laca @endif
           </div>
         @endif
       </div>

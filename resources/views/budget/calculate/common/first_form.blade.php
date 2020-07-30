@@ -37,6 +37,16 @@ if ($paper_type_id && !$paper_color_id) {
 if (!$fold_qty) {
     $fold_qty = 0;
 }
+
+if (!$various_finishing) {
+    $various_finishing = 0;
+}
+if (!$mounting) {
+    $mounting = 0;
+}
+if (!$shipping) {
+    $shipping = 0;
+}
 if (!$discount_percentage) {
     $discount_percentage = 0;
 }

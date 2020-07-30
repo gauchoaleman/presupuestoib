@@ -150,4 +150,6 @@ Preguntas para Mama:
 [ ]   Ver con Mama trabajos Adast.
 [X] Si no encuentra papel adecuado, poner texto con link hacia atrás.
 [ ] Ver si se puede seleccionar 2 tipos de papel para libros/revistas
-[ ] Corregir select_paper.blade.php
+[X] Corregir select_paper.blade.php
+[ ] Ver cuando orientación=lying: Si se ve bien en el resultado de que va Acostado.
+[x] En todas las tablas de presupuestos incluir dollar_price_id

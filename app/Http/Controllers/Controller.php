@@ -67,7 +67,7 @@ class Controller extends BaseController
                                "GTO52"=>23,
                                "GTO46"=>34);
   public $cmyk_ink_kilo_price = 10;
-  public $pantone_ink_kilo_price = 30;
+  public $pantone_ink_kilo_price = 20;
 
   public $guillotine_price = 123;
 

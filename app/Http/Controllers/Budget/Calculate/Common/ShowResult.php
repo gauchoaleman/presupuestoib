@@ -133,50 +133,35 @@ class ShowResult extends Controller
     $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["ink_prices"]["total"];
 
     if( $fold_qty ){
-      $data["fold"] = true;
-      $data["folding_arrangement_price"] = $this->get_folding_arrangement_price($fold_qty);
-      $data["folding_per_qty_price"] = $this->get_folding_per_qty_price($copy_qty_and_excess,$fold_qty);
-      $total += $data["folding_arrangement_price"]+$data["folding_per_qty_price"];
+      $data["folding"]["arrangement_price"] = $this->get_folding_arrangement_price($fold_qty);
+      $data["folding"]["per_qty_price"] = $this->get_folding_per_qty_price($copy_qty_and_excess,$fold_qty);
+      $total += $data["folding"]["arrangement_price"]+$data["folding"]["per_qty_price"];
     }
-    else
-      $data["fold"] = false;
 
     if( $punching_difficulty ){
-      $data["punch"] = true;
-      $data["punching_arrangement_price"] = $this->get_punching_arrangement_price($punching_difficulty);
-      $data["punching_per_qty_price"] = $this->get_punching_per_qty_price($copy_qty_and_excess,$punching_difficulty);
-      $data["break_out_per_qty_price"] = $this->get_break_out_per_qty_price($copy_qty_and_excess);
-      $total += $data["punching_arrangement_price"]+$data["punching_per_qty_price"]+$data["break_out_per_qty_price"];
+      $data["punching"]["arrangement_price"] = $this->get_punching_arrangement_price($punching_difficulty);
+      $data["punching"]["per_qty_price"] = $this->get_punching_per_qty_price($copy_qty_and_excess,$punching_difficulty);
+      $data["punching"]["break_out_per_qty_price"] = $this->get_break_out_per_qty_price($copy_qty_and_excess);
+      $total += $data["punching"]["arrangement_price"]+$data["punching"]["per_qty_price"]+$data["punching"]["break_out_per_qty_price"];
     }
-    else
-    $data["punch"] = false;
 
     if( $perforate ){
-      $data["perforate"] = true;
-      $data["perforating_arrangement_price"] = $this->get_perforating_arrangement_price();
-      $data["perforating_per_qty_price"] = $this->get_perforating_per_qty_price($copy_qty_and_excess);
-      $total += $data["perforating_arrangement_price"]+$data["perforating_per_qty_price"];
+      $data["perforating"]["arrangement_price"] = $this->get_perforating_arrangement_price();
+      $data["perforating"]["per_qty_price"] = $this->get_perforating_per_qty_price($copy_qty_and_excess);
+      $total += $data["perforating"]["arrangement_price"]+$data["perforating"]["per_qty_price"];
     }
-    else
-    $data["perforate"] = false;
 
     if( $tracing ){
-      $data["tracing"] = true;
-      $data["tracing_arrangement_price"] = $this->get_tracing_arrangement_price();
-      $data["tracing_per_qty_price"] = $this->get_tracing_per_qty_price($copy_qty_and_excess);
-      $total += $data["tracing_arrangement_price"]+$data["tracing_per_qty_price"];
+      $data["tracing"]["arrangement_price"] = $this->get_tracing_arrangement_price();
+      $data["tracing"]["per_qty_price"] = $this->get_tracing_per_qty_price($copy_qty_and_excess);
+      $total += $data["tracing"]["arrangement_price"]+$data["tracing"]["per_qty_price"];
     }
-    else
-    $data["perforate"] = false;
 
     if( $lac ){
-      $data["lac"] = true;
-      $data["lac_arrangement_price"] = $this->get_lac_arrangement_price();
-      $data["lac_per_qty_price"] = $this->get_lac_per_qty_price($copy_qty_and_excess);
-      $total += $data["lac_arrangement_price"]+$data["lac_per_qty_price"];
+      $data["lac"]["arrangement_price"] = $this->get_lac_arrangement_price();
+      $data["lac"]["per_qty_price"] = $this->get_lac_per_qty_price($copy_qty_and_excess);
+      $total += $data["lac"]["arrangement_price"]+$data["lac"]["per_qty_price"];
     }
-    else
-    $data["lac"] = false;
 
     $total += $various_finishing+$mounting+$shipping;
 
@@ -191,7 +176,7 @@ class ShowResult extends Controller
       $total += $total*$plus_percentage/100;
     }
     else
-    $data["subtotal"] = false;
+      $data["subtotal"] = false;
 
     if( isset($dollar_price_id) )
       $data["dollar_price"] = get_dollar_price($dollar_price_id);
@@ -220,20 +205,18 @@ class ShowResult extends Controller
   private function get_result_from_post( $input )
   {
     $paper_data_input = $this->extract_paper_data($input["paper_data"]);
-    //print_r($paper_data);    //Bandera
-    $input["perforate"] = isset($input["perforate"])?$input["perforate"]:0;
-    $input["tracing"] = isset($input["tracing"])?$input["tracing"]:0;
-    $input["lac"] = isset($input["lac"])?$input["lac"]:0;
+    //print("input:");    //Bandera
+    //print_r($input);    //Bandera
 
-    $input["various_finishing"] = $input["various_finishing"]?$input["various_finishing"]/get_dollar_price():0;
-    $input["mounting"] = $input["mounting"]?$input["mounting"]/get_dollar_price():0;
-    $input["shipping"] = $input["shipping"]?$input["shipping"]/get_dollar_price():0;
-    $input["discount_percentage"] = isset($input["discount_percentage"])?$input["discount_percentage"]:0;
-    $input["plus_percentage"] = isset($input["plus_percentage"])?$input["plus_percentage"]:0;
+    $input["various_finishing"] = pesos_to_dollars($input["various_finishing"]);
+    $input["mounting"] = pesos_to_dollars($input["mounting"]);
+    $input["shipping"] = pesos_to_dollars($input["shipping"]);
 
-    $calculated_result = $this->calculate_result(array_merge($input,$paper_data_input));
+    $all_input = array_merge($input,$paper_data_input);
+    $ret["all_input"] = $all_input;
+    $ret["result"] = $this->calculate_result($all_input);
 
-    return array_merge($input,$calculated_result);
+    return $ret;
   }
 
   private function save_budget_to_database($data)
@@ -255,9 +238,9 @@ class ShowResult extends Controller
     $data_input["punching_difficulty"] = $data["punching_difficulty"];
     $data_input["perforate"] = $data["perforate"];
     $data_input["lac"] = $data["lac"];
-    $data_input["various_finishing"] = $data["various_finishing"];
-    $data_input["mounting"] = $data["mounting"];
-    $data_input["shipping"] = $data["shipping"];
+    $data_input["various_finishing"] = pesos_to_dollars($data["various_finishing"]);
+    $data_input["mounting"] = pesos_to_dollars($data["mounting"]);
+    $data_input["shipping"] = pesos_to_dollars($data["shipping"]);
     $data_input["discount_percentage"] = $data["discount_percentage"];
     $data_input["plus_percentage"] = $data["plus_percentage"];
     $data_input["dollar_price_id"] = get_dollar_price_id();
@@ -269,8 +252,8 @@ class ShowResult extends Controller
   public function proc(Request $request)
   {
     $data = $this->get_result_from_post($_POST);
-    print("_POST:");       //Bandera
-    print_r($_POST);      //Bandera
+    //print("_POST:");       //Bandera
+    //print_r($_POST);      //Bandera
     if( $_POST["button_action"] == "show_job_paper" )
       return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
     else if( $_POST["button_action"] == "show_result" ){
