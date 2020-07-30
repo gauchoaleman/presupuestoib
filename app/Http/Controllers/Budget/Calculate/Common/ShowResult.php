@@ -205,8 +205,6 @@ class ShowResult extends Controller
   private function get_result_from_post( $input )
   {
     $paper_data_input = $this->extract_paper_data($input["paper_data"]);
-    //print("input:");    //Bandera
-    //print_r($input);    //Bandera
 
     $input["various_finishing"] = pesos_to_dollars($input["various_finishing"]);
     $input["mounting"] = pesos_to_dollars($input["mounting"]);
