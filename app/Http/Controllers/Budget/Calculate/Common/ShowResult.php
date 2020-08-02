@@ -222,29 +222,38 @@ class ShowResult extends Controller
     print("Input for database:");   //Bandera
     print_r($data);   //Bandera
 
-    $paper_data_input = $this->extract_paper_data($data["paper_data"]);
-    $data_input["client_id"] = $data["client_id"];
-    $data_input["budget_name"] = $data["budget_name"];
-    $data_input["copy_qty"] = $data["copy_qty"];
-    $data_input["machine"] = $data["machine"];
-    $data_input["front_color_qty"] = $data["front_color_qty"];
-    $data_input["back_color_qty"] = $data["back_color_qty"];
-    $data_input["pantone_1"] = $data["pantone_1"];
-    $data_input["pantone_2"] = $data["pantone_2"];
-    $data_input["pantone_3"] = $data["pantone_3"];
-    $data_input["fold_qty"] = $data["fold_qty"];
-    $data_input["punching_difficulty"] = $data["punching_difficulty"];
-    $data_input["perforate"] = $data["perforate"];
-    $data_input["lac"] = $data["lac"];
-    $data_input["various_finishing"] = pesos_to_dollars($data["various_finishing"]);
-    $data_input["mounting"] = pesos_to_dollars($data["mounting"]);
-    $data_input["shipping"] = pesos_to_dollars($data["shipping"]);
-    $data_input["discount_percentage"] = $data["discount_percentage"];
-    $data_input["plus_percentage"] = $data["plus_percentage"];
-    $data_input["dollar_price_id"] = get_dollar_price_id();
+    $paper_data_input = $this->extract_paper_data($data["paper_data"]);             //Contains: paper_price_id, leaf_width, leaf_height, leaf_width_qty,        added
+                                                                                    //leaf_height_qty, pose_width_qty, pose_height_qty, position, front_back    added
+    print("Paper Data input for database:");   //Bandera
+    print_r($paper_data_input);   //Bandera
+    $data_input["pose_width"] = $data["pose_width"];                                //Checked, added
+    $data_input["pose_height"] = $data["pose_height"];                              //Checked, added
+    $data_input["copy_qty"] = $data["copy_qty"];                                    //Checked, added
+    $data_input["machine"] = $data["machine"];                                      //Checked, added
+    $data_input["front_color_qty"] = $data["front_color_qty"];                      //Checked, added
+    $data_input["back_color_qty"] = $data["back_color_qty"];                        //Checked, added
+    $data_input["pantone_1"] = $data["pantone_1"];                                  //Checked, added
+    $data_input["pantone_2"] = $data["pantone_2"];                                  //Checked, added
+    $data_input["pantone_3"] = $data["pantone_3"];                                  //Checked, added
+    $data_input["pose_qty"] = $data["pose_qty"];                                    //Checked, added
+    $data_input["fold_qty"] = $data["fold_qty"];                                    //Checked, added
+    $data_input["punching_difficulty"] = $data["punching_difficulty"];              //Checked, added
+    $data_input["perforate"] = $data["perforate"]?true:false;                                  //Checked, added
+    $data_input["tracing"] = $data["tracing"]?true:false;                                      //Checked, added
+    $data_input["lac"] = $data["lac"]?true:false;                                              //Checked, added
+    $data_input["various_finishing"] = pesos_to_dollars($data["various_finishing"]);//Checked, added
+    $data_input["mounting"] = pesos_to_dollars($data["mounting"]);                  //Checked, added
+    $data_input["shipping"] = pesos_to_dollars($data["shipping"]);                  //Checked, added
+    $data_input["discount_percentage"] = $data["discount_percentage"]?$data["discount_percentage"]:0;              //Checked, added
+    $data_input["plus_percentage"] = $data["plus_percentage"]?$data["plus_percentage"]:0;                      //Checked, added
+    $data_input["client_id"] = $data["client_id"];                                  //Checked, added
+    $data_input["budget_name"] = $data["budget_name"];                              //Checked, added
+    $data_input["dollar_price_id"] = get_dollar_price_id();                         //Checked, added
+    $data_input["created_at"] = date('Y-m-d H:i:s');
     $insert_array = array_merge($data_input,$paper_data_input);
     print("Insert array:");     //Bandera
     print_r($insert_array);     //Bandera
+    DB::table('common_jobs')->insert($insert_array);
   }
 
   public function proc(Request $request)

@@ -119,7 +119,7 @@ Preguntas para Mama:
   [ ] Etc.
   [X] ¿Guillotina se calcula según ctd. de ejemplares?
   [X] ¿Se cobra guillotina de cortar resmas? No
-[ ] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)
+[X] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)
 [X] Demasía: 100 Druckbogen.
 [X] Si es front_back calcular doble de poses en pliego --> Verlo con Mama.
 [X] Reemplazar sheet_height_qty x leaf_height_qty
@@ -132,7 +132,7 @@ Preguntas para Mama:
     No Calcular directamente en template select_paper.blade.php sino en función de procesar tamaño.
 [?] Dorso con GTO46: Usar Tamaño trabajo (420x300), tamaño papel (950x650) --> Teóricamente no entra en GTO46, preguntar Mama.
 [X] Agregar tamaño papel en Resultado, sección papel.
-[ ] En tabla de precios papel poner width antes que height
+[X] En tabla de precios papel poner width antes que height
 [X] En show_result no muestra poses con frente/dorso (mutiplicado x 2)
 [X] Mirar etiquetas div en select_paper.blade.php.
 [X] Agregar descuento
@@ -153,3 +153,4 @@ Preguntas para Mama:
 [X] Corregir select_paper.blade.php
 [ ] Ver cuando orientación=lying: Si se ve bien en el resultado de que va Acostado.
 [x] En todas las tablas de presupuestos incluir dollar_price_id
+[ ] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price_id

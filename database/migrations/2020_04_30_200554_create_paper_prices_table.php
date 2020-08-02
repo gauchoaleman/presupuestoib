@@ -17,8 +17,8 @@ class CreatePaperPricesTable extends Migration
           $table->id();
           $table->foreignId('paper_prices_set_id');
           $table->foreignId('paper_type_id');
-          $table->integer('height');
           $table->integer('width');
+          $table->integer('height');
           $table->integer('weight');
           $table->foreignId('paper_color_id');
           $table->float('sheet_price', 8, 2);
