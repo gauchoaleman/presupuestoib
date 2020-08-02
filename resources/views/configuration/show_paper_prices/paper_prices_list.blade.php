@@ -5,7 +5,7 @@ $paper_prices = DB::table('paper_prices')
 ->where('paper_prices_set_id', $_GET["paper_prices_set_id"])
 ->select('paper_types.name as paper_type','paper_prices.height','paper_prices.width','paper_prices.weight','paper_colors.name as paper_color',
 'paper_prices.sheet_price')->get();
-$dollar_price = get_dollar_price();
+$dollar_price = get_actual_dollar_price();
 ?>
 <div class="container">
   <br>

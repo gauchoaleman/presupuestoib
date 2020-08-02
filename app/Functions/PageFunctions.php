@@ -93,7 +93,7 @@ function get_paper_weights($paper_type_id,$paper_color_id)
   return $paper_weights;
 }
 
-function get_dollar_price($id=0) {
+function get_actual_dollar_price($id=0) {
   if( $id )
     $dollar_price = DB::table('dollar_prices')->where("id","=",$id)->select('amount')->first();
   else
@@ -101,13 +101,13 @@ function get_dollar_price($id=0) {
   return $dollar_price->amount;
 }
 
-function get_dollar_price_id() {
+function get_actual_dollar_price_id() {
   $max_dollar_price_id = DB::table('dollar_prices')->orderBy('id', 'desc')->select('id')->first();
   return $max_dollar_price_id->id;
 }
 
 function pesos_to_dollars($pesos,$dollar_price_id=0) {
-  return $pesos?$pesos/get_dollar_price($dollar_price_id):0;
+  return $pesos?$pesos/get_actual_dollar_price($dollar_price_id):0;
 }
 
 function aasort (&$array, $key) {

@@ -179,9 +179,9 @@ class ShowResult extends Controller
       $data["subtotal"] = false;
 
     if( isset($dollar_price_id) )
-      $data["dollar_price"] = get_dollar_price($dollar_price_id);
+      $data["dollar_price"] = get_actual_dollar_price($dollar_price_id);
     else
-      $data["dollar_price"] = get_dollar_price();
+      $data["dollar_price"] = get_actual_dollar_price();
     $data["total"] = $total;
     return $data;
   }
@@ -248,7 +248,7 @@ class ShowResult extends Controller
     $data_input["plus_percentage"] = $data["plus_percentage"]?$data["plus_percentage"]:0;                      //Checked, added
     $data_input["client_id"] = $data["client_id"];                                  //Checked, added
     $data_input["budget_name"] = $data["budget_name"];                              //Checked, added
-    $data_input["dollar_price_id"] = get_dollar_price_id();                         //Checked, added
+    $data_input["dollar_price_id"] = get_actual_dollar_price_id();                         //Checked, added
     $data_input["created_at"] = date('Y-m-d H:i:s');
     $insert_array = array_merge($data_input,$paper_data_input);
     print("Insert array:");     //Bandera
