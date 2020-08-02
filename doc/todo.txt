@@ -153,4 +153,5 @@ Preguntas para Mama:
 [X] Corregir select_paper.blade.php
 [ ] Ver cuando orientación=lying: Si se ve bien en el resultado de que va Acostado.
 [x] En todas las tablas de presupuestos incluir dollar_price_id
-[ ] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price_id
+[X] Reemplazar nombre de funcion get_dollar_price_id por get_actual_dollar_price_id
+[X] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price

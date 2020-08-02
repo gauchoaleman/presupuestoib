@@ -232,12 +232,13 @@ class ShowResult extends Controller
     $data_input["machine"] = $data["machine"];                                      //Checked, added
     $data_input["front_color_qty"] = $data["front_color_qty"];                      //Checked, added
     $data_input["back_color_qty"] = $data["back_color_qty"];                        //Checked, added
-    $data_input["pantone_1"] = $data["pantone_1"];                                  //Checked, added
-    $data_input["pantone_2"] = $data["pantone_2"];                                  //Checked, added
-    $data_input["pantone_3"] = $data["pantone_3"];                                  //Checked, added
-    $data_input["pose_qty"] = $data["pose_qty"];                                    //Checked, added
-    $data_input["fold_qty"] = $data["fold_qty"];                                    //Checked, added
-    $data_input["punching_difficulty"] = $data["punching_difficulty"];              //Checked, added
+    if($data["pantone_1"]) $data_input["pantone_1"] = $data["pantone_1"];                                  //Checked, added
+    if($data["pantone_2"]) $data_input["pantone_2"] = $data["pantone_2"];                                  //Checked, added
+    if($data["pantone_3"]) $data_input["pantone_3"] = $data["pantone_3"];
+    if($data["pose_qty"])$data_input["pose_qty"] = $data["pose_qty"];
+    if($data["punching_difficulty"])$data_input["punching_difficulty"] = $data["punching_difficulty"];
+    if($data["fold_qty"])$data_input["fold_qty"] = $data["fold_qty"];
+
     $data_input["perforate"] = $data["perforate"]?true:false;                                  //Checked, added
     $data_input["tracing"] = $data["tracing"]?true:false;                                      //Checked, added
     $data_input["lac"] = $data["lac"]?true:false;                                              //Checked, added

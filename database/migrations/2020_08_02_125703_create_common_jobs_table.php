@@ -30,12 +30,12 @@ class CreateCommonJobsTable extends Migration
             $table->string('machine', 100);
             $table->integer('front_color_qty');
             $table->integer('back_color_qty');
-            $table->integer('pantone_1');
-            $table->integer('pantone_2');
-            $table->integer('pantone_3');
-            $table->integer('pose_qty');
-            $table->integer('fold_qty');
-            $table->integer('punching_difficulty');
+            $table->integer('pantone_1')->nullable()->default(NULL);
+            $table->integer('pantone_2')->nullable()->default(NULL);
+            $table->integer('pantone_3')->nullable()->default(NULL);
+            $table->integer('pose_qty')->nullable()->default(NULL);
+            $table->integer('fold_qty')->nullable()->default(NULL);
+            $table->integer('punching_difficulty')->nullable()->default(NULL);
             $table->boolean('perforate');
             $table->boolean('tracing');
             $table->boolean('lac');
