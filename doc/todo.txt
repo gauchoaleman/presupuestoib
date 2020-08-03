@@ -155,3 +155,4 @@ Preguntas para Mama:
 [x] En todas las tablas de presupuestos incluir dollar_price_id
 [X] Reemplazar nombre de funcion get_dollar_price_id por get_actual_dollar_price_id
 [X] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price
+[ ] Paginación en listado de jobs
