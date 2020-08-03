@@ -81,11 +81,11 @@ Preguntas para Mama:
 [X]   Laca UV
         Arreglo (fijo)
         Se cobra x ctd. de pliegos
-[ ]   Acabados varios
+[X]   Acabados varios
         Ingresar monto en pesos
-[ ]  *Montage
+[X]  *Montage
       Ingresar monto en pesos
-[ ]  *Envío
+[X]  *Envío
       Ingresar monto en pesos
 
   Libros
@@ -109,9 +109,43 @@ Preguntas para Mama:
         Manual o x máquina
         X ctd. de pliegos (x millar)
   Revistas
+Datos
+[ ]   Ctd
+[ ]   Tamaño (anchoxalto)
+[ ]   Ctd de páginas (chequear que sea divisible por 4)
+[ ]   Impresión (Ctd de tintas)
+[ ]     Interior
+[ ]       Tintas de cada juego de páginas
+[ ]     Tapa
+[ ]       Tintas Tapa/Contratapa
+[ ]       Tintas Retiros
+[ ]   Acabado
+[ ]     Abrochar o encuadernado o anillado
+[ ]   Tipo de papel
+[ ]     Interior
+[ ]     Tapa
+Calcular
+[ ]   Montaje (calcular x página no importa ctd. de tintas)
+[ ]   Envío
+Impresión
+[ ]   Arreglo
+    Se cobra x ctd. de planchas y tamaño de plancha (máquina)
+      (5 planchas es *5 según tamaño plancha)
+[ ]   Lavado de máquina (Fijo)
+        Ingresar ctd. de lavados (todos los lavados valen lo mismo (350 x el momento))
+[ ]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
+    Multiplicar por costo Kg CMYK o Pantone (precio varía)
+[ ]   Impresión en si
+        Se cobra x
+        ctd. de pliegos
+        ctd. de Colores
+        tamaño de plancha
+        Frente o Frente y dorso
+Acabado
 [ ]   Compilar
-        Manual o x máquina
         X ctd. de pliegos (x millar)
+[ ]   Abrochado o Encuadernar o Anillado (x unidad)
+[ ]   Corte (x millar de pliegos)
 
 
 [ ] Cuáles son todos los puntos a tener en cuenta? Cómo se calculan los puntos?
@@ -156,3 +190,4 @@ Preguntas para Mama:
 [X] Reemplazar nombre de funcion get_dollar_price_id por get_actual_dollar_price_id
 [X] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price
 [ ] Paginación en listado de jobs
+[ ] Button height on listing
