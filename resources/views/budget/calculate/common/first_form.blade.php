@@ -12,6 +12,7 @@ $pantone_3 = get_form_value("pantone_3");
 $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
 $machine = get_form_value("machine");
+$machine_washing_qty = get_form_value("machine_washing_qty");
 $fold_qty = get_form_value("fold_qty");
 $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");
@@ -275,6 +276,35 @@ if (!$plus_percentage) {
             @enderror
           </div>
         </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Lavados de máquina:') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <select name="machine_washing_qty" id="machine_washing_qty">
+              <option value=""></option>
+              @foreach(array(1,2,3,4) as $each_machine_washing_qty)
+                <option value="{{$each_machine_washing_qty}}"
+                  @if($machine_washing_qty == $each_machine_washing_qty)
+                    selected
+                  @endif
+                >
+                  {{$each_machine_washing_qty}}
+                </option>
+              @endforeach
+            </select>
+            @error('machine_washing_qty')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
 
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">

@@ -28,6 +28,7 @@ class CreateCommonJobsTable extends Migration
             $table->integer('pose_height');
             $table->integer('copy_qty');
             $table->string('machine', 100);
+            $table->integer('machine_washing_qty')->nullable()->default(NULL);
             $table->integer('front_color_qty');
             $table->integer('back_color_qty');
             $table->integer('pantone_1')->nullable()->default(NULL);

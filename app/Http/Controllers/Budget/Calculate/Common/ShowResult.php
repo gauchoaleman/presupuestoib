@@ -132,6 +132,11 @@ class ShowResult extends Controller
     $data["ink_prices"] = $this->get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$pantone_1,$pantone_2,$pantone_3);
     $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["ink_prices"]["total"];
 
+    if( $machine_washing_qty ){
+      $data["washing_machine_price"] = $this->get_washing_machine_price($machine_washing_qty);
+      $total += $data["washing_machine_price"];
+    }
+
     if( $fold_qty ){
       $data["folding"]["arrangement_price"] = $this->get_folding_arrangement_price($fold_qty);
       $data["folding"]["per_qty_price"] = $this->get_folding_per_qty_price($copy_qty_and_excess,$fold_qty);
@@ -232,6 +237,7 @@ class ShowResult extends Controller
     $data_input["machine"] = $data["machine"];                                      //Checked, added
     $data_input["front_color_qty"] = $data["front_color_qty"];                      //Checked, added
     $data_input["back_color_qty"] = $data["back_color_qty"];                        //Checked, added
+    if($data["machine_washing_qty"]) $data_input["machine_washing_qty"] = $data["machine_washing_qty"];     //Checked, added
     if($data["pantone_1"]) $data_input["pantone_1"] = $data["pantone_1"];                                  //Checked, added
     if($data["pantone_2"]) $data_input["pantone_2"] = $data["pantone_2"];                                  //Checked, added
     if($data["pantone_3"]) $data_input["pantone_3"] = $data["pantone_3"];

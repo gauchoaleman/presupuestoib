@@ -55,6 +55,8 @@ class Controller extends BaseController
 
   public $excess_leaves = 100;
 
+  public $machine_washing_price = 5;
+
   public $printing_prices = array("Adast"=>123,
                                   "GTO52"=>234,
                                   "GTO46"=>345);
@@ -93,6 +95,11 @@ class Controller extends BaseController
   public function get_guillotine_price($copy_qty_and_excess,$pose_qty)
   {
     return $this->guillotine_price*$copy_qty_and_excess/$this->price_qty;
+  }
+
+  public function get_washing_machine_price($machine_washing_qty)
+  {
+    return $this->machine_washing_price*$machine_washing_qty;
   }
 
   public function get_folding_arrangement_price($fold_qty)

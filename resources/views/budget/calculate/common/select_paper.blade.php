@@ -15,6 +15,7 @@ $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
 $paper_price_id = get_form_value("paper_price_id");
 $machine = get_form_value("machine");
+$machine_washing_qty = get_form_value("machine_washing_qty");
 $fold_qty = get_form_value("fold_qty");
 $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");

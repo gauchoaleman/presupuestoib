@@ -118,6 +118,19 @@
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Lavados de máquina:') }}</b>
+      </label>
+      <input type="hidden" name="machine_washing_qty" value="{{$machine_washing_qty}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
+        </label>
+        {{$machine_washing_qty}}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Cantidad de pliegues:') }}</b>
       </label>
       <input type="hidden" name="fold_qty" value="{{$fold_qty}}">
