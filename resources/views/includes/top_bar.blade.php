@@ -136,7 +136,7 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a href="/budget/view/common/show_budget">
+                <a href="/budget/view/common/listing">
                   Común
                 </a>
               </li>
