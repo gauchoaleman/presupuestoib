@@ -19,7 +19,7 @@ $budgets = DB::table('common_jobs')
 ->where($where)
 ->select('clients.name as client_name','common_jobs.machine as machine','common_jobs.copy_qty as copy_qty','common_jobs.budget_name as budget_name','common_jobs.created_at as created_at',
         'common_jobs.id as common_job_id')->get();
-$dollar_price = get_actual_dollar_price();
+$dollar_price = get_dollar_price();
 ?>
 <div class="container">
   <br>

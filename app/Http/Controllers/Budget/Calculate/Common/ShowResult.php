@@ -22,19 +22,19 @@ class ShowResult extends Controller
       return $this->show_page_without_menubars("no_access");
   }
 
-  private function get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
+  public function get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
   {
     $sheet_qty = ceil($copy_qty_and_excess/($leaf_width_qty*$leaf_height_qty*$pose_width_qty*$pose_height_qty));
     return $sheet_qty;
   }
 
-  private function get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty)
+  public function get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty)
   {
     $leaf_qty = ceil($copy_qty_and_excess/($pose_width_qty*$pose_height_qty));
     return $leaf_qty;
   }
 
-  private function get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back)
+  public function get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back)
   {
     $paper_price_get = DB::table('paper_prices')->
     select('paper_prices.sheet_price')->
@@ -47,7 +47,7 @@ class ShowResult extends Controller
     return $paper_price;
   }
 
-  private function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back)
+  public function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back)
   {
     $total = 0;
     if( $machine == "GTO52" ){
@@ -110,7 +110,7 @@ class ShowResult extends Controller
     return $ret;
   }
 
-  private function calculate_result($result_input)
+  public function calculate_result($result_input)
   {
     extract($result_input);
 
@@ -184,14 +184,14 @@ class ShowResult extends Controller
       $data["subtotal"] = false;
 
     if( isset($dollar_price_id) )
-      $data["dollar_price"] = get_actual_dollar_price($dollar_price_id);
+      $data["dollar_price"] = get_dollar_price($dollar_price_id);
     else
-      $data["dollar_price"] = get_actual_dollar_price();
+      $data["dollar_price"] = get_dollar_price();
     $data["total"] = $total;
     return $data;
   }
 
-  private function extract_paper_data( $paper_data )
+  public function extract_paper_data( $paper_data )
   {
     $extracted_paper_data = explode("/", $paper_data);
     //print_r($paper_data);    //Bandera
@@ -207,7 +207,7 @@ class ShowResult extends Controller
     return $ret;
   }
 
-  private function get_result_from_post( $input )
+  public function get_result_from_post( $input )
   {
     $paper_data_input = $this->extract_paper_data($input["paper_data"]);
 
@@ -222,7 +222,7 @@ class ShowResult extends Controller
     return $ret;
   }
 
-  private function save_budget_to_database($data)
+  public function save_budget_to_database($data)
   {
     print("Input for database:");   //Bandera
     print_r($data);   //Bandera
