@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Budget\View\Common;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Budget\Calculate\Common\ShowResult;
+use App\Classes\CommonCalculation;
 use Illuminate\Http\Request;
 use DB;
 
@@ -36,6 +37,7 @@ class ShowJob extends Controller
 
   public function proc(Request $request)
   {
+    $test_common_calculation = new CommonCalculation(); 
     if( isset($_GET["common_job_id"]) ){
       $data = $this->get_result_from_db($_GET["common_job_id"]);
       if( isset($_POST["button_action"]) && $_POST["button_action"] == "show_job_paper" )
