@@ -50,7 +50,7 @@ Preguntas para Mama:
 [X]   Arreglo
         Se cobra x ctd. de planchas y tamaño de plancha (máquina)
           (5 planchas es *5 según tamaño plancha)
-[ ]   Lavado de máquina (Fijo)
+[X]   Lavado de máquina (Fijo)
         Ingresar ctd. de lavados (todos los lavados valen lo mismo (350 x el momento))
 [X]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
         Multiplicar por costo Kg CMYK o Pantone (precio varía)
@@ -190,4 +190,4 @@ Acabado
 [X] Reemplazar nombre de funcion get_dollar_price_id por get_actual_dollar_price_id
 [X] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price
 [ ] Paginación en listado de jobs
-[ ] Button height on listing
+[X] Button height on listing

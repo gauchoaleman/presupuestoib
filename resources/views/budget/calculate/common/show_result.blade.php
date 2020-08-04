@@ -14,6 +14,5 @@ $dollar_price = get_actual_dollar_price(isset($dollar_price_id)?$dollar_price_id
     @include('budget.calculate.common.show_result.job_detail_card')
     <br>
     @include('budget.calculate.common.show_result.job_result_card')
-
   </form>
 </div>

@@ -17,7 +17,8 @@ if( $machine )
 $budgets = DB::table('common_jobs')
 ->join('clients', 'clients.id', '=', 'common_jobs.client_id')
 ->where($where)
-->select('clients.name as client_name','common_jobs.machine as machine','common_jobs.copy_qty as copy_qty','common_jobs.budget_name as budget_name','common_jobs.created_at as created_at')->get();
+->select('clients.name as client_name','common_jobs.machine as machine','common_jobs.copy_qty as copy_qty','common_jobs.budget_name as budget_name','common_jobs.created_at as created_at',
+        'common_jobs.id as common_job_id')->get();
 $dollar_price = get_actual_dollar_price();
 ?>
 <div class="container">
@@ -29,6 +30,15 @@ $dollar_price = get_actual_dollar_price();
         <thead>
           <form method="GET" action="/budget/view/common/listing">
             <tr>
+              <th scope="col">
+                Nombre<br>
+                <input type="text" size="15" name="budget_name" id="budget_name" value="{{$budget_name}}">
+                @error('budget_name')
+                  <div class="alert alert-danger">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </th>
               <th scope="col">
                 Cliente<br>
                 <select id="client_id" name="client_id">
@@ -43,15 +53,6 @@ $dollar_price = get_actual_dollar_price();
                     </option>
                   @endforeach
                 </select>
-              </th>
-              <th scope="col">
-                Nombre<br>
-                <input type="text" size="15" name="budget_name" id="budget_name" value="{{$budget_name}}">
-                @error('budget_name')
-                  <div class="alert alert-danger">
-                    {{ $message }}
-                  </div>
-                @enderror
               </th>
               <th scope="col">
                 Cantidad de ejemplares<br>
@@ -84,7 +85,7 @@ $dollar_price = get_actual_dollar_price();
               </th>
               <th scope="col">
                 Fecha creación<br>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" style="height:30px;" class="btn btn-primary">
                   {{ __('Entrar') }}
                 </button>
               </th>
@@ -95,16 +96,16 @@ $dollar_price = get_actual_dollar_price();
           @foreach($budgets as $budget)
             <tr>
               <td>
-                {{$budget->client_name}}</a>
+                <a href="/budget/view/common/show_job?common_job_id={{$budget->common_job_id}}">{{$budget->budget_name}}</a>
               </td>
               <td>
-                {{$budget->budget_name}}</a>
+                {{$budget->client_name}}
               </td>
               <td>
-                {{$budget->copy_qty}}</a>
+                {{$budget->copy_qty}}
               </td>
               <td>
-                {{$budget->machine}}</a>
+                {{$budget->machine}}
               </td>
               <td>
                 <?php $date = new DateTime($budget->created_at); ?>
