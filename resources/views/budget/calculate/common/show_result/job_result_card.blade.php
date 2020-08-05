@@ -55,17 +55,19 @@
       </div>
     </div>
 
-    <div class="form-group row">
-      <label class="col-md-4 col-form-label text-md-right">
-        <b>{{ __('Lavados de máquina:') }}</b>
-      </label>
-      <div class="col-md-6">
-        <label class="col-md-6 col-form-label text-md-right">
-          &nbsp;
+    @if( $all_input["machine_washing_qty"] )
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">
+          <b>{{ __('Lavados de máquina:') }}</b>
         </label>
-        ${{number_format($result["washing_machine_price"]*$dollar_price,2)}}
+        <div class="col-md-6">
+          <label class="col-md-6 col-form-label text-md-right">
+            &nbsp;
+          </label>
+          ${{number_format($result["washing_machine_price"]*$dollar_price,2)}}
+        </div>
       </div>
-    </div>
+    @endif
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">

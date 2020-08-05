@@ -18,10 +18,16 @@ class ShowJob extends Controller
      */
   public function __invoke(Request $request)
   {
-    if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]== true )
-      return $this->proc($request);
+    $test_common_calculation = new CommonCalculation();
+    if( isset($_GET["common_job_id"]) ){
+      $data = $this->get_result_from_db($_GET["common_job_id"]);
+      if( isset($_POST["button_action"]) && $_POST["button_action"] == "show_job_paper" )
+        return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
+      else
+        return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
+    }
     else
-      return $this->show_page_without_menubars("no_access");
+      return $this->show_page_with_menubars("/home_page","No se puede mostrar esta página");
   }
 
   private function get_result_from_db( $common_job_id )
@@ -33,19 +39,5 @@ class ShowJob extends Controller
     $ret["result"] = $show_result->calculate_result((array) $common_job);
     //print_r($ret);      //Bandera
     return $ret;
-  }
-
-  public function proc(Request $request)
-  {
-    $test_common_calculation = new CommonCalculation(); 
-    if( isset($_GET["common_job_id"]) ){
-      $data = $this->get_result_from_db($_GET["common_job_id"]);
-      if( isset($_POST["button_action"]) && $_POST["button_action"] == "show_job_paper" )
-        return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
-      else
-        return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
-    }
-    else
-      return $this->show_page_with_menubars("/home_page","No se puede mostrar esta página");
   }
 }

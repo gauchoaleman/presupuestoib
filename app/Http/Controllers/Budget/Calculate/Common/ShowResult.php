@@ -16,10 +16,15 @@ class ShowResult extends Controller
    */
   public function __invoke(Request $request)
   {
-    if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]== true )
-      return $this->proc($request);
-    else
-      return $this->show_page_without_menubars("no_access");
+    $data = $this->get_result_from_post($_POST);
+    //print("_POST:");       //Bandera
+    //print_r($_POST);      //Bandera
+    if( $_POST["button_action"] == "show_job_paper" )
+      return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
+    else if( $_POST["button_action"] == "show_result" ){
+      $this->save_budget_to_database($_POST);
+      return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
+    }
   }
 
   public function get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
@@ -263,16 +268,4 @@ class ShowResult extends Controller
     DB::table('common_jobs')->insert($insert_array);
   }
 
-  public function proc(Request $request)
-  {
-    $data = $this->get_result_from_post($_POST);
-    //print("_POST:");       //Bandera
-    //print_r($_POST);      //Bandera
-    if( $_POST["button_action"] == "show_job_paper" )
-      return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
-    else if( $_POST["button_action"] == "show_result" ){
-      $this->save_budget_to_database($_POST);
-      return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
-    }
-  }
 }
