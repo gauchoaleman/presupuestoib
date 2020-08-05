@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Budget\View\Common;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Budget\Calculate\Common\ShowResult;
-use App\Classes\CommonCalculation;
+use App\Classes\Calculation\Common\CommonCalculation;
 use Illuminate\Http\Request;
 use DB;
 
