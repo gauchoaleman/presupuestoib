@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+
+class CheckLogin
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+  public function handle($request, Closure $next)
+  {
+    if( isset($_SESSION["logged_in"]) && $_SESSION["logged_in"]== true )
+      return $next($request);
+    else if( $request->path() != 'login' )
+      return redirect('login');
+    else
+      return $next($request);
+  }
+}

@@ -191,3 +191,6 @@ Acabado
 [X] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price
 [ ] Paginación en listado de jobs
 [X] Button height on listing
+[ ] Poner funciones de showpage en PageFunctions
+[ ]  Cambiar llamados a funciones showpage en todo el sitio (sacar $this->)
+[ ] Usar middleware para login
