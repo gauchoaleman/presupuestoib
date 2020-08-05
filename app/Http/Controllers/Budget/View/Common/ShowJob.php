@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Budget\View\Common;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Budget\Calculate\Common\ShowResult;
 use App\Classes\Calculation\Common\CommonCalculation;
 use Illuminate\Http\Request;
 use DB;
@@ -18,7 +17,6 @@ class ShowJob extends Controller
      */
   public function __invoke(Request $request)
   {
-    $test_common_calculation = new CommonCalculation();
     if( isset($_GET["common_job_id"]) ){
       $data = $this->get_result_from_db($_GET["common_job_id"]);
       if( isset($_POST["button_action"]) && $_POST["button_action"] == "show_job_paper" )
@@ -35,8 +33,8 @@ class ShowJob extends Controller
     $common_job = DB::table('common_jobs')->
     select('*')->where('common_jobs.id','=', $common_job_id)->first();
     $ret["all_input"] = (array) $common_job;
-    $show_result = new ShowResult();
-    $ret["result"] = $show_result->calculate_result((array) $common_job);
+    $common_calculation = new CommonCalculation();
+    $ret["result"] = $common_calculation->calculate_result((array) $common_job);
     //print_r($ret);      //Bandera
     return $ret;
   }

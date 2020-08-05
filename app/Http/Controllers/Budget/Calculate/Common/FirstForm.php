@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use App\Classes\Calculation\Common\CommonCalculation;
 
 class FirstForm extends Controller
 {
@@ -21,6 +22,7 @@ class FirstForm extends Controller
 
   public function calculate_papers($paper_type_id, $paper_color_id, $weight, $pose_width, $pose_height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty,$machine)
   {
+    $common_calculation = new CommonCalculation();
     $sizes_result = DB::table('paper_prices')->select('id','width','height')->
     where('paper_type_id', '=', $paper_type_id)->
     where('paper_color_id', '=', $paper_color_id)->
@@ -31,7 +33,7 @@ class FirstForm extends Controller
     $size_res = array();
     $all_sizes = array();
     foreach ($sizes_result as $size) {
-      $size_res = $this->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine);    //calculate
+      $size_res = $common_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine);    //calculate
       //print($size->width."x".$size->height.": "); //Bandera
       //print_r($size_res); //Bandera
       $all_sizes = array_merge($size_res,$all_sizes);
@@ -39,7 +41,7 @@ class FirstForm extends Controller
     //If there are no sizes, we calculate normal
     if( !sizeof($all_sizes) ){
       foreach ($sizes_result as $size) {
-        $size_res = $this->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine,false);    //calculate
+        $size_res = $common_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine,false);    //calculate
         //print($size->width."x".$size->height.": "); //Bandera
         //print_r($size_res); //Bandera
         $all_sizes = array_merge($size_res,$all_sizes);
