@@ -25,7 +25,7 @@ Route::any('budget/calculate/common/first_form', 'Budget\Calculate\Common\FirstF
 Route::any('budget/calculate/common/show_result', 'Budget\Calculate\Common\ShowResult');
 Route::any('budget/calculate/common/show_job_paper', 'Budget\Calculate\Common\ShowResult');
 Route::any('budget/view/common/listing', 'Budget\View\Common\Listing');
-Route::any('budget/view/common/show_job', 'Budget\View\Common\ShowJob');
+Route::any('budget/view/common/show_job/{common_job_id}', 'Budget\View\Common\ShowJob');
 //Route::any('budget/calculate/common/select_paper', 'Budget\Calculate\Common\SelectPaper');
 
 //Route::any('budget/make', 'Budget\MakeBudget');

@@ -15,17 +15,13 @@ class ShowJob extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-  public function __invoke(Request $request)
+  public function __invoke(Request $request,$common_job_id)
   {
-    if( isset($_GET["common_job_id"]) ){
-      $data = $this->get_result_from_db($_GET["common_job_id"]);
-      if( isset($_POST["button_action"]) && $_POST["button_action"] == "show_job_paper" )
-        return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
-      else
-        return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
-    }
+    $data = $this->get_result_from_db($common_job_id);
+    if( isset($_POST["button_action"]) && $_POST["button_action"] == "show_job_paper" )
+      return $this->show_page_without_menubars("budget/calculate/common/show_job_paper","",$data);
     else
-      return $this->show_page_with_menubars("/home_page","No se puede mostrar esta página");
+      return $this->show_page_with_menubars("budget/calculate/common/show_result","",$data);
   }
 
   private function get_result_from_db( $common_job_id )

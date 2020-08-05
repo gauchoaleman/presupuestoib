@@ -96,7 +96,7 @@ $dollar_price = get_dollar_price();
           @foreach($budgets as $budget)
             <tr>
               <td>
-                <a href="/budget/view/common/show_job?common_job_id={{$budget->common_job_id}}">{{$budget->budget_name}}</a>
+                <a href="/budget/view/common/show_job/{{$budget->common_job_id}}">{{$budget->budget_name}}</a>
               </td>
               <td>
                 {{$budget->client_name}}
