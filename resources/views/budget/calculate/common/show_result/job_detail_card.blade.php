@@ -229,7 +229,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$all_input["various_finishing"]*$dollar_price}}
+        {{$all_input["various_finishing"]*$result["dollar_price"]}}
       </div>
     </div>
 
@@ -242,7 +242,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$all_input["mounting"]*$dollar_price}}
+        {{$all_input["mounting"]*$result["dollar_price"]}}
       </div>
     </div>
 
@@ -255,7 +255,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$all_input["shipping"]*$dollar_price}}
+        {{$all_input["shipping"]*$result["dollar_price"]}}
       </div>
     </div>
     <div class="form-group row">

@@ -39,7 +39,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           Costo:
         </label>
-        ${{number_format($result["paper_price"]*$dollar_price,2)}}
+        ${{number_format($result["paper_price"]*$result["dollar_price"],2)}}
       </div>
     </div>
 
@@ -51,7 +51,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        ${{number_format($result["guillotine_price"]*$dollar_price,2)}}
+        ${{number_format($result["guillotine_price"]*$result["dollar_price"],2)}}
       </div>
     </div>
 
@@ -64,7 +64,7 @@
           <label class="col-md-6 col-form-label text-md-right">
             &nbsp;
           </label>
-          ${{number_format($result["washing_machine_price"]*$dollar_price,2)}}
+          ${{number_format($result["washing_machine_price"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -79,7 +79,7 @@
             <label class="col-md-6 col-form-label text-md-right">
               {{$each_machine}}: {{$result["printing_and_plate_info"]["plate"]["qty"][$each_machine]}} unidades
             </label>
-            ${{number_format($result["printing_and_plate_info"]["plate"]["prices"][$each_machine]*$dollar_price,2)}}
+            ${{number_format($result["printing_and_plate_info"]["plate"]["prices"][$each_machine]*$result["dollar_price"],2)}}
           @endif
         @endforeach
       </div>
@@ -95,12 +95,12 @@
           <label class="col-md-6 col-form-label text-md-right">
             {{$each_machine}}: {{$result["printing_and_plate_info"]["printing"]["qty"][$each_machine]}} copias
           </label>
-          ${{number_format($result["printing_and_plate_info"]["printing"]["printing_prices"][$each_machine]*$dollar_price,2)}}
+          ${{number_format($result["printing_and_plate_info"]["printing"]["printing_prices"][$each_machine]*$result["dollar_price"],2)}}
 
           <label class="col-md-6 col-form-label text-md-right">
             Arreglo {{$each_machine}}:
           </label>
-          ${{number_format($result["printing_and_plate_info"]["printing"]["arrangement_prices"][$each_machine]*$dollar_price,2)}}
+          ${{number_format($result["printing_and_plate_info"]["printing"]["arrangement_prices"][$each_machine]*$result["dollar_price"],2)}}
 
           @endif
         @endforeach
@@ -109,13 +109,13 @@
           <label class="col-md-6 col-form-label text-md-right">
             Tinta CMYK:
           </label>
-          ${{number_format($result["ink_prices"]["cmyk"]*$dollar_price,2)}}
+          ${{number_format($result["ink_prices"]["cmyk"]*$result["dollar_price"],2)}}
         @endif
         @if($result["ink_prices"]["pantone"])
           <label class="col-md-6 col-form-label text-md-right">
             Tinta Pantone:
           </label>
-          ${{number_format($result["ink_prices"]["pantone"]*$dollar_price,2)}}
+          ${{number_format($result["ink_prices"]["pantone"]*$result["dollar_price"],2)}}
         @endif
 
       </div>
@@ -130,11 +130,11 @@
           <label class="col-md-6 col-form-label text-md-right">
             Arreglo:
           </label>
-          ${{number_format($result["folding"]["arrangement_price"]*$dollar_price,2)}}
+          ${{number_format($result["folding"]["arrangement_price"]*$result["dollar_price"],2)}}
           <label class="col-md-6 col-form-label text-md-right">
             Por cantidad:
           </label>
-          ${{number_format($result["folding"]["per_qty_price"]*$dollar_price,2)}}
+          ${{number_format($result["folding"]["per_qty_price"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -148,15 +148,15 @@
           <label class="col-md-6 col-form-label text-md-right">
             Arreglo:
           </label>
-          ${{number_format($result["punching"]["arrangement_price"]*$dollar_price,2)}}
+          ${{number_format($result["punching"]["arrangement_price"]*$result["dollar_price"],2)}}
           <label class="col-md-6 col-form-label text-md-right">
             Por cantidad:
           </label>
-          ${{number_format($result["punching"]["per_qty_price"]*$dollar_price,2)}}
+          ${{number_format($result["punching"]["per_qty_price"]*$result["dollar_price"],2)}}
           <label class="col-md-6 col-form-label text-md-right">
             Descartonar:
           </label>
-          ${{number_format($result["punching"]["break_out_per_qty_price"]*$dollar_price,2)}}
+          ${{number_format($result["punching"]["break_out_per_qty_price"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -170,11 +170,11 @@
           <label class="col-md-6 col-form-label text-md-right">
             Arreglo:
           </label>
-          ${{number_format($result["perforating"]["arrangement_price"]*$dollar_price,2)}}
+          ${{number_format($result["perforating"]["arrangement_price"]*$result["dollar_price"],2)}}
           <label class="col-md-6 col-form-label text-md-right">
             Por cantidad:
           </label>
-          ${{number_format($result["perforating"]["per_qty_price"]*$dollar_price,2)}}
+          ${{number_format($result["perforating"]["per_qty_price"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -188,11 +188,11 @@
           <label class="col-md-6 col-form-label text-md-right">
             Arreglo:
           </label>
-          ${{number_format($result["tracing"]["arrangement_price"]*$dollar_price,2)}}
+          ${{number_format($result["tracing"]["arrangement_price"]*$result["dollar_price"],2)}}
           <label class="col-md-6 col-form-label text-md-right">
             Por cantidad:
           </label>
-          ${{number_format($result["tracing"]["per_qty_price"]*$dollar_price,2)}}
+          ${{number_format($result["tracing"]["per_qty_price"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -206,11 +206,11 @@
           <label class="col-md-6 col-form-label text-md-right">
             Arreglo:
           </label>
-          ${{number_format($result["lac"]["arrangement_price"]*$dollar_price,2)}}
+          ${{number_format($result["lac"]["arrangement_price"]*$result["dollar_price"],2)}}
           <label class="col-md-6 col-form-label text-md-right">
             Por cantidad:
           </label>
-          ${{number_format($result["lac"]["per_qty_price"]*$dollar_price,2)}}
+          ${{number_format($result["lac"]["per_qty_price"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -224,7 +224,7 @@
           <label class="col-md-6 col-form-label text-md-right">
             &nbsp;
           </label>
-          ${{number_format($all_input["various_finishing"]*$dollar_price,2)}}
+          ${{number_format($all_input["various_finishing"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -238,7 +238,7 @@
           <label class="col-md-6 col-form-label text-md-right">
             &nbsp;
           </label>
-          ${{number_format($all_input["mounting"]*$dollar_price,2)}}
+          ${{number_format($all_input["mounting"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -252,7 +252,7 @@
           <label class="col-md-6 col-form-label text-md-right">
             &nbsp;
           </label>
-          ${{number_format($all_input["shipping"]*$dollar_price,2)}}
+          ${{number_format($all_input["shipping"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -266,7 +266,7 @@
           <label class="col-md-6 col-form-label text-md-right">
             &nbsp;
           </label>
-          ${{number_format($result["subtotal"]*$dollar_price,2)}}
+          ${{number_format($result["subtotal"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -280,7 +280,7 @@
           <label class="col-md-6 col-form-label text-md-right">
             &nbsp;
           </label>
-          ${{number_format($result["discount_price"]*$dollar_price,2)}}
+          ${{number_format($result["discount_price"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -294,7 +294,7 @@
           <label class="col-md-6 col-form-label text-md-right">
             &nbsp;
           </label>
-          ${{number_format($result["plus_price"]*$dollar_price,2)}}
+          ${{number_format($result["plus_price"]*$result["dollar_price"],2)}}
         </div>
       </div>
     @endif
@@ -307,7 +307,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        ${{number_format($result["total"]*$dollar_price,0)}}
+        ${{number_format($result["total"]*$result["dollar_price"],0)}}
       </div>
     </div>
 

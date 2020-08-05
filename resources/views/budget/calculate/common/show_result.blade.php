@@ -2,7 +2,6 @@
 $paper_type = get_paper_type($all_input["paper_type_id"]);
 $paper_color = get_paper_color($all_input["paper_color_id"]);
 $client_name = get_client_name($all_input["client_id"]);
-$dollar_price = get_dollar_price(isset($dollar_price_id)?$dollar_price_id:0);
 ?>
 <div class="container">
   <br>
