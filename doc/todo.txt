@@ -178,7 +178,7 @@ Acabado
 [X] Sacar precios/descuento/plus de hoja trabajo
 [X] Muestra mal importes ingresados en show_result en detalle trabajo
 [X] Tamaño de letra en job_paper + grande
-[ ] Guardado en base de datos
+[X] Guardado en base de datos
 [ ] Al elegir Adast/GTO46 no hay papel compatible
 [ ]   Preguntarle a mamá la política con poses normales
 [ ]   Ver con Mama trabajos Adast.
@@ -193,4 +193,4 @@ Acabado
 [X] Button height on listing
 [ ] Poner funciones de showpage en PageFunctions
 [ ]  Cambiar llamados a funciones showpage en todo el sitio (sacar $this->)
-[ ] Usar middleware para login
+[X] Usar middleware para login

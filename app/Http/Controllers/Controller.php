@@ -40,7 +40,4 @@ class Controller extends BaseController
     $ret .= view('includes/bottom');
     return $ret;
   }
-
-
-
 }

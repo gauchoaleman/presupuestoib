@@ -8,7 +8,7 @@ use DB;
 use Illuminate\Support\Facades\Validator;
 use App\Classes\Calculation\Common\CommonCalculation;
 
-class FirstForm extends Controller
+class GetInput extends Controller
 {
   private function form_complete()
   {

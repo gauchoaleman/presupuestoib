@@ -110,7 +110,7 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a href="/budget/calculate/common/first_form">
+                <a href="/budget/calculate/common/get_input">
                   Común
                 </a>
               </li>
