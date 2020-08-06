@@ -120,7 +120,7 @@
                 </a>
               </li>
               <li>
-                <a href="/budget/calculate/magazine">
+                <a href="/budget/calculate/magazine/get_input">
                   Revista
                 </a>
               </li>

@@ -257,7 +257,7 @@ if (!$plus_percentage) {
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            <select id="machine" name="machine" id="machine">
+            <select name="machine" id="machine">
               <option value=""></option>
               @foreach(array("Adast","GTO52","GTO46") as $each_machine)
                 <option value="{{$each_machine}}"

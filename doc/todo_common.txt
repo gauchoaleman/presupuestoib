@@ -1,0 +1,116 @@
+Comunes
+  *Tipos de trabajo
+    Etiquetas
+    Mapas
+    Folletos
+    Volantes
+    Tarjetas
+    Postales
+    Solapas
+  *Elegir máquina manualmente
+    Cambia tamaño mínimo según máquina
+      Adast:
+        520x370
+      GTO52:
+        216x128
+      GTO46:
+        190x128
+    Cambia tamaño máximo según máquina
+      Adast:
+        650x475 el pliego (sin márgenes)
+      GTO52:
+        510x360 el pliego
+      GTO46:
+        460x325 el pliego
+  *Planchas
+    1 plancha x color
+    Si frente y dorso entran a la misma plancha son 4 Colores
+    Si es 4/1 y entran a la misma plancha se imprime 4/4
+  *Impresión
+[X]   Arreglo
+      Se cobra x ctd. de planchas y tamaño de plancha (máquina)
+        (5 planchas es *5 según tamaño plancha)
+[X]   Lavado de máquina (Fijo)
+      Ingresar ctd. de lavados (todos los lavados valen lo mismo (350 x el momento))
+[X]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
+      Multiplicar por costo Kg CMYK o Pantone (precio varía)
+
+[X]   Impresión en si:
+      Se cobra x
+      ctd. de pliegos
+      ctd. de Colores
+      tamaño de plancha
+      Frente o Frente y dorso
+[ ]     Mirar ShowResult, línea 54 a 59 (tiene que multiplicar *2 o no?)
+  *Acabado
+[X]   Guillotina (se cobra por ctd. de poses y copias).
+
+[X]   Plegado
+      Arreglo (x ctd. de pliegues)
+      Se cobra x cantidad de pliegos y ctd. de pliegues
+[X]   Troquelado
+      Arreglo (se cobra por dificultad (1, 2, 3, 4))
+      Se cobra x ctd. de pliegos y dificultad (1,2,3,4)
+[X]     Descartonar x millar
+[X]   Perforado
+      Arreglo (fijo)
+      Se cobra x ctd. de pliegos
+[X]   Trazado (despues de perforar)
+      Arreglo (fijo)
+      Se cobra x ctd. de pliegos
+[X]   Laca UV
+      Arreglo (fijo)
+      Se cobra x ctd. de pliegos
+[X]   Acabados varios
+      Ingresar monto en pesos
+[X]  *Montage
+    Ingresar monto en pesos
+[X]  *Envío
+    Ingresar monto en pesos
+
+
+    [X] Cuáles son todos los puntos a tener en cuenta? Cómo se calculan los puntos?
+      [X] Acabado?
+      [X] ¿Guillotina se calcula según ctd. de ejemplares?
+      [X] ¿Se cobra guillotina de cortar resmas? No
+    [X] Posibilidad de agregar adicionales en presupuesto final (x ej. Sacabocado o Laminado)
+    [X] Demasía: 100 Druckbogen.
+    [X] Si es front_back calcular doble de poses en pliego --> Verlo con Mama.
+    [X] Reemplazar sheet_height_qty x leaf_height_qty
+    [X] Reemplazar sheet_width x leaf_width y sheet_height x leaf_height
+    [X] En ShowResult conseguir leaf_width y leaf_height
+    [X] Reemplazar paper_width x sheet_width y paper_height x sheet_height
+    [ ] Test fits_size function
+    [X] 880x630 no debería funcionar. (tamaño trabajo: 210x300)
+    [X] Calcular poses con frente dorso * 2 al seleccionar papel (no en Show Result)
+        No Calcular directamente en template select_paper.blade.php sino en función de procesar tamaño.
+    [?] Dorso con GTO46: Usar Tamaño trabajo (420x300), tamaño papel (950x650) --> Teóricamente no entra en GTO46, preguntar Mama.
+    [X] Agregar tamaño papel en Resultado, sección papel.
+    [X] En tabla de precios papel poner width antes que height
+    [X] En show_result no muestra poses con frente/dorso (mutiplicado x 2)
+    [X] Mirar etiquetas div en select_paper.blade.php.
+    [X] Agregar descuento
+    [X] Agregar plus
+    [x] Ctd de poses no funciona
+    [X] Agregar contenido en show_result (abajo de laca).  Agregar definicion de variables en parte de arriba tambien.
+    [ ] En mostrar clientes cambiar "Precios dólar" por "Listado clientes"
+    [X] En presupuesto ingresar nombres de tintas Pantone (colores especiales), máximo 3 colores especiales (ingresar código Pantone)
+    [X] Sacar precios/descuento/plus de hoja trabajo
+    [X] Muestra mal importes ingresados en show_result en detalle trabajo
+    [X] Tamaño de letra en job_paper + grande
+    [X] Guardado en base de datos
+    [ ] Al elegir Adast/GTO46 no hay papel compatible
+    [ ]   Preguntarle a mamá la política con poses normales
+    [ ]   Ver con Mama trabajos Adast.
+    [X] Si no encuentra papel adecuado, poner texto con link hacia atrás.
+    [ ] Ver si se puede seleccionar 2 tipos de papel para libros/revistas
+    [X] Corregir select_paper.blade.php
+    [ ] Ver cuando orientación=lying: Si se ve bien en el resultado de que va Acostado.
+    [x] En todas las tablas de presupuestos incluir dollar_price_id
+    [X] Reemplazar nombre de funcion get_dollar_price_id por get_actual_dollar_price_id
+    [X] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price
+    [ ] Paginación en listado de jobs
+    [X] Button height on listing
+    [ ] Poner funciones de showpage en PageFunctions
+    [ ]  Cambiar llamados a funciones showpage en todo el sitio (sacar $this->)
+    [X] Si da cero el width_qty o el height_qty hacer continue

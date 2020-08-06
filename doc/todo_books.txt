@@ -1,0 +1,20 @@
+Libros
+  *Qué datos pedir
+    Páginas (siempre 1/1)
+      Cuántas
+      Tipo de papel
+      Tamaño
+    Tapa (siempre 4/0)
+      Tamaño
+      Tipo de papel
+      Con o sin Solapa
+      Acabado
+        Laca UV
+        Polipropileno (Extra, igual a precio laca)
+        Encuadernación pegada o anillado
+    Impresión
+      Interior 1/1
+    Guillotina
+[ ]   Compilar
+      Manual o x máquina
+      X ctd. de pliegos (x millar)

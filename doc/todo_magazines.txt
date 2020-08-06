@@ -1,0 +1,43 @@
+Revistas
+Datos
+FirstForm:
+
+  [X]   Ctd
+  [X]   Tamaño (anchoxalto)
+  [ ]   Ctd de páginas (chequear que sea divisible por 4)
+  [ ]   Acabado
+  [ ]     Abrochar o encuadernado o anillado
+  [ ]   Montaje (calcular x página no importa ctd. de tintas)
+  [ ]   Envío
+
+
+  [ ]   Impresión (Ctd de tintas)
+  [ ]     Interior
+  [ ]       Tintas de cada juego de páginas
+  [ ]     Tapa
+  [ ]       Tintas Tapa/Contratapa
+  [ ]       Tintas Retiros
+
+  [ ]   Tipo de papel
+  [ ]     Interior
+  [ ]     Tapa
+
+Impresión
+[ ]   Arreglo
+    Se cobra x ctd. de planchas y tamaño de plancha (máquina)
+      (5 planchas es *5 según tamaño plancha)
+[ ]   Lavado de máquina (Fijo)
+        Ingresar ctd. de lavados (todos los lavados valen lo mismo (350 x el momento))
+[ ]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
+    Multiplicar por costo Kg CMYK o Pantone (precio varía)
+[ ]   Impresión en si
+        Se cobra x
+        ctd. de pliegos
+        ctd. de Colores
+        tamaño de plancha
+        Frente o Frente y dorso
+Acabado
+[ ]   Compilar
+        X ctd. de pliegos (x millar)
+[ ]   Abrochado o Encuadernar o Anillado (x unidad)
+[ ]   Corte (x millar de pliegos)
