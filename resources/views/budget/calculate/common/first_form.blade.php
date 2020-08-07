@@ -32,9 +32,10 @@ if (!$front_color_qty) {
 if (!$back_color_qty) {
     $back_color_qty = 0;
 }
+//Color blanco x defecto
 if ($paper_type_id && !$paper_color_id) {
     $paper_color_id = 1;
-}   //Color blanco x defecto
+}
 if (!$fold_qty) {
     $fold_qty = 0;
 }

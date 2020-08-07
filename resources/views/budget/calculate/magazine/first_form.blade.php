@@ -32,7 +32,7 @@ if (!$plus_percentage) {
       Calcular presupuesto
     </div>
     <div class="card-body">
-      <form method="POST">
+      <form method="POST" action="/budget/calculate/magazine/select_pages_paper">
         @csrf
 
         <div class="form-group row">

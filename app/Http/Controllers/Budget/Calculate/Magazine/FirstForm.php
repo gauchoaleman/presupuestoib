@@ -1,12 +1,11 @@
 <?php
-
 namespace App\Http\Controllers\Budget\Calculate\Magazine;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class GetInput extends Controller
+class FirstForm extends Controller
 {
   private function form_complete()
   {
@@ -32,6 +31,7 @@ class GetInput extends Controller
         'copy_qty.gt' => 'La cantidad de ejemplares debe ser mayor a cero.',
         'page_qty.required' => 'Debe ingresar cantidad de páginas.',
         'page_qty.integer' => 'La cantidad de páginas debe ser un entero.',
+        'page_qty.gt' => 'La cantidad de páginas debe ser mayor a cero.',
         'finishing.required' => 'Debe seleccionar un acabado.',
         'client_id.required' => 'Debe seleccionar un cliente.',
         'budget_name.required' => 'Debe ingesar nombre de presupuesto.',
@@ -44,11 +44,11 @@ class GetInput extends Controller
         'pose_width' => ['required','integer','gt:0'],
         'pose_height' =>['required','integer','gt:0'],
         'copy_qty' => ['required','integer','gt:0'],
-        'page_qty' => ['required','integer',function ($attribute, $value, $fail) {
-          if ($value % 4 !== 0) {
-              $fail('La cantidad de páginas debe ser divisible por 4.'); // your message
-            }
-        }],
+        'page_qty' => ['required','integer','gt:0',
+          function ($attribute, $value, $fail) {
+            if ($value % 4 !== 0)
+                $fail('La cantidad de páginas debe ser divisible por 4.'); // your message
+          }],
         'finishing' => ['required'],
         'client_id' => ['required'],
         'budget_name' => ['required'],
@@ -61,12 +61,8 @@ class GetInput extends Controller
 
       if ($v->fails())
         return redirect()->back()->withInput($request->input())->withErrors($v->errors());
-      else{
-        $result = $this->calculate_papers($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["pose_width"], $_POST["pose_height"],
-        $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["copy_qty"],$_POST["machine"]);
-        $data["result"]=$result;
-        return $this->show_page_with_menubars("budget/calculate/magazine/select_pages_paper","",$data);
-      }
+      else
+        return $this->show_page_with_menubars("budget/calculate/magazine/select_pages_paper","");
     }
     else
       return $this->show_page_with_menubars("budget/calculate/magazine/first_form");

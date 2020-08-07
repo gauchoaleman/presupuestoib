@@ -41,3 +41,7 @@ Acabado
         X ctd. de pliegos (x millar)
 [ ]   Abrochado o Encuadernar o Anillado (x unidad)
 [ ]   Corte (x millar de pliegos)
+
+
+Preguntas:
+[ ] Die cantidad de colores bei der revista ist zwischen 1 und 4?  Oder kann es mehr Farben geben?  Pantone?

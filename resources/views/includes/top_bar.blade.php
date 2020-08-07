@@ -120,7 +120,7 @@
                 </a>
               </li>
               <li>
-                <a href="/budget/calculate/magazine/get_input">
+                <a href="/budget/calculate/magazine/first_form">
                   Revista
                 </a>
               </li>
