@@ -107,13 +107,14 @@ if (!$plus_percentage) {
             </label>
             <select id="finishing" name="finishing">
               <option value=""></option>
-              @foreach(array("Abrochar","Encuadernar","Anillar") as $each_finishing)
-                <option value="{{$each_finishing}}"
-                  @if($finishing == $each_finishing)
+              <?php $finishing_array= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar"); ?>
+              @foreach( $finishing_array as $key => $value)
+                <option value="{{$key}}"
+                  @if($finishing == $key)
                     selected
                   @endif
                 >
-                  {{$each_finishing}}
+                  {{$value}}
                 </option>
               @endforeach
             </select>

@@ -44,7 +44,11 @@ class GetInput extends Controller
         'pose_width' => ['required','integer','gt:0'],
         'pose_height' =>['required','integer','gt:0'],
         'copy_qty' => ['required','integer','gt:0'],
-        'page_qty' => ['required','integer'],
+        'page_qty' => ['required','integer',function ($attribute, $value, $fail) {
+          if ($value % 4 !== 0) {
+              $fail('La cantidad de páginas debe ser divisible por 4.'); // your message
+            }
+        }],
         'finishing' => ['required'],
         'client_id' => ['required'],
         'budget_name' => ['required'],

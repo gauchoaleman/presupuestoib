@@ -114,3 +114,4 @@ Comunes
     [ ] Poner funciones de showpage en PageFunctions
     [ ]  Cambiar llamados a funciones showpage en todo el sitio (sacar $this->)
     [X] Si da cero el width_qty o el height_qty hacer continue
+    [ ] Comentar los print_r
