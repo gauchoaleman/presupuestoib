@@ -25,3 +25,9 @@ function confirm_del_document(id) {
 function go_back() {
   window.history.back();
 }
+
+function newWindow(url) {
+	popupWindow = window.open(
+		url,
+		'popUpWindow','height=300,width=450,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+}

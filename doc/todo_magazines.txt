@@ -42,6 +42,11 @@ Acabado
 [ ]   Abrochado o Encuadernar o Anillado (x unidad)
 [ ]   Corte (x millar de pliegos)
 
+Cuestiones
+[X] No hace validación de 1er formulario
+[ ] Agregar lavados de máquina
+[ ] Poner <?php $finishing_array= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar"); ?> en archivo aparte, usarlo para mostrar acabado en español en job_detail y en first_form, etc
+
 
 Preguntas:
 [ ] Die cantidad de colores bei der revista ist zwischen 1 und 4?  Oder kann es mehr Farben geben?  Pantone?

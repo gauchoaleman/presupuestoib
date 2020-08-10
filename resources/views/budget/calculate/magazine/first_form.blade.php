@@ -32,7 +32,7 @@ if (!$plus_percentage) {
       Calcular presupuesto
     </div>
     <div class="card-body">
-      <form method="POST" action="/budget/calculate/magazine/select_pages_paper">
+      <form method="POST">
         @csrf
 
         <div class="form-group row">
@@ -128,12 +128,40 @@ if (!$plus_percentage) {
 
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Lavados de máquina:') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <select name="machine_washing_qty" id="machine_washing_qty">
+              <option value=""></option>
+              @foreach(array(1,2,3,4) as $each_machine_washing_qty)
+                <option value="{{$each_machine_washing_qty}}"
+                  @if($machine_washing_qty == $each_machine_washing_qty)
+                    selected
+                  @endif
+                >
+                  {{$each_machine_washing_qty}}
+                </option>
+              @endforeach
+            </select>
+            @error('machine_washing_qty')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
             <b>{{ __('Cliente:') }}</b>
           </label>
 
           <div class="col-md-6">
             <label class="col-md-6 col-form-label text-md-right">
-              <a href="/configuration/add_client">Agregar cliente</a>
+              <button onClick="JavaScript:newWindow('/configuration/add_client_popup')">Agregar cliente</button>
             </label>
             <select id="client_id" name="client_id">
               <option value=""></option>

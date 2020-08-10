@@ -20,6 +20,7 @@ Route::get('configuration/show_paper_prices', 'Configuration\ShowPaperPrices');
 Route::any('configuration/set_dollar_price', 'Configuration\SetDollarPrice');
 Route::any('configuration/show_dollar_prices', 'Configuration\ShowDollarPrices');
 Route::any('configuration/add_client', 'Configuration\AddClient');
+Route::any('configuration/add_client_popup', 'Configuration\AddClient@popup');
 Route::any('configuration/show_clients', 'Configuration\ShowClients');
 Route::any('budget/calculate/common/get_input', 'Budget\Calculate\Common\GetInput');
 Route::any('budget/calculate/common/show_result', 'Budget\Calculate\Common\ShowResult');

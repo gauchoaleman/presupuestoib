@@ -407,7 +407,7 @@ if (!$plus_percentage) {
 
           <div class="col-md-6">
             <label class="col-md-6 col-form-label text-md-right">
-              <a href="/configuration/add_client">Agregar cliente</a>
+              <button onClick="JavaScript:newWindow('/configuration/add_client_popup')">Agregar cliente</button>
             </label>
             <select id="client_id" name="client_id">
               <option value=""></option>

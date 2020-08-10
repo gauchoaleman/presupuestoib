@@ -1,4 +1,18 @@
 <?php
+$pose_width = get_form_value("pose_width");
+$pose_height = get_form_value("pose_height");
+$copy_qty = get_form_value("copy_qty");
+$page_qty = get_form_value("page_qty");
+$finishing = get_form_value("finishing");
+$machine_washing_qty = get_form_value("machine_washing_qty");
+$client_id = get_form_value("client_id");
+$client_name = get_client_name($client_id);
+$budget_name = get_form_value("budget_name");
+$mounting = get_form_value("mounting");
+$shipping = get_form_value("shipping");
+$discount_percentage = get_form_value("discount_percentage");
+$plus_percentage = get_form_value("plus_percentage");
+
 $paper_type_id = get_form_value("paper_type_id");
 $paper_color_id = get_form_value("paper_color_id");
 $weight = get_form_value("weight");
@@ -22,6 +36,8 @@ if ($paper_type_id && !$paper_color_id) {
 }
 ?>
 <div class="container">
+  <br>
+  @include('budget.calculate.magazine.select_pages_paper.job_detail')
   <br>
   <div class="card" style="width: 70rem;">
     <div class="card-header">
