@@ -37,15 +37,15 @@ if ($paper_type_id && !$paper_color_id) {
 ?>
 <div class="container">
   <br>
-  @include('budget.calculate.magazine.select_pages_paper.job_detail')
-  <br>
-  <div class="card" style="width: 70rem;">
-    <div class="card-header">
-      Configurar páginas
-    </div>
-    <div class="card-body">
-      <form method="POST">
-        @csrf
+  <form method="POST" action="/budget/calculate/magazine/select_pages_paper">
+    @csrf
+    @include('budget.calculate.magazine.select_pages_paper.job_detail')
+    <br>
+    <div class="card" style="width: 70rem;">
+      <div class="card-header">
+        Configurar páginas
+      </div>
+      <div class="card-body">
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">
             <b>{{ __('Tapa/Contratapa y retiros:') }}</b>

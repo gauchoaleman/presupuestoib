@@ -18,6 +18,10 @@ FirstForm:
   [ ]       Tintas Tapa/Contratapa
   [ ]       Tintas Retiros
 
+Tintas:
+  Ctd. de colores cmyk
+  Checkbox Pantone
+
   [ ]   Tipo de papel
   [ ]     Interior
   [ ]     Tapa

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Budget\Calculate\Magazine;
 
 use App\Http\Controllers\Controller;
@@ -35,3 +34,4 @@ class SelectPagesPaper extends Controller
       return $this->show_page_with_menubars("budget/calculate/magazine/select_pages_paper");
   }
 }
+?>

@@ -72,9 +72,10 @@ function get_clients()
 
 function get_client_name($id)
 {
-  $paper_color = DB::table('clients')->select('clients.name')->
+  $client = DB::table('clients')->select('clients.name')->
   where('clients.id','=',$id)->first();
-  return $paper_color->name;
+
+  return $client->name;
 }
 
 function get_paper_type($id)

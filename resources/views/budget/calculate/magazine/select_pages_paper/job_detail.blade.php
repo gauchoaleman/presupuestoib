@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <div class="form-group row">*
+    <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Cantidad de ejemplares:') }}</b>
       </label>
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="form-group row">*
+    <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Cantidad de páginas:') }}</b>
       </label>
