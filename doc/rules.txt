@@ -5,5 +5,6 @@
 * Paper sheet_price goes in Dollars
 * Timezone managment in app/Http/Controllers/Controller.php
   * Check out if this can be done better
+* Global variables in app/Functions/PageFunctions.php
 * Navbar: http://bootstrapessentials.com/fulldocs/components/navbar/navbar-submenu/
 * In show_result display entered prices without multiplicating by dollar value (the values come in pesos)

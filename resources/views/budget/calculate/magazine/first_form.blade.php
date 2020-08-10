@@ -1,4 +1,6 @@
 <?php
+use App\Classes\Calculation\Magazine\MagazineCalculation;
+
 $pose_width = get_form_value("pose_width");
 $pose_height = get_form_value("pose_height");
 $copy_qty = get_form_value("copy_qty");
@@ -107,8 +109,8 @@ if (!$plus_percentage) {
             </label>
             <select id="finishing" name="finishing">
               <option value=""></option>
-              <?php $finishing_array= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar"); ?>
-              @foreach( $finishing_array as $key => $value)
+              <?php $magazine_calculation = new MagazineCalculation; ?>
+              @foreach( $magazine_calculation->finishing_array as $key => $value)
                 <option value="{{$key}}"
                   @if($finishing == $key)
                     selected

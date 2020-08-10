@@ -1,3 +1,4 @@
+<?php use App\Classes\Calculation\Magazine\MagazineCalculation; ?>
 <div class="card" style="width: 50rem;">
   <div class="card-header">
     Detalle trabajo
@@ -59,7 +60,8 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$finishing}}
+        <?php $magazine_calculation = new MagazineCalculation; ?>
+        {{$magazine_calculation->finishing_array[$finishing]}}
       </div>
     </div>
 

@@ -29,7 +29,7 @@ class SelectPagesPaper extends Controller
       if ($v->fails())
         return redirect()->back()->withInput($request->input())->withErrors($v->errors());
       else
-        return $this->show_page_with_menubars("budget/calculate/magazine/select_pages_paper","");
+        return $this->show_page_with_menubars("budget/calculate/magazine/select_pages_paper");
     }
     else
       return $this->show_page_with_menubars("budget/calculate/magazine/select_pages_paper");

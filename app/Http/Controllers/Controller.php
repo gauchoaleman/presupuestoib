@@ -15,6 +15,8 @@ $defaultTimeZone='America/Argentina/Buenos_Aires';
 if(date_default_timezone_get()!=$defaultTimeZone)
   date_default_timezone_set($defaultTimeZone);
 
+$magazine_finishing= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar");
+
 class Controller extends BaseController
 {
   use AuthorizesRequests, DispatchesJobs, ValidatesRequests;

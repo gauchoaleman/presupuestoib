@@ -13,3 +13,4 @@
 [X] En A4, elige acostado no normal, mirarlo
 [X] Usar middleware para login
 [X] Hacer Agregar cliente en ventanita chica sin barras de menú
+[ ] Probar compatibilidad con navegadores

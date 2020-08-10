@@ -45,7 +45,7 @@ Acabado
 Cuestiones
 [X] No hace validación de 1er formulario
 [ ] Agregar lavados de máquina
-[ ] Poner <?php $finishing_array= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar"); ?> en archivo aparte, usarlo para mostrar acabado en español en job_detail y en first_form, etc
+[ ] Poner <?php $magazine_finishing= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar"); ?> en archivo aparte, usarlo para mostrar acabado en español en job_detail y en first_form, etc
 
 
 Preguntas:
