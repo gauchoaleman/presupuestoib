@@ -12,4 +12,4 @@
 [X] Para Mama: Si se pueden poner las poses también hay que especificar el tamaño de la hoja?
 [X] En A4, elige acostado no normal, mirarlo
 [X] Usar middleware para login
-[ ] Hacer Agregar cliente en ventanita chica sin barras de menú
+[X] Hacer Agregar cliente en ventanita chica sin barras de menú

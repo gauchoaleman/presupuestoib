@@ -46,7 +46,7 @@ class AddClient extends Controller
         return $this->show_page_with_menubars("home_page","Cliente agregado.");
     }
     else if( $popup )
-      return $this->show_page_without_menubars("configuration/add_client/form");
+      return $this->show_page_without_menubars("configuration/add_client/popup_form");
     else
       return $this->show_page_with_menubars("configuration/add_client/form");
   }
