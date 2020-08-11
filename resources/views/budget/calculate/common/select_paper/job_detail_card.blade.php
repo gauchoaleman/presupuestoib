@@ -125,7 +125,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$machine_washing_qty}}
+        @if( $machine_washing_qty ){{$machine_washing_qty}}@else - @endif
       </div>
     </div>
 
@@ -229,12 +229,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$various_finishing}}
-        @error('various_finishing')
-          <div class="alert alert-danger">
-            {{ $message }}
-          </div>
-        @enderror
+        @if( $various_finishing ){{$various_finishing}}@else - @endif
       </div>
     </div>
 
@@ -247,12 +242,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$mounting}}
-        @error('mounting')
-          <div class="alert alert-danger">
-            {{ $message }}
-          </div>
-        @enderror
+        @if( $mounting ){{$mounting}}@else - @endif
       </div>
     </div>
 
@@ -265,14 +255,10 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$shipping}}
-        @error('shipping')
-          <div class="alert alert-danger">
-            {{ $message }}
-          </div>
-        @enderror
+        @if( $shipping ){{$shipping}}@else - @endif
       </div>
     </div>
+
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Descuento:') }}</b>
@@ -282,7 +268,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$discount_percentage}}
+        @if( $discount_percentage ){{$discount_percentage}}@else - @endif
       </div>
     </div>
 
@@ -295,7 +281,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$plus_percentage}}
+        @if( $plus_percentage ){{$plus_percentage}}@else - @endif
       </div>
     </div>
 

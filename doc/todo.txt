@@ -14,5 +14,5 @@
 [X] Usar middleware para login
 [X] Hacer Agregar cliente en ventanita chica sin barras de menú
 [ ] Probar compatibilidad con navegadores
-[ ] Despues de agregar cliente en ventanita, debe aparecer en dropdown de clientes.
+[X] Despues de agregar cliente en ventanita, debe aparecer en dropdown de clientes.
 [X] Dropdown de clientes ordenado x alfabeto

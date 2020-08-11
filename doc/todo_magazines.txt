@@ -4,14 +4,12 @@ FirstForm:
 
   [X]   Ctd
   [X]   Tamaño (anchoxalto)
-  [ ]   Ctd de páginas (chequear que sea divisible por 4)
-  [ ]   Acabado
-  [ ]     Abrochar o encuadernado o anillado
-  [ ]   Montaje (calcular x página no importa ctd. de tintas)
-    Ponder dropdown con opciones "simple" o "complicado"
+  [X]   Ctd de páginas (chequear que sea divisible por 4)
+  [X]   Acabado: Abrochar o encuadernado o anillado
   [ ]   Envío
 
-
+  [ ]   Montaje (calcular x página no importa ctd. de tintas)
+    Ponder dropdown con opciones "simple" o "complicado"
   [ ]   Impresión (Ctd de tintas)
   [ ]     Interior
   [ ]       Tintas de cada juego de páginas
@@ -22,6 +20,8 @@ FirstForm:
 Tintas:
   Ctd. de colores cmyk y opcional Pantone
   Checkbox Pantone
+
+[ ] Máquina: por pliego, cambia en frente y dorso
 
   [ ]   Tipo de papel
   [ ]     Interior

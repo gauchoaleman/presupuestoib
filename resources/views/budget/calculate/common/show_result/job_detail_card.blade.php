@@ -90,7 +90,7 @@
       </div>
     </div>
 
-    <div class="form-group row">*
+    <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Cantidad de ejemplares:') }}</b>
       </label>
@@ -138,7 +138,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{ $all_input["fold_qty"] ?? '' }}
+        {{ $all_input["fold_qty"] ?? '-' }}
       </div>
     </div>
 
@@ -229,7 +229,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$all_input["various_finishing"]*$result["dollar_price"]}}
+        @if( $all_input["various_finishing"] ){{$all_input["various_finishing"]*$result["dollar_price"]}}@else - @endif
       </div>
     </div>
 
@@ -242,7 +242,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$all_input["mounting"]*$result["dollar_price"]}}
+        @if( $all_input["mounting"] ){{$all_input["mounting"]*$result["dollar_price"]}}@else - @endif
       </div>
     </div>
 
@@ -255,7 +255,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$all_input["shipping"]*$result["dollar_price"]}}
+        @if( $all_input["shipping"] ){{$all_input["shipping"]*$result["dollar_price"]}}@else - @endif
       </div>
     </div>
     <div class="form-group row">
@@ -267,7 +267,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$all_input["discount_percentage"]}}
+        @if( $all_input["discount_percentage"] ){{$all_input["discount_percentage"]*$result["dollar_price"]}}@else - @endif
       </div>
     </div>
 
@@ -280,7 +280,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$all_input["plus_percentage"]}}
+        @if( $all_input["plus_percentage"] ){{$all_input["plus_percentage"]*$result["dollar_price"]}}@else - @endif
       </div>
     </div>
 
