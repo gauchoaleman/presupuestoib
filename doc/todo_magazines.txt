@@ -8,6 +8,7 @@ FirstForm:
   [ ]   Acabado
   [ ]     Abrochar o encuadernado o anillado
   [ ]   Montaje (calcular x página no importa ctd. de tintas)
+    Ponder dropdown con opciones "simple" o "complicado"
   [ ]   Envío
 
 
@@ -19,7 +20,7 @@ FirstForm:
   [ ]       Tintas Retiros
 
 Tintas:
-  Ctd. de colores cmyk
+  Ctd. de colores cmyk y opcional Pantone
   Checkbox Pantone
 
   [ ]   Tipo de papel

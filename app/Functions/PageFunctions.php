@@ -66,7 +66,7 @@ function get_paper_types()
 
 function get_clients()
 {
-  $clients = DB::table('clients')->orderBy('id', 'desc')->select('id','name')->get();
+  $clients = DB::table('clients')->orderBy('name', 'asc')->select('id','name')->get();
   return $clients;
 }
 

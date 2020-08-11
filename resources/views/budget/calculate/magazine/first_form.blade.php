@@ -9,7 +9,6 @@ $finishing = get_form_value("finishing");
 $machine_washing_qty = get_form_value("machine_washing_qty");
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
-$mounting = get_form_value("mounting");
 $shipping = get_form_value("shipping");
 $discount_percentage = get_form_value("discount_percentage");
 $plus_percentage = get_form_value("plus_percentage");
@@ -34,7 +33,7 @@ if (!$plus_percentage) {
       Calcular presupuesto
     </div>
     <div class="card-body">
-      <form method="POST">
+      <form method="POST" id="first_form">
         @csrf
 
         <div class="form-group row">
@@ -195,23 +194,6 @@ if (!$plus_percentage) {
             </label>
             <input type="text" size="15" name="budget_name" id="budget_name" value="{{$budget_name}}">
             @error('budget_name')
-              <div class="alert alert-danger">
-                {{ $message }}
-              </div>
-            @enderror
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Montaje (importe en pesos):') }}</b>
-          </label>
-          <div class="col-md-6">
-            <label class="col-md-6 col-form-label text-md-right">
-              &nbsp;
-            </label>
-            <input type="text" size="5" name="mounting" id="mounting" value="{{$mounting}}">
-            @error('mounting')
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
