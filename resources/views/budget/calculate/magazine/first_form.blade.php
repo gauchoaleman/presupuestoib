@@ -7,15 +7,13 @@ $copy_qty = get_form_value("copy_qty");
 $page_qty = get_form_value("page_qty");
 $finishing = get_form_value("finishing");
 $machine_washing_qty = get_form_value("machine_washing_qty");
+$mounting = get_form_value("mounting");
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
 $shipping = get_form_value("shipping");
 $discount_percentage = get_form_value("discount_percentage");
 $plus_percentage = get_form_value("plus_percentage");
 
-if (!$mounting) {
-    $mounting = 0;
-}
 if (!$shipping) {
     $shipping = 0;
 }
@@ -148,6 +146,35 @@ if (!$plus_percentage) {
               @endforeach
             </select>
             @error('machine_washing_qty')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Montaje:') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <select id="mounting" name="mounting">
+              <option value=""></option>
+              <?php $magazine_calculation = new MagazineCalculation; ?>
+              @foreach( $magazine_calculation->mounting_array as $key => $value)
+                <option value="{{$key}}"
+                  @if($mounting == $key)
+                    selected
+                  @endif
+                >
+                  {{$value}}
+                </option>
+              @endforeach
+            </select>
+            @error('mounting')
               <div class="alert alert-danger">
                 {{ $message }}
               </div>

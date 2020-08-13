@@ -80,6 +80,20 @@
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Montaje:') }}</b>
+      </label>
+      <input type="hidden" name="mounting" value="{{$mounting}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
+        </label>
+        <?php $magazine_calculation = new MagazineCalculation; ?>
+        {{$magazine_calculation->mounting_array[$mounting]}}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Cliente:') }}</b>
       </label>
       <input type="hidden" name="client_id" value="{{$client_id}}">
