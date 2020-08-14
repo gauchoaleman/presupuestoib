@@ -1,4 +1,5 @@
 <?php
+use App\Classes\Calculation\Magazine\MagazineCalculation;
 $pose_width = get_form_value("pose_width");
 $pose_height = get_form_value("pose_height");
 $copy_qty = get_form_value("copy_qty");
@@ -23,12 +24,12 @@ for( $i=0;$i<=$page_qty/4;$i++ ){
   if ($job_data[$i]["paper_type_id"] && !$job_data[$i]["paper_color_id"])
       $job_data[$i]["paper_color_id"] = 1;
   //By foil_front & foil_back
-  /*$job_data[$i]["front_color_qty"] = get_form_sub_array_value("job_data[$i]['front_color_qty']");
-  $job_data[$i]["front_pantone"] = get_form_sub_array_value("job_data[$i]['front_pantone']");
-  $job_data[$i]["front_machine"] = get_form_sub_array_value("job_data[$i]['front_machine']");
-  $job_data[$i]["back_color_qty"] = get_form_sub_array_value("job_data[$i]['back_color_qty']");
-  $job_data[$i]["back_pantone"] = get_form_sub_array_value("job_data[$i]['back_pantone']");
-  $job_data[$i]["back_machine"] = get_form_sub_array_value("job_data[$i]['back_machine']");*/
+  $job_data[$i]["front_color_qty"] = get_form_sub_array_value("job_data",$i,"front_color_qty");
+  $job_data[$i]["front_pantone"] = get_form_sub_array_value("job_data",$i,"front_pantone");
+  $job_data[$i]["front_machine"] = get_form_sub_array_value("job_data",$i,"front_machine");
+  $job_data[$i]["back_color_qty"] = get_form_sub_array_value("job_data",$i,"back_color_qty");
+  $job_data[$i]["back_pantone"] = get_form_sub_array_value("job_data",$i,"back_pantone");
+  $job_data[$i]["back_machine"] = get_form_sub_array_value("job_data",$i,"back_machine");
 }
 /*
 if (!$front_color_qty) {
@@ -129,6 +130,96 @@ if (!$back_color_qty) {
                 {{ $message }}
               </div>
             @enderror
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Ctd de colores frente:
+            </label>
+            <select name="job_data[{{$i}}][front_color_qty]" id="back_color_qty">
+              @foreach(array(1,2,3,4,5) as $each_color_qty)
+                <option value="{{$each_color_qty}}"
+                  @if($job_data[$i]["front_color_qty"] == $each_color_qty)
+                    selected
+                  @endif
+                >
+                  {{$each_color_qty}}
+                </option>
+              @endforeach
+            </select>
+            @error($job_data[$i]["front_color_qty"])
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone frente:
+            </label>
+            <input type="checkbox" name="job_data[{{$i}}][front_pantone]" value="1" id="front_pantone"
+              @if($job_data[$i]["front_pantone"] == "1")
+              checked
+              @endif
+            >
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Máquina frente:
+            </label>
+            <select name="job_data[{{$i}}][front_machine]" id="machine">
+              <?php $magazine_calculation = new MagazineCalculation; ?>
+              @foreach($magazine_calculation->machine_list as $each_machine)
+                <option value="{{$each_machine}}"
+                  @if($job_data[$i]["front_machine"] == $each_machine)
+                    selected
+                  @endif
+                >
+                  {{$each_machine}}
+                </option>
+              @endforeach
+            </select>
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Ctd de colores dorso:
+            </label>
+            <select name="job_data[{{$i}}][back_color_qty]" id="back_color_qty">
+              @foreach(array(1,2,3,4,5) as $each_color_qty)
+                <option value="{{$each_color_qty}}"
+                  @if($job_data[$i]["back_color_qty"] == $each_color_qty)
+                    selected
+                  @endif
+                >
+                  {{$each_color_qty}}
+                </option>
+              @endforeach
+            </select>
+            @error($job_data[$i]["back_color_qty"])
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Pantone dorso:
+            </label>
+            <input type="checkbox" name="job_data[{{$i}}][back_pantone]" value="1" id="back_pantone"
+              @if($job_data[$i]["back_pantone"] == "1")
+              checked
+              @endif
+            >
+
+            <label class="col-md-6 col-form-label text-md-right">
+              Máquina dorso:
+            </label>
+            <select name="job_data[{{$i}}][back_machine]" id="machine">
+              <?php $magazine_calculation = new MagazineCalculation; ?>
+              @foreach($magazine_calculation->machine_list as $each_machine)
+                <option value="{{$each_machine}}"
+                  @if($job_data[$i]["back_machine"] == $each_machine)
+                    selected
+                  @endif
+                >
+                  {{$each_machine}}
+                </option>
+              @endforeach
+            </select>
 
           </div>
         </div>
