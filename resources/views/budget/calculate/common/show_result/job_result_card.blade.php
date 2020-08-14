@@ -1,3 +1,7 @@
+<?php
+  use App\Classes\Calculation\Common\CommonCalculation;
+?>
+
 <div class="card" style="width: 70rem;">
   <div class="card-header">
     Resultado
@@ -74,7 +78,8 @@
         <b>{{ __('Planchas:') }}</b>
       </label>
       <div class="col-md-6">
-        @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+        <?php $common_calculation = new CommonCalculation; ?>
+        @foreach($common_calculation->machine_list as $each_machine)
           @if( isset($result["printing_and_plate_info"]["plate"]["qty"][$each_machine]))
             <label class="col-md-6 col-form-label text-md-right">
               {{$each_machine}}: {{$result["printing_and_plate_info"]["plate"]["qty"][$each_machine]}} unidades
@@ -90,7 +95,7 @@
         <b>{{ __('Impresión:') }}</b>
       </label>
       <div class="col-md-6">
-        @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+        @foreach($common_calculation->machine_list as $each_machine)
           @if( isset($result["printing_and_plate_info"]["printing"]["qty"][$each_machine]))
           <label class="col-md-6 col-form-label text-md-right">
             {{$each_machine}}: {{$result["printing_and_plate_info"]["printing"]["qty"][$each_machine]}} copias

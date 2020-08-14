@@ -5,6 +5,9 @@ use DB;
 class Calculation
 {
   public $continue_if_invalid_size = true;
+
+  public $machine_list = array("Adast","GTO52","GTO46");
+  
   public $min_sizes = array("Adast"=>array("width"=>210,"height"=>120),
                             "GTO52"=>array("width"=>216,"height"=>128),
                             "GTO46"=>array("width"=>190,"height"=>128));

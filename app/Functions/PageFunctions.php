@@ -151,17 +151,11 @@ function get_form_value($var_name){
   return request()->get($var_name)?request()->get($var_name):request()->old($var_name);
 }
 
-function get_form_array_value($var_name,$index,$sub_index){
-  echo "in_data: $var_name,$index,$sub_index";
-  print("request_get");
-  print_r(request()->get($var_name));
-  $request_get_var_name = request()->get($var_name);
-  $request_old_var_name = request()->old($var_name);
-  if( isset($request_get_var_name->$index->$sub_index) )
-    return $request_get_var_name[$index][$sub_index];
-  else
-    return $request_old_var_name[$index][$sub_index]);
-  }
+function get_form_sub_array_value($var_name,$index,$sub_index)
+{
+  if( isset($_POST[$var_name][$index][$sub_index]) )
+    return $_POST[$var_name][$index][$sub_index];
+}
 
 function swap(&$x, &$y) {
   $tmp=$x;

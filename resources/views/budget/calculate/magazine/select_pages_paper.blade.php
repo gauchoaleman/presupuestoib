@@ -16,22 +16,20 @@ $plus_percentage = get_form_value("plus_percentage");
 for( $i=0;$i<=$page_qty/4;$i++ ){
   //By foil
   echo "job_data[$i]['paper_type_id']";
-  $job_data[$i]["paper_type_id"] = get_form_array_value("job_data",$i,"paper_type_id");
-  $job_data[$i]["paper_color_id"] = get_form_value("job_data[$i]['paper_color_id']");
-  $job_data[$i]["weight"] = get_form_value("job_data[$i]['weight']");
-
+  $job_data[$i]["paper_type_id"] = get_form_sub_array_value("job_data",$i,"paper_type_id");
+  $job_data[$i]["paper_color_id"] = get_form_sub_array_value("job_data",$i,"paper_color_id");
+  $job_data[$i]["weight"] = get_form_sub_array_value("job_data",$i,"weight");
+  //Color blanco x defecto
+  if ($job_data[$i]["paper_type_id"] && !$job_data[$i]["paper_color_id"])
+      $job_data[$i]["paper_color_id"] = 1;
   //By foil_front & foil_back
-  $job_data[$i]["front_color_qty"] = get_form_value("job_data[$i]['front_color_qty']");
-  $job_data[$i]["front_pantone"] = get_form_value("job_data[$i]['front_pantone']");
-  $job_data[$i]["front_machine"] = get_form_value("job_data[$i]['front_machine']");
-  $job_data[$i]["back_color_qty"] = get_form_value("job_data[$i]['back_color_qty']");
-  $job_data[$i]["back_pantone"] = get_form_value("job_data[$i]['back_pantone']");
-  $job_data[$i]["back_machine"] = get_form_value("job_data[$i]['back_machine']");
+  /*$job_data[$i]["front_color_qty"] = get_form_sub_array_value("job_data[$i]['front_color_qty']");
+  $job_data[$i]["front_pantone"] = get_form_sub_array_value("job_data[$i]['front_pantone']");
+  $job_data[$i]["front_machine"] = get_form_sub_array_value("job_data[$i]['front_machine']");
+  $job_data[$i]["back_color_qty"] = get_form_sub_array_value("job_data[$i]['back_color_qty']");
+  $job_data[$i]["back_pantone"] = get_form_sub_array_value("job_data[$i]['back_pantone']");
+  $job_data[$i]["back_machine"] = get_form_sub_array_value("job_data[$i]['back_machine']");*/
 }
-echo "Post:";
-print_r($_POST);
-echo "Job data:";
-print_r($job_data);
 /*
 if (!$front_color_qty) {
     $front_color_qty = 0;
@@ -39,10 +37,7 @@ if (!$front_color_qty) {
 if (!$back_color_qty) {
     $back_color_qty = 0;
 }
-//Color blanco x defecto
-if ($paper_type_id && !$paper_color_id) {
-    $paper_color_id = 1;
-}*/
+*/
 ?>
 <div class="container">
   <br>
@@ -71,7 +66,6 @@ if ($paper_type_id && !$paper_color_id) {
             <label class="col-md-6 col-form-label text-md-right">
               Tipo:
             </label>
-            job_data_paper_type_id:{{$job_data[$i]['paper_type_id'] }}
             <select id="paper_type_id" name="job_data[{{$i}}][paper_type_id]" onchange="this.form.submit()">
               <option value=""></option>
               @foreach(get_paper_types() as $paper_type)
@@ -93,12 +87,12 @@ if ($paper_type_id && !$paper_color_id) {
             <label class="col-md-6 col-form-label text-md-right">
               Color:
             </label>
-            <select id="paper_color_id" name="paper_color_id" onchange="this.form.submit()">
+            <select id="paper_color_id" name="job_data[{{$i}}][paper_color_id]" onchange="this.form.submit()">
               <option value=""></option>
-              @if(isset($paper_type_id))
-                @foreach(get_paper_colors($paper_type_id) as $paper_color)
+              @if(isset($job_data[$i]["paper_type_id"]))
+                @foreach(get_paper_colors($job_data[$i]["paper_type_id"]) as $paper_color)
                   <option value="{{$paper_color->id}}"
-                    @if($paper_color_id==$paper_color->id)
+                    @if($job_data[$i]["paper_color_id"]==$paper_color->id)
                       selected
                     @endif
                   >
@@ -107,7 +101,7 @@ if ($paper_type_id && !$paper_color_id) {
                 @endforeach
               @endif
             </select>
-            @error('paper_color_id')
+            @error($job_data[$i]["paper_color_id"])
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
@@ -116,12 +110,12 @@ if ($paper_type_id && !$paper_color_id) {
             <label class="col-md-6 col-form-label text-md-right">
               Peso:
             </label>
-            <select id="weight" name="weight">
+            <select id="weight" name="job_data[{{$i}}][weight]">
               <option value=""></option>
-              @if(isset($paper_type_id) && isset($paper_color_id))
-                @foreach(get_paper_weights($paper_type_id,$paper_color_id) as $paper_weight)
+              @if(isset($job_data[$i]["paper_type_id"]) && isset($job_data[$i]["paper_color_id"]))
+                @foreach(get_paper_weights($job_data[$i]["paper_type_id"],$job_data[$i]["paper_color_id"]) as $paper_weight)
                   <option value="{{$paper_weight->weight}}"
-                    @if($weight == $paper_weight->weight)
+                    @if($job_data[$i]["weight"] == $paper_weight->weight)
                       selected
                     @endif
                   >
@@ -130,7 +124,7 @@ if ($paper_type_id && !$paper_color_id) {
                 @endforeach
               @endif
             </select>
-            @error('weight')
+            @error($job_data[$i]["weight"])
               <div class="alert alert-danger">
                 {{ $message }}
               </div>

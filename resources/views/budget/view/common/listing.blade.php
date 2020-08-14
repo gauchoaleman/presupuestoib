@@ -1,4 +1,6 @@
 <?php
+use App\Classes\Calculation\Common\CommonCalculation;
+
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
 $copy_qty = get_form_value("copy_qty");
@@ -67,7 +69,8 @@ $budgets = DB::table('common_jobs')
                 Máquina<br>
                 <select id="machine" name="machine" id="machine">
                   <option value=""></option>
-                  @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+                  <?php $common_calculation = new CommonCalculation; ?>
+                  @foreach($common_calculation->machine_list as $each_machine)
                     <option value="{{$each_machine}}"
                       @if($machine == $each_machine)
                         selected

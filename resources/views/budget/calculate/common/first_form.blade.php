@@ -1,4 +1,5 @@
 <?php
+use App\Classes\Calculation\Common\CommonCalculation;
 $paper_type_id = get_form_value("paper_type_id");
 $paper_color_id = get_form_value("paper_color_id");
 $weight = get_form_value("weight");
@@ -260,7 +261,8 @@ if (!$plus_percentage) {
             </label>
             <select name="machine" id="machine">
               <option value=""></option>
-              @foreach(array("Adast","GTO52","GTO46") as $each_machine)
+              <?php $common_calculation = new CommonCalculation; ?>
+              @foreach($common_calculation->machine_list as $each_machine)
                 <option value="{{$each_machine}}"
                   @if($machine == $each_machine)
                     selected
