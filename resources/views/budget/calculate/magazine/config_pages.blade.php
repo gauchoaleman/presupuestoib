@@ -16,7 +16,6 @@ $plus_percentage = get_form_value("plus_percentage");
 
 for( $i=0;$i<=$page_qty/4;$i++ ){
   //By foil
-  echo "job_data[$i]['paper_type_id']";
   $job_data[$i]["paper_type_id"] = get_form_sub_array_value("job_data",$i,"paper_type_id");
   $job_data[$i]["paper_color_id"] = get_form_sub_array_value("job_data",$i,"paper_color_id");
   $job_data[$i]["weight"] = get_form_sub_array_value("job_data",$i,"weight");
@@ -42,9 +41,9 @@ if (!$back_color_qty) {
 ?>
 <div class="container">
   <br>
-  <form method="POST" action="/budget/calculate/magazine/select_pages_paper">
+  <form method="POST" action="/budget/calculate/magazine/config_pages">
     @csrf
-    @include('budget.calculate.magazine.select_pages_paper.job_detail_card')
+    @include('budget.calculate.magazine.config_pages.job_detail_card')
     <br>
     <div class="card" style="width: 70rem;">
       <div class="card-header">
