@@ -45,6 +45,7 @@ if (!$back_color_qty) {
     @csrf
     @include('budget.calculate.magazine.config_pages.job_detail_card')
     <br>
+    <div id="pages_config"></div>
     <div class="card" style="width: 70rem;">
       <div class="card-header">
         Configurar páginas
@@ -232,3 +233,6 @@ if (!$back_color_qty) {
     </div>
   </div>
 </div>
+<script>
+  var elmnt = document.getElementById("pages_config").scrollIntoView();
+</script>

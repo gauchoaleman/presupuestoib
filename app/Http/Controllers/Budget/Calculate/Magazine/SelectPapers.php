@@ -16,6 +16,7 @@ class SelectPapers extends Controller
     public function __invoke(Request $request)
     {
       print("@SelectPapers"); //Bandera
+      print_r($_POST); //Bandera
         //
     }
 }
