@@ -41,17 +41,17 @@ class ConfigPages extends Controller
     return TRUE;
   }
 
-  private function form_complete($form_data)
+  private function config_pages_form_complete($form_data)
   {
     return isset($form_data["job_data"]) && $this->check_job_data_completion($form_data["job_data"],$form_data["page_qty"]);
   }
 
   public function __invoke(Request $request)
   {
-    if( $this->form_complete($_POST) ){
+    if( $this->config_pages_form_complete($_POST) ){
       $unique_papers = $this->get_unique_papers($_POST["job_data"]);
       print_r($unique_papers);
-      
+
       return $this->show_page_with_menubars("budget/calculate/magazine/select_papers");
     }
     else

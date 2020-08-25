@@ -20,7 +20,7 @@ class GetInput extends Controller
       return FALSE;
   }
 
-  public function calculate_papers($paper_type_id, $paper_color_id, $weight, $pose_width, $pose_height,$front_color_qty,$back_color_qty,$pose_qty,$copy_qty,$machine)
+  public function calculate_papers($paper_type_id, $paper_color_id, $weight, $pose_width, $pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine)
   {
     $common_calculation = new CommonCalculation();
     $sizes_result = DB::table('paper_prices')->select('id','width','height')->
@@ -109,7 +109,7 @@ class GetInput extends Controller
         return redirect()->back()->withInput($request->input())->withErrors($v->errors());
       else{
         $result = $this->calculate_papers($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["pose_width"], $_POST["pose_height"],
-        $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["copy_qty"],$_POST["machine"]);
+        $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["machine"]);
         $data["result"]=$result;
         return $this->show_page_with_menubars("budget/calculate/common/select_paper","",$data);
       }
