@@ -49,6 +49,11 @@ class ConfigPages extends Controller
     return isset($form_data["job_data"]) && $this->check_job_data_completion($form_data["job_data"],$form_data["page_qty"]);
   }
 
+  private function sizes_intersection($sizes1,$sizes2)
+  {
+
+  }
+  
   private function calculate_sizes($paper,$pose_width,$pose_height)
   {
     $magazine_calculation = new MagazineCalculation();
@@ -62,7 +67,13 @@ class ConfigPages extends Controller
     $size_res = array();
     $all_sizes = array();
     foreach ($sizes_result as $size) {
-      $size_res = $common_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$machine);    //calculate
+      if( $paper["front_machine"] == $paper["back_machine"] )
+        $size_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["front_machine"],FALSE);    //calculate
+      else {
+        $front_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["front_machine"],FALSE);    //calculate
+        $back_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["back_machine"],FALSE);    //calculate
+        $size_res = $this->sizes_intersection($front_sizes,$back_sizes);
+      }
       //print($size->width."x".$size->height.": "); //Bandera
       //print_r($size_res); //Bandera
       $all_sizes = array_merge($size_res,$all_sizes);
