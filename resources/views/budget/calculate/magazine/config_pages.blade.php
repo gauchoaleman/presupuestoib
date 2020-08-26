@@ -135,7 +135,7 @@ if (!$back_color_qty) {
               Ctd de colores frente:
             </label>
             <select name="job_data[{{$i}}][front_color_qty]" id="back_color_qty">
-              @foreach(array(1,2,3,4,5) as $each_color_qty)
+              @foreach(array(0,1,2,3,4,5) as $each_color_qty)
                 <option value="{{$each_color_qty}}"
                   @if($job_data[$i]["front_color_qty"] == $each_color_qty)
                     selected
@@ -180,7 +180,7 @@ if (!$back_color_qty) {
               Ctd de colores dorso:
             </label>
             <select name="job_data[{{$i}}][back_color_qty]" id="back_color_qty">
-              @foreach(array(1,2,3,4,5) as $each_color_qty)
+              @foreach(array(0,1,2,3,4,5) as $each_color_qty)
                 <option value="{{$each_color_qty}}"
                   @if($job_data[$i]["back_color_qty"] == $each_color_qty)
                     selected

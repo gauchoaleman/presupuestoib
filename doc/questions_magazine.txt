@@ -1,0 +1,3 @@
+Mirar interseccion de papeles si hay 2 maquinas (1 frente y 1 dorso).
+  Hay que chequear si las máquinas coinciden "al revés" (x ejemplo GTO46 y GTO52 en el una y GTO52 y GTO46 en el dorso)
+¿Cómo hago si tengo 1 maquina de frente y 1 maquina de dorso?
