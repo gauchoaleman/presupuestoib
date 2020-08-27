@@ -51,9 +51,9 @@ class ConfigPages extends Controller
 
   private function sizes_intersection($sizes1,$sizes2)
   {
-
+    return array_uintersect($sizes1,$sizes2,"sizes_compare");
   }
-  
+
   private function calculate_sizes($paper,$pose_width,$pose_height)
   {
     $magazine_calculation = new MagazineCalculation();
@@ -64,35 +64,39 @@ class ConfigPages extends Controller
     where('paper_prices_set_id', '=', get_latest_paper_price_set_id())->
     get();
     //print_r($sizes_result); //Bandera
-    $size_res = array();
+    $magazine_width = $pose_width*2;
+    $sizes_res = array();
     $all_sizes = array();
     foreach ($sizes_result as $size) {
       if( $paper["front_machine"] == $paper["back_machine"] )
-        $size_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["front_machine"],FALSE);    //calculate
+        $sizes_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["front_machine"],FALSE);    //calculate
       else {
-        $front_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["front_machine"],FALSE);    //calculate
-        $back_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["back_machine"],FALSE);    //calculate
-        $size_res = $this->sizes_intersection($front_sizes,$back_sizes);
+        $front_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["front_machine"],FALSE);    //calculate
+        $back_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["back_machine"],FALSE);    //calculate
+        $sizes_res = $this->sizes_intersection($front_sizes,$back_sizes);
       }
       //print($size->width."x".$size->height.": "); //Bandera
       //print_r($size_res); //Bandera
-      $all_sizes = array_merge($size_res,$all_sizes);
+      $all_sizes = array_merge($sizes_res,$all_sizes);
     }
+    aasort($all_sizes,"rest");
+    return $all_sizes;
   }
 
-  private function calculate_papers($papers,$pose_width,$pose_height)
+  private function calculate_papers($unique_papers,$pose_width,$pose_height)
   {
-    foreach ($papers as $paper_number => $paper)
-      $papers[$paper_number]["sizes"] = $this->calculate_sizes($paper);
+    foreach ($unique_papers as $paper_number => $paper)
+      $unique_papers[$paper_number]["sizes"] = $this->calculate_sizes($paper);
 
-    return $papers;
+    return $unique_papers;
   }
+
   public function __invoke(Request $request)
   {
     if( $this->config_pages_form_complete($_POST) ){
       $unique_papers = $this->get_unique_papers($_POST["job_data"]);
       print_r($unique_papers);
-      $papers_with_sizes = $this->calculate_papers($unique_papers,$_POST["pose_width"],$_POST["pose_height"]);
+      $unique_papers_with_sizes = $this->calculate_papers($unique_papers,$_POST["pose_width"],$_POST["pose_height"]);
 
       return $this->show_page_with_menubars("budget/calculate/magazine/select_papers");
     }

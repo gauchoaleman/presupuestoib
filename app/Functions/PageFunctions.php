@@ -1,4 +1,4 @@
-<?php
+  <?php
 session_start();
 
 function show_page_with_menubars($uri,$message = "",$data=array()) {
@@ -161,5 +161,18 @@ function swap(&$x, &$y) {
   $tmp=$x;
   $x=$y;
   $y=$tmp;
+}
+
+function sizes_compare($s1,$s2)
+{
+  if( $s1["paper_price_id"] == $s2["paper_price_id"] && $s1["sheet_width"] == $s2["sheet_width"] && $s1["sheet_height"] == $s2["sheet_height"] &&
+      $s1["leaf_width_qty"] == $s2["leaf_width_qty"] && $s1["leaf_height_qty"] == $s2["leaf_height_qty"] && $s1["leaf_width"] == $s2["leaf_width"] &&
+      $s1["leaf_height"] == $s2["leaf_height"] && $s1["pose_width"] == $s2["pose_width"] && $s1["pose_height"] == $s2["pose_height"] &&
+      $s1["leaf_width_without_borders"] == $s2["leaf_width_without_borders"] && $s1["leaf_height_without_borders"] == $s2["leaf_height_without_borders"] &&
+      $s1["pose_width_qty"] == $s2["pose_width_qty"] && $s1["pose_height_qty"] == $s2["pose_height_qty"] && $s1["rest"] == $s2["rest"] &&
+      $s1["position"] == $s2["position"] && $s1["front_back"] == $s2["front_back"] )
+      return 0;
+  else
+    return 1;
 }
 ?>
