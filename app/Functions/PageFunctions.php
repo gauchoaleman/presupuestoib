@@ -1,4 +1,4 @@
-  <?php
+<?php
 session_start();
 
 function show_page_with_menubars($uri,$message = "",$data=array()) {

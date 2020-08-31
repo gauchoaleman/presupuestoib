@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Budget\Calculate\Magazine;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use DB;
+use App\Classes\Calculation\Magazine\MagazineCalculation;
 
 class ConfigPages extends Controller
 {
@@ -15,6 +17,7 @@ class ConfigPages extends Controller
       $found_paper = FALSE;
       foreach( $unique_papers as $unique_paper_number => $unique_paper ){
         if( $unique_paper["paper_type_id"] == $paper["paper_type_id"] &&
+            $paper["front_color_qty"] != 0 && $paper["back_color_qty"] != 0 &&
             $unique_paper["paper_color_id"] == $paper["paper_color_id"] &&
             $unique_paper["weight"] == $paper["weight"] &&
             ( ($unique_paper["front_machine"] == $paper["front_machine"] && $unique_paper["back_machine"] == $paper["back_machine"]) ||
@@ -36,8 +39,7 @@ class ConfigPages extends Controller
   {
     for( $i=0;$i<=$page_qty/4;$i++ ){
       //By foil
-      if( !($job_data[$i]["paper_type_id"] && $job_data[$i]["paper_color_id"] && $job_data[$i]["weight"] &&
-            $job_data[$i]["front_color_qty"] && $job_data[$i]["front_machine"] &&
+      if( !($job_data[$i]["paper_type_id"] && $job_data[$i]["paper_color_id"] && $job_data[$i]["weight"] && $job_data[$i]["front_machine"] &&
             $job_data[$i]["back_color_qty"] && $job_data[$i]["back_machine"]) )
         return FALSE;
     }
@@ -54,13 +56,13 @@ class ConfigPages extends Controller
     return array_uintersect($sizes1,$sizes2,"sizes_compare");
   }
 
-  private function calculate_sizes($paper,$pose_width,$pose_height)
+  private function calculate_sizes($unique_paper,$pose_width,$pose_height)
   {
     $magazine_calculation = new MagazineCalculation();
     $sizes_result = DB::table('paper_prices')->select('id','width','height')->
-    where('paper_type_id', '=', $paper_type_id)->
-    where('paper_color_id', '=', $paper_color_id)->
-    where('weight', '=', $weight)->
+    where('paper_type_id', '=', $unique_paper["paper_type_id"])->
+    where('paper_color_id', '=', $unique_paper["paper_color_id"])->
+    where('weight', '=', $unique_paper["weight"])->
     where('paper_prices_set_id', '=', get_latest_paper_price_set_id())->
     get();
     //print_r($sizes_result); //Bandera
@@ -68,11 +70,14 @@ class ConfigPages extends Controller
     $sizes_res = array();
     $all_sizes = array();
     foreach ($sizes_result as $size) {
-      if( $paper["front_machine"] == $paper["back_machine"] )
-        $sizes_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["front_machine"],FALSE);    //calculate
+      if( $unique_paper["front_machine"] == $unique_paper["back_machine"] )
+        $sizes_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$unique_paper["front_color_qty"],
+                     $unique_paper["back_color_qty"],FALSE,$unique_paper["front_machine"],FALSE);    //calculate
       else {
-        $front_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["front_machine"],FALSE);    //calculate
-        $back_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$front_color_qty,$back_color_qty,FALSE,$paper["back_machine"],FALSE);    //calculate
+        $front_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$unique_paper["front_color_qty"],
+                       $unique_paper["back_color_qty"],FALSE,$unique_paper["front_machine"],FALSE);    //calculate
+        $back_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$unique_paper["front_color_qty"],
+                      $unique_paper["back_color_qty"],FALSE,$unique_paper["back_machine"],FALSE);    //calculate
         $sizes_res = $this->sizes_intersection($front_sizes,$back_sizes);
       }
       //print($size->width."x".$size->height.": "); //Bandera
@@ -85,8 +90,8 @@ class ConfigPages extends Controller
 
   private function calculate_papers($unique_papers,$pose_width,$pose_height)
   {
-    foreach ($unique_papers as $paper_number => $paper)
-      $unique_papers[$paper_number]["sizes"] = $this->calculate_sizes($paper);
+    foreach ($unique_papers as $unique_paper_number => $unique_paper)
+      $unique_papers[$unique_paper_number]["sizes"] = $this->calculate_sizes($unique_paper,$pose_width,$pose_height);
 
     return $unique_papers;
   }
@@ -95,10 +100,12 @@ class ConfigPages extends Controller
   {
     if( $this->config_pages_form_complete($_POST) ){
       $unique_papers = $this->get_unique_papers($_POST["job_data"]);
-      print_r($unique_papers);
+      print_r($unique_papers);    //Bandera
       $unique_papers_with_sizes = $this->calculate_papers($unique_papers,$_POST["pose_width"],$_POST["pose_height"]);
-
-      return $this->show_page_with_menubars("budget/calculate/magazine/select_papers");
+      print_r($unique_papers_with_sizes);     //Bandera
+      $form_data = array();
+      $form_data["unique_papers_with_sizes"] = $unique_papers_with_sizes;
+      return $this->show_page_with_menubars("budget/calculate/magazine/select_papers","",$form_data);
     }
     else
       return $this->show_page_with_menubars("budget/calculate/magazine/config_pages");
