@@ -31,6 +31,7 @@ $plus_percentage = get_form_value("plus_percentage");
         @endif
       @endforeach
       <br>
+
     @endforeach
 
   </form>
