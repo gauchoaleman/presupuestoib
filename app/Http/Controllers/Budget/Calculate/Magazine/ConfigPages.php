@@ -18,6 +18,8 @@ class ConfigPages extends Controller
       foreach( $unique_papers as $unique_paper_number => $unique_paper ){
         if( $unique_paper["paper_type_id"] == $paper["paper_type_id"] &&
             $paper["front_color_qty"] != 0 && $paper["back_color_qty"] != 0 &&
+            (($unique_paper["front_color_qty"] == $paper["front_color_qty"] && $unique_paper["back_color_qty"] == $paper["back_color_qty"]) ||
+            ($unique_paper["front_color_qty"] == $paper["back_color_qty"] && $unique_paper["back_color_qty"] == $paper["front_color_qty"]) ) &&
             $unique_paper["paper_color_id"] == $paper["paper_color_id"] &&
             $unique_paper["weight"] == $paper["weight"] &&
             ( ($unique_paper["front_machine"] == $paper["front_machine"] && $unique_paper["back_machine"] == $paper["back_machine"]) ||
