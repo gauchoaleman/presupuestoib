@@ -30,6 +30,7 @@ Route::any('budget/view/common/show_job/{common_job_id}', 'Budget\View\Common\Sh
 Route::any('budget/calculate/magazine/first_form', 'Budget\Calculate\Magazine\FirstForm');
 Route::any('budget/calculate/magazine/config_pages', 'Budget\Calculate\Magazine\ConfigPages');
 Route::any('budget/calculate/magazine/select_papers', 'Budget\Calculate\Magazine\SelectPapers');
+Route::any('budget/calculate/magazine/show_result', 'Budget\Calculate\Magazine\ShowResult');
 
 
 //Route::any('budget/calculate/common/select_paper', 'Budget\Calculate\Common\SelectPaper');

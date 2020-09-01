@@ -9,6 +9,7 @@ use App\Classes\Calculation\Magazine\MagazineCalculation;
 
 class ConfigPages extends Controller
 {
+  //Detects common foils and reorders them
   private function get_unique_papers($page_papers)
   {
     $unique_papers = array();
@@ -37,6 +38,7 @@ class ConfigPages extends Controller
     return $unique_papers;
   }
 
+  //Checks out if job form is completed
   private function check_job_data_completion($job_data,$page_qty)
   {
     for( $i=0;$i<=$page_qty/4;$i++ ){
@@ -48,16 +50,25 @@ class ConfigPages extends Controller
     return TRUE;
   }
 
+  //Checks out if job form is completed
   private function config_pages_form_complete($form_data)
   {
     return isset($form_data["job_data"]) && $this->check_job_data_completion($form_data["job_data"],$form_data["page_qty"]);
   }
 
+  //Calculates size intersection (for different machines on same foil)
   private function sizes_intersection($sizes1,$sizes2)
   {
+    //print("Sizes1");                  //Bandera
+    //print_r($sizes1);                 //Bandera
+    //print("Sizes2");                  //Bandera
+    //print_r($sizes2);                 //Bandera
+    //print("Intersection:");           //Bandera
+    //print_r(array_uintersect($sizes1,$sizes2,"sizes_compare"));
     return array_uintersect($sizes1,$sizes2,"sizes_compare");
   }
 
+  //Get possible sizes for some unnique paper
   private function calculate_sizes($unique_paper,$pose_width,$pose_height)
   {
     $magazine_calculation = new MagazineCalculation();
@@ -90,6 +101,7 @@ class ConfigPages extends Controller
     return $all_sizes;
   }
 
+  //Get possible sizes for different papers
   private function calculate_papers($unique_papers,$pose_width,$pose_height)
   {
     foreach ($unique_papers as $unique_paper_number => $unique_paper)

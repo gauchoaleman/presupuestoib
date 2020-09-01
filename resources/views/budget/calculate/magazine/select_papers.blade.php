@@ -17,12 +17,12 @@ $plus_percentage = get_form_value("plus_percentage");
 ?>
 <div class="container">
   <br>
-  <form method="POST" action="/budget/calculate/magazine/config_pages">
+  <form method="POST" action="/budget/calculate/magazine/show_result">
     @csrf
     @include('budget.calculate.magazine.config_pages.job_detail_card')
-    <input type="hidden" name="unique_papers_with_sizes" value="{{serialize($unique_papers_with_sizes)}}">
+    <input type="hidden" name="unique_papers_with_sizes_serialized" value="{{serialize($unique_papers_with_sizes)}}">
     <br>
-    @foreach($unique_papers_with_sizes as $unique_paper_with_sizes)
+    @foreach($unique_papers_with_sizes as $unique_paper_key => $unique_paper_with_sizes)
       @foreach($unique_paper_with_sizes["foil_list"] as $foil_number)
         @if($foil_number==0)
           Tapa/Contratapa y retiros:<br>
@@ -30,9 +30,13 @@ $plus_percentage = get_form_value("plus_percentage");
           Folio {{$foil_number}}, Páginas {{$foil_number*2-1}}, {{$foil_number*2}}, {{$page_qty-2*($foil_number-1)-1}}, {{$page_qty-2*($foil_number-1)}}:<br>
         @endif
       @endforeach
+      @include('budget.calculate.magazine.select_papers.select_paper_card')
       <br>
-
     @endforeach
-
+    <div class="col-md-6">
+      <button type="submit" class="btn btn-primary" name="button_action" value="show_result">
+        {{ __('Ver resultado') }}
+      </button>
+    </div>
   </form>
 </div>
