@@ -18,11 +18,13 @@ class ConfigPages extends Controller
       $found_paper = FALSE;
       foreach( $unique_papers as $unique_paper_number => $unique_paper ){
         if( $unique_paper["paper_type_id"] == $paper["paper_type_id"] &&
+            $unique_paper["weight"] == $paper["weight"] &&
+            $unique_paper["paper_color_id"] == $paper["paper_color_id"] &&
             $paper["front_color_qty"] != 0 && $paper["back_color_qty"] != 0 &&
+
             (($unique_paper["front_color_qty"] == $paper["front_color_qty"] && $unique_paper["back_color_qty"] == $paper["back_color_qty"]) ||
             ($unique_paper["front_color_qty"] == $paper["back_color_qty"] && $unique_paper["back_color_qty"] == $paper["front_color_qty"]) ) &&
-            $unique_paper["paper_color_id"] == $paper["paper_color_id"] &&
-            $unique_paper["weight"] == $paper["weight"] &&
+
             ( ($unique_paper["front_machine"] == $paper["front_machine"] && $unique_paper["back_machine"] == $paper["back_machine"]) ||
               ($unique_paper["front_machine"] == $paper["back_machine"] && $unique_paper["back_machine"] == $paper["front_machine"]) )
             ){
@@ -43,8 +45,7 @@ class ConfigPages extends Controller
   {
     for( $i=0;$i<=$page_qty/4;$i++ ){
       //By foil
-      if( !($job_data[$i]["paper_type_id"] && $job_data[$i]["paper_color_id"] && $job_data[$i]["weight"] && $job_data[$i]["front_machine"] &&
-            $job_data[$i]["back_color_qty"] && $job_data[$i]["back_machine"]) )
+      if( !($job_data[$i]["paper_type_id"] && $job_data[$i]["paper_color_id"] && $job_data[$i]["weight"] && $job_data[$i]["front_machine"] && $job_data[$i]["back_machine"]) )
         return FALSE;
     }
     return TRUE;
