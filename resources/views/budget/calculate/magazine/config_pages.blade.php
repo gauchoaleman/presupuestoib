@@ -165,6 +165,7 @@ if (!$back_color_qty) {
             </label>
             <select name="job_data[{{$i}}][front_machine]" id="machine">
               <?php $magazine_calculation = new MagazineCalculation; ?>
+              <option value=""></option>
               @foreach($magazine_calculation->machine_list as $each_machine)
                 <option value="{{$each_machine}}"
                   @if($job_data[$i]["front_machine"] == $each_machine)
@@ -210,6 +211,7 @@ if (!$back_color_qty) {
             </label>
             <select name="job_data[{{$i}}][back_machine]" id="machine">
               <?php $magazine_calculation = new MagazineCalculation; ?>
+              <option value=""></option>
               @foreach($magazine_calculation->machine_list as $each_machine)
                 <option value="{{$each_machine}}"
                   @if($job_data[$i]["back_machine"] == $each_machine)

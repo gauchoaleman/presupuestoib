@@ -9,6 +9,17 @@ use App\Classes\Calculation\Magazine\MagazineCalculation;
 
 class ConfigPages extends Controller
 {
+  private function unique_paper_condition( $unique_paper,$paper )
+  {
+    $same_paper = $unique_paper["paper_type_id"] == $paper["paper_type_id"] && $unique_paper["weight"] == $paper["weight"] &&
+                  $unique_paper["paper_color_id"] == $paper["paper_color_id"];
+    $same_colors = $unique_paper["front_color_qty"] == $paper["front_color_qty"] && $unique_paper["back_color_qty"] == $paper["back_color_qty"];
+    $same_machines = $unique_paper["front_machine"] == $paper["front_machine"] && $unique_paper["back_machine"] == $paper["back_machine"];
+    $paper_pantone = isset($paper["front_pantone"]) || isset($paper["back_pantone"]);
+    $unique_paper_pantone = isset($unique_paper["front_pantone"]) || isset($unique_paper["back_pantone"]);
+    $ret = $same_paper && $same_colors && $same_machines && !$paper_pantone && !$unique_paper_pantone;
+    return $ret;
+  }
   //Detects common foils and reorders them
   private function get_unique_papers($page_papers)
   {
@@ -17,17 +28,7 @@ class ConfigPages extends Controller
     foreach( $page_papers as $foil_number => $paper ){
       $found_paper = FALSE;
       foreach( $unique_papers as $unique_paper_number => $unique_paper ){
-        if( $unique_paper["paper_type_id"] == $paper["paper_type_id"] &&
-            $unique_paper["weight"] == $paper["weight"] &&
-            $unique_paper["paper_color_id"] == $paper["paper_color_id"] &&
-            $paper["front_color_qty"] != 0 && $paper["back_color_qty"] != 0 &&
-
-            (($unique_paper["front_color_qty"] == $paper["front_color_qty"] && $unique_paper["back_color_qty"] == $paper["back_color_qty"]) ||
-            ($unique_paper["front_color_qty"] == $paper["back_color_qty"] && $unique_paper["back_color_qty"] == $paper["front_color_qty"]) ) &&
-
-            ( ($unique_paper["front_machine"] == $paper["front_machine"] && $unique_paper["back_machine"] == $paper["back_machine"]) ||
-              ($unique_paper["front_machine"] == $paper["back_machine"] && $unique_paper["back_machine"] == $paper["front_machine"]) )
-            ){
+        if( $this->unique_paper_condition( $unique_paper,$paper )) {
           $unique_papers[$unique_paper_number]["foil_list"][] = $foil_number;
           $found_paper = TRUE;
         }
@@ -45,7 +46,9 @@ class ConfigPages extends Controller
   {
     for( $i=0;$i<=$page_qty/4;$i++ ){
       //By foil
-      if( !($job_data[$i]["paper_type_id"] && $job_data[$i]["paper_color_id"] && $job_data[$i]["weight"] && $job_data[$i]["front_machine"] && $job_data[$i]["back_machine"]) )
+      $paper_completed = $job_data[$i]["paper_type_id"] && $job_data[$i]["paper_color_id"] && $job_data[$i]["weight"];
+      $machines_completed = $job_data[$i]["front_machine"] && $job_data[$i]["back_machine"];
+      if( !( $paper_completed && $machines_completed) )
         return FALSE;
     }
     return TRUE;
@@ -65,7 +68,7 @@ class ConfigPages extends Controller
     //print("Sizes2");                  //Bandera
     //print_r($sizes2);                 //Bandera
     //print("Intersection:");           //Bandera
-    //print_r(array_uintersect($sizes1,$sizes2,"sizes_compare"));
+    //print_r(array_uintersect($sizes1,$sizes2,"sizes_compare"));   //Bandera
     return array_uintersect($sizes1,$sizes2,"sizes_compare");
   }
 
