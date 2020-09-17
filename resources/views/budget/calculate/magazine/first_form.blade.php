@@ -105,7 +105,6 @@ if (!$plus_percentage) {
               &nbsp;
             </label>
             <select id="finishing" name="finishing">
-              <option value=""></option>
               <?php $magazine_calculation = new MagazineCalculation; ?>
               @foreach( $magazine_calculation->finishing_array as $key => $value)
                 <option value="{{$key}}"
@@ -162,7 +161,6 @@ if (!$plus_percentage) {
               &nbsp;
             </label>
             <select id="mounting" name="mounting">
-              <option value=""></option>
               <?php $magazine_calculation = new MagazineCalculation; ?>
               @foreach( $magazine_calculation->mounting_array as $key => $value)
                 <option value="{{$key}}"

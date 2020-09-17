@@ -61,7 +61,7 @@ class ShowResult extends Controller
     //$all_input = array_merge($input,$paper_data_input);
     $ret["all_input"] = $input;
     $ret["result"] = $magazine_calculation->calculate_result($input);
-    print_r($input);      //Bandera
+    //print_r($input);      //Bandera
     return $ret;
   }
 

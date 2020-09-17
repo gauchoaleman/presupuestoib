@@ -83,17 +83,17 @@ class ConfigPages extends Controller
     where('paper_prices_set_id', '=', get_latest_paper_price_set_id())->
     get();
     //print_r($sizes_result); //Bandera
-    $magazine_width = $pose_width*2;
+    $foil_width = $pose_width*2;    //foil width is double magazine width
     $sizes_res = array();
     $all_sizes = array();
     foreach ($sizes_result as $size) {
       if( $unique_paper["front_machine"] == $unique_paper["back_machine"] )
-        $sizes_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$unique_paper["front_color_qty"],
+        $sizes_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$foil_width,$pose_height,$unique_paper["front_color_qty"],
                      $unique_paper["back_color_qty"],FALSE,$unique_paper["front_machine"],FALSE);    //calculate
       else {
-        $front_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$unique_paper["front_color_qty"],
+        $front_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$foil_width,$pose_height,$unique_paper["front_color_qty"],
                        $unique_paper["back_color_qty"],FALSE,$unique_paper["front_machine"],FALSE);    //calculate
-        $back_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$magazine_width,$pose_height,$unique_paper["front_color_qty"],
+        $back_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$foil_width,$pose_height,$unique_paper["front_color_qty"],
                       $unique_paper["back_color_qty"],FALSE,$unique_paper["back_machine"],FALSE);    //calculate
         $sizes_res = $this->sizes_intersection($front_sizes,$back_sizes);
       }
@@ -119,6 +119,7 @@ class ConfigPages extends Controller
     if( $this->config_pages_form_complete($_POST) ){
       $unique_papers = $this->get_unique_papers($_POST["job_data"]);
       print_r($unique_papers);    //Bandera
+
       $unique_papers_with_sizes = $this->calculate_papers($unique_papers,$_POST["pose_width"],$_POST["pose_height"]);
       print_r($unique_papers_with_sizes);     //Bandera
       $form_data = array();

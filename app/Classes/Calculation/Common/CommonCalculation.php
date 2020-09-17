@@ -5,30 +5,6 @@ use DB;
 
 class CommonCalculation extends Calculation
 {
-  public function get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
-  {
-    $sheet_qty = ceil($copy_qty_and_excess/($leaf_width_qty*$leaf_height_qty*$pose_width_qty*$pose_height_qty));
-    return $sheet_qty;
-  }
-
-  public function get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty)
-  {
-    $leaf_qty = ceil($copy_qty_and_excess/($pose_width_qty*$pose_height_qty));
-    return $leaf_qty;
-  }
-
-  public function get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back)
-  {
-    $paper_price_get = DB::table('paper_prices')->
-    select('paper_prices.sheet_price')->
-    where('paper_prices.id','=', $paper_price_id)->
-    first();
-
-    $sheet_price = $paper_price_get->sheet_price;
-    $paper_price = $sheet_price*$this->get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
-
-    return $paper_price;
-  }
 
   public function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back)
   {
@@ -109,7 +85,7 @@ class CommonCalculation extends Calculation
     $data["sheet_size"] = $sheet_size;
     $data["sheet_qty_and_excess"] = $sheet_qty_and_excess;
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
-    $data["paper_price"] = $this->get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty,$front_back);
+    $data["paper_price"] = $this->get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
     $data["guillotine_price"] = $this->get_guillotine_price($copy_qty_and_excess,$pose_qty);
     $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
     $data["ink_prices"] = $this->get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$pantone_1,$pantone_2,$pantone_3);

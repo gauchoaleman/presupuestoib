@@ -33,6 +33,7 @@ class Calculation
   public $plate_prices = array("Adast"=>12,
                                "GTO52"=>23,
                                "GTO46"=>34);
+
   public $cmyk_ink_kilo_price = 10;
   public $pantone_ink_kilo_price = 20;
 
@@ -161,6 +162,31 @@ class Calculation
     echo "leaf_width:".$leaf_width."<br>";
     echo "leaf_height:".$leaf_height."<br>";
     return $this->max_sizes[$machine]["width"]>=$leaf_width && $this->max_sizes[$machine]["height"]>=$leaf_height;
+  }
+
+  public function get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
+  {
+    $sheet_qty = ceil($copy_qty_and_excess/($leaf_width_qty*$leaf_height_qty*$pose_width_qty*$pose_height_qty));
+    return $sheet_qty;
+  }
+
+  public function get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty)
+  {
+    $leaf_qty = ceil($copy_qty_and_excess/($pose_width_qty*$pose_height_qty));
+    return $leaf_qty;
+  }
+
+  public function get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
+  {
+    $paper_price_get = DB::table('paper_prices')->
+    select('paper_prices.sheet_price')->
+    where('paper_prices.id','=', $paper_price_id)->
+    first();
+
+    $sheet_price = $paper_price_get->sheet_price;
+    $paper_price = $sheet_price*$this->get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+
+    return $paper_price;
   }
 
   public function calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$machine,$position,$front_back)
