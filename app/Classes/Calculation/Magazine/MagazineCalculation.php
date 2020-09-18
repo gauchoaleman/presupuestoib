@@ -23,34 +23,102 @@ class MagazineCalculation extends Calculation
     return $copy_qty*$this->finishing_per_copy_prices[$finishing];
   }
 
+  private function get_totals_from_paper_infos($paper_infos)
+  {
+    $totals_sum = 0;
+    foreach ($paper_infos as $paper_info) {
+      $totals_sum += $paper_info["total"];
+    }
+    return $totals_sum;
+  }
+
+  public function get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$front_pantone,$back_pantone)
+  {
+    $pantone_color_qty = $front_pantone+$back_pantone;
+    $cmyk_color_qty = $front_color_qty+$back_color_qty-$pantone_color_qty;
+    //print("pantone_color_qty:".$pantone_color_qty);     //Bandera
+    //print("cmyk_color_qty:".$cmyk_color_qty);        //Bandera
+    $ret["cmyk"] = $cmyk_color_qty*($leaf_width/1000)*($leaf_height/1000)*$leaf_qty_and_excess*0.005*$this->cmyk_ink_kilo_price;
+    $ret["pantone"] = $pantone_color_qty*($leaf_width/1000)*($leaf_height/1000)*$leaf_qty_and_excess*0.005*$this->pantone_ink_kilo_price;
+    $ret["total"] = $ret["cmyk"] + $ret["pantone"];
+    return $ret;
+  }
+
+  public function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,$front_color_qty,$back_color_qty)
+  {
+    $total = 0;
+    if( $front_machine == $back_machine){
+      $printing["qty"][$front_machine] = $leaf_qty_and_excess*($front_color_qty+$back_color_qty);
+      $printing["printing_prices"][$front_machine] = $printing["qty"][$front_machine]*$this->printing_prices[$front_machine]/$this->price_qty;
+      $printing["arrangement_prices"][$front_machine] = ($front_color_qty+$back_color_qty)*$this->printing_arrangement_prices[$front_machine];
+      $plate["qty"][$front_machine] = $front_color_qty+$back_color_qty;
+      $plate["prices"][$front_machine] = $plate["qty"][$front_machine]*$this->plate_prices[$front_machine];
+      $total += $printing["printing_prices"][$front_machine]+$plate["prices"][$front_machine]+$printing["arrangement_prices"][$front_machine];
+    }
+    else{
+      $printing["qty"][$front_machine] = $leaf_qty_and_excess*$front_color_qty;
+      $printing["printing_prices"][$front_machine] = $printing["qty"][$front_machine]*$this->printing_prices[$front_machine]/$this->price_qty;
+      $printing["arrangement_prices"][$front_machine] = $front_color_qty*$this->printing_arrangement_prices[$front_machine];
+      $plate["qty"][$front_machine] = $front_color_qty;
+      $plate["prices"][$front_machine] = $plate["qty"][$front_machine]*$this->plate_prices[$front_machine];
+      $printing["qty"][$back_machine] = $leaf_qty_and_excess*$back_color_qty;
+      $printing["printing_prices"][$back_machine] = $printing["qty"][$back_machine]*$this->printing_prices[$back_machine]/$this->price_qty;
+      $printing["arrangement_prices"][$back_machine] = $back_color_qty*$this->printing_arrangement_prices[$back_machine];
+      $plate["qty"][$back_machine] = $back_color_qty;
+      $plate["prices"][$back_machine] = $plate["qty"][$back_machine]*$this->plate_prices[$back_machine];
+      $total += $printing["printing_prices"][$front_machine]+$plate["prices"][$front_machine]+$printing["arrangement_prices"][$front_machine];
+      $total += $printing["printing_prices"][$back_machine]+$plate["prices"][$back_machine]+$printing["arrangement_prices"][$back_machine];
+    }
+    $ret["printing"] = $printing;
+    $ret["plate"] = $plate;
+    $ret["total"] = $total;
+    return $ret;
+  }
+
   private function get_paper_info($unique_paper,$copy_qty)
   {
     extract($unique_paper);
     extract($paper_data);
     $pose_qty = $pose_width_qty*$pose_height_qty;
-    $copy_qty_and_excess = $copy_qty+$this->excess_leaves*$pose_qty;
+    //$copy_qty_and_excess = $copy_qty+$this->excess_leaves*$pose_qty;
     $foil_qty = sizeof($foil_list);
     $set_qty = ceil($foil_qty/$pose_qty);
     $rest_foils = $foil_qty%$pose_qty;
     //Last set maybe has half copies
     $total_copies_and_excess = 0;
-    if( $set_qty )
-      $total_copies_and_excess += ($copy_qty + $this->excess_leaves*$pose_qty)*($set_qty - 1);
+    //If there are no rest_foils I have full sets
+    if( $set_qty && !$rest_foils )
+      $total_copies_and_excess += ($copy_qty + $this->excess_leaves*$pose_qty)*$set_qty;
+    //If there is rest_foils the last set is not complete
+    else if( $set_qty )
+      $total_copies_and_excess += ($copy_qty + $this->excess_leaves*$pose_qty)*($set_qty-1);
+    //Here I calculate the rest_foils
     if( $rest_foils )
       $total_copies_and_excess += $copy_qty/$rest_foils + $this->excess_leaves*$pose_qty/$rest_foils;     //Danger, watch this
     $sheet_size = $this->get_sheet_size($paper_price_id);
     $sheet_qty_and_excess = $this->get_sheet_qty($total_copies_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
-    $leaf_qty_and_excess = $this->get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty);
+    $leaf_qty_and_excess = $this->get_leaf_qty($total_copies_and_excess,$pose_width_qty,$pose_height_qty);
 
     $data["sheet_size"] = $sheet_size;
+    $data["total_copies_and_excess"] = $total_copies_and_excess;
     $data["sheet_qty_and_excess"] = $sheet_qty_and_excess;
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
+    $data["pose_qty"] = $pose_qty;
+    $data["copy_qty"] = $copy_qty;
+    $data["set_qty"] = $set_qty;
+    $data["rest_foils"] = $rest_foils;
+    $data["foil_qty"] = $foil_qty;
+
     $data["paper_price"] = $this->get_paper_price($total_copies_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
     $data["guillotine_price"] = $this->get_guillotine_price($total_copies_and_excess,$pose_qty);
-    //$data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
-    //$data["ink_prices"] = $this->get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$front_pantone,$back_pantone);
-    //$data["total"] = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["ink_prices"]["total"];
-
+    $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,
+    $front_color_qty,$back_color_qty);
+    if( !isset($front_pantone) )
+      $front_pantone = 0;
+      if( !isset($back_pantone) )
+        $back_pantone = 0;
+    $data["ink_prices"] = $this->get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$front_pantone,$back_pantone);
+    $data["total"] = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["ink_prices"]["total"];
     return $data;
   }
 
@@ -63,6 +131,8 @@ class MagazineCalculation extends Calculation
 
     foreach( $unique_papers as $unique_paper )
       $data["paper_info"][] = $this->get_paper_info($unique_paper,$copy_qty);
+
+    $total += $this->get_totals_from_paper_infos($data["paper_info"]);
 
     if( $machine_washing_qty ){
       $data["washing_machine_price"] = $this->get_washing_machine_price($machine_washing_qty);

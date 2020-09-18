@@ -111,7 +111,7 @@ Comunes
     [X] Reemplazar nombre de funcion get_dollar_price por get_actual_dollar_price
     [ ] Paginación en listado de jobs
     [X] Button height on listing
-    [ ] Poner funciones de showpage en PageFunctions
     [ ]  Cambiar llamados a funciones showpage en todo el sitio (sacar $this->)
     [X] Si da cero el width_qty o el height_qty hacer continue
     [ ] Comentar los print_r
+    [ ] No está guardando presupuesto a base de datos

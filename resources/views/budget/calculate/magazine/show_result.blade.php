@@ -1,7 +1,7 @@
 <div class="container">
   <br>
   <h1 align="center">{{$all_input["budget_name"]}}</h1>
-  <h2 align="center">Cliente: {{$client_name}}</h2>
+  <h2 align="center">Cliente: {{$client_name ?? ''}}</h2>
   <form method="POST" action="/budget/calculate/common/show_job_paper" target="_blank">
     @csrf
     <input type="hidden" name="paper_data" value="{{$all_input["paper_data"]}}">

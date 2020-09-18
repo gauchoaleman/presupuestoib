@@ -79,7 +79,9 @@ class ShowResult extends Controller
     $insert_array = array_merge($data_input,$paper_data_input);
     print("Insert array:");     //Bandera
     print_r($insert_array);     //Bandera
+    DB::enableQueryLog();
     DB::table('common_jobs')->insert($insert_array);
+    print_r(DB::getQueryLog());
   }
 
   /**
