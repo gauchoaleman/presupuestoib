@@ -44,6 +44,13 @@ class MagazineCalculation extends Calculation
     return $ret;
   }
 
+  /*Here i calculate
+    Printing qty for each foil side
+    Printing Arrangement prices
+    Printing prices
+    Plate qty for each foil side
+    Plate prices for each foil side
+    */
   public function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,$front_color_qty,$back_color_qty)
   {
     $total = 0;
@@ -74,7 +81,7 @@ class MagazineCalculation extends Calculation
     $ret["total"] = $total;
     return $ret;
   }
-
+  // Get prices for each paper set
   private function get_paper_info($unique_paper,$copy_qty)
   {
     extract($unique_paper);
@@ -122,6 +129,7 @@ class MagazineCalculation extends Calculation
     return $data;
   }
 
+  //Here I call root prices and call get_paper_info for each paper set
   public function calculate_result($result_input)
   {
     print_r($result_input);     //Bandera

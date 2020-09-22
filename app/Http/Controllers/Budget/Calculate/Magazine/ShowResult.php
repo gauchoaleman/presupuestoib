@@ -56,7 +56,7 @@ class ShowResult extends Controller
     $input["shipping"] = pesos_to_dollars($input["shipping"]);
     $input["unique_papers"] = $unique_papers;
     unset($input["unique_papers_with_sizes_serialized"]);
-    unset($input["paper_data"]);
+    //unset($input["paper_data"]);
     unset($input["_token"]);
     //$all_input = array_merge($input,$paper_data_input);
     $ret["all_input"] = $input;
