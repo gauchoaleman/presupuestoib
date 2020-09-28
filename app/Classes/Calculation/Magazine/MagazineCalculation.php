@@ -173,6 +173,7 @@ class MagazineCalculation extends Calculation
     else
       $data["dollar_price"] = get_dollar_price();
     $data["total"] = $total;
+    print("Result data:");      //Bandera
     print_r($data);     //Bandera
     return $data;
 

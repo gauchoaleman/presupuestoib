@@ -53,6 +53,7 @@ Cuestiones
 [ ] Poner <?php $magazine_finishing= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar"); ?> en archivo aparte, usarlo para mostrar acabado en español en job_detail y en first_form, etc
 [ ] Probar si anda interseccion.
 [ ] Ver si anda función get_unique_papers de Controller ConfigPages.php
+[ ] Ctd de planchas par amas de un folio está mal.
 
 Preguntas:
 [ ] Die cantidad de colores bei der revista ist zwischen 1 und 4?  Oder kann es mehr Farben geben?  Pantone?

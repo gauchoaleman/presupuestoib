@@ -8,6 +8,24 @@
   </div>
   <div class="card-body">
 
+    @foreach( $result["paper_info"] as $paper_index => $paper )
+    <div class="card" style="width: 65rem;">
+      <div class="card-header">
+        @foreach($all_input["unique_papers"][$paper_index]["foil_list"] as $foil_number)
+          @if($foil_number==0)
+            <b>Tapa/Contratapa y retiros:</b><br>
+          @else
+            <b>Folio {{$foil_number}}, Páginas {{$foil_number*2-1}}, {{$foil_number*2}}, {{$all_input["page_qty"]-2*($foil_number-1)-1}}, {{$all_input["page_qty"]-2*($foil_number-1)}}:</b><br>
+          @endif
+        @endforeach
+      </div>
+      <div class="card-body">
+        @include('budget.calculate.magazine.show_result.job_detail_card.paper_detail',
+        array("paper_all_input" => $all_input["unique_papers"][$paper_index],"paper_result" => $paper))
+      </div>
+    </div>
+    @endforeach
+
     @if( $all_input["machine_washing_qty"] )
       <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">
@@ -22,19 +40,19 @@
       </div>
     @endif
 
-    @if( $all_input["mounting"] )
-      <div class="form-group row">
-        <label class="col-md-4 col-form-label text-md-right">
-          <b>{{ __('Montaje:') }}</b>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Montaje:') }}</b>
+      </label>
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
         </label>
-        <div class="col-md-6">
-          <label class="col-md-6 col-form-label text-md-right">
-            &nbsp;
-          </label>
-          ${{number_format($all_input["mounting"]*$result["dollar_price"],2)}}
-        </div>
+        ${{number_format($result["mounting"]*$result["dollar_price"],2)}}
       </div>
-    @endif
+    </div>
+
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
@@ -44,7 +62,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        ${{number_format($all_input["finishing"]*$result["dollar_price"],2)}}
+        ${{number_format($result["finishing"]*$result["dollar_price"],2)}}
       </div>
     </div>
 

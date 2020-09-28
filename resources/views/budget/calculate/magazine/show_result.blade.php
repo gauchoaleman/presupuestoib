@@ -1,3 +1,7 @@
+<?php
+$client_name = get_client_name($all_input["client_id"]);
+
+ ?>
 <div class="container">
   <br>
   <h1 align="center">{{$all_input["budget_name"]}}</h1>
