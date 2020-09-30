@@ -85,7 +85,7 @@ class MagazineCalculation extends Calculation
   private function get_paper_info($unique_paper,$copy_qty)
   {
     extract($unique_paper);
-    extract($paper_data);
+    //extract($paper_data);
     $pose_qty = $pose_width_qty*$pose_height_qty;
     //$copy_qty_and_excess = $copy_qty+$this->excess_leaves*$pose_qty;
     $foil_qty = sizeof($foil_list);

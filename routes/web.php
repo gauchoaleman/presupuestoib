@@ -31,7 +31,7 @@ Route::any('budget/calculate/magazine/first_form', 'Budget\Calculate\Magazine\Fi
 Route::any('budget/calculate/magazine/config_pages', 'Budget\Calculate\Magazine\ConfigPages');
 Route::any('budget/calculate/magazine/select_papers', 'Budget\Calculate\Magazine\SelectPapers');
 Route::any('budget/calculate/magazine/show_result', 'Budget\Calculate\Magazine\ShowResult');
-
+Route::any('budget/calculate/magazine/show_job_paper', 'Budget\Calculate\Magazine\ShowResult');
 
 //Route::any('budget/calculate/common/select_paper', 'Budget\Calculate\Common\SelectPaper');
 

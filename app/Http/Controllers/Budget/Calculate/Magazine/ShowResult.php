@@ -34,7 +34,8 @@ class ShowResult extends Controller
   public function extract_paper_data_from_unique_papers_with_sizes( $unique_papers_with_sizes )
   {
     foreach( $unique_papers_with_sizes as $unique_paper_key => $unique_paper_with_sizes )
-      $unique_papers_with_sizes[$unique_paper_key]["paper_data"] = $this->extract_paper_data( $unique_paper_with_sizes["paper_data"] );
+      $unique_papers_with_sizes[$unique_paper_key] = array_merge($unique_papers_with_sizes[$unique_paper_key],
+                                                                 $this->extract_paper_data( $unique_paper_with_sizes["paper_data"]));
     return $unique_papers_with_sizes;
   }
 
@@ -55,7 +56,7 @@ class ShowResult extends Controller
     $unique_papers = $this->del_sizes_from_unique_papers_with_sizes($unique_papers_with_sizes);
     $input["shipping"] = pesos_to_dollars($input["shipping"]);
     $input["unique_papers"] = $unique_papers;
-    unset($input["unique_papers_with_sizes_serialized"]);
+    //unset($input["unique_papers_with_sizes_serialized"]);
     //unset($input["paper_data"]);
     unset($input["_token"]);
     //$all_input = array_merge($input,$paper_data_input);
@@ -77,9 +78,11 @@ class ShowResult extends Controller
    */
   public function __invoke(Request $request)
   {
+    print("_POST:");       //Bandera
+    print_r($_POST);      //Bandera
     $data = $this->get_result_from_post($_POST);
-    //print("_POST:");       //Bandera
-    //print_r($_POST);      //Bandera
+    print_r($data);
+
     if( $_POST["button_action"] == "show_job_paper" )
       return $this->show_page_without_menubars("budget/calculate/magazine/show_job_paper","",$data);
     else if( $_POST["button_action"] == "show_result" ){

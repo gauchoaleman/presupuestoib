@@ -18,23 +18,23 @@
       Pliegos ancho:
     </label>
 
-    {{$paper_all_input["paper_data"]["leaf_width_qty"]}}
+    {{$paper_all_input["leaf_width_qty"]}}
     <label class="col-md-6 col-form-label text-md-right">
       Pliegos alto:
     </label>
-    {{$paper_all_input["paper_data"]["leaf_height_qty"]}}
+    {{$paper_all_input["leaf_height_qty"]}}
     <label class="col-md-6 col-form-label text-md-right">
       Tamaño pliego:
     </label>
-    {{$paper_all_input["paper_data"]["leaf_width"]}}x{{$paper_all_input["paper_data"]["leaf_height"]}}
+    {{$paper_all_input["leaf_width"]}}x{{$paper_all_input["leaf_height"]}}
     <label class="col-md-6 col-form-label text-md-right">
       Poses ancho:
     </label>
-    {{$paper_all_input["paper_data"]["pose_width_qty"]}}@if( $paper_all_input["paper_data"]["front_back"] == "front_back_width" ) Frente/Dorso @endif
+    {{$paper_all_input["pose_width_qty"]}}@if( $paper_all_input["front_back"] == "front_back_width" ) Frente/Dorso @endif
     <label class="col-md-6 col-form-label text-md-right">
       Poses alto:
     </label>
-    {{$paper_all_input["paper_data"]["pose_height_qty"]}}@if( $paper_all_input["paper_data"]["front_back"] == "front_back_height" ) Frente/Dorso @endif
+    {{$paper_all_input["pose_height_qty"]}}@if( $paper_all_input["front_back"] == "front_back_height" ) Frente/Dorso @endif
     <label class="col-md-6 col-form-label text-md-right">
       Costo:
     </label>

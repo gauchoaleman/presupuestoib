@@ -1,3 +1,5 @@
+<?php use App\Classes\Calculation\Magazine\MagazineCalculation; ?>
+
 <div class="card" style="width: 50rem;">
   <div class="card-header">
     Detalle trabajo
@@ -5,7 +7,24 @@
   <div class="card-body">
 
     @csrf
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Tamaño:') }}</b>
+      </label>
 
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          Ancho (mm):
+        </label>
+        <input type="hidden" name="pose_width" value="{{$pose_width}}">
+        {{$pose_width}}
+        <label class="col-md-6 col-form-label text-md-right">
+          Alto (mm):
+        </label>
+        <input type="hidden" name="pose_height" value="{{$pose_height}}">
+        {{$pose_height}}
+      </div>
+    </div>
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Cantidad de ejemplares:') }}</b>
@@ -21,6 +40,33 @@
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Cantidad de páginas:') }}</b>
+      </label>
+      <input type="hidden" name="page_qty" value="{{$page_qty}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
+        </label>
+        {{$page_qty}}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Acabado:') }}</b>
+      </label>
+      <input type="hidden" name="finishing" value="{{$finishing}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
+        </label>
+        <?php $magazine_calculation = new MagazineCalculation; ?>
+        {{$magazine_calculation->finishing_array[$finishing]}}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Lavados de máquina:') }}</b>
       </label>
       <input type="hidden" name="machine_washing_qty" value="{{$all_input["machine_washing_qty"]}}">
@@ -29,6 +75,20 @@
           &nbsp;
         </label>
         {{$all_input["machine_washing_qty"]}}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Montaje:') }}</b>
+      </label>
+      <input type="hidden" name="mounting" value="{{$mounting}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
+        </label>
+        <?php $magazine_calculation = new MagazineCalculation; ?>
+        {{$magazine_calculation->mounting_array[$mounting]}}
       </div>
     </div>
 
@@ -60,19 +120,6 @@
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
-        <b>{{ __('Montaje:') }}</b>
-      </label>
-      <input type="hidden" name="mounting" value="{{$all_input["mounting"]}}">
-      <div class="col-md-6">
-        <label class="col-md-6 col-form-label text-md-right">
-          &nbsp;
-        </label>
-        {{$all_input["mounting"]}}
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Envío:') }}</b>
       </label>
       <input type="hidden" name="shipping" value="{{$all_input["shipping"]}}">
@@ -93,7 +140,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        @if( $all_input["discount_percentage"] ){{$all_input["discount_percentage"]*$result["dollar_price"]}}@else - @endif
+        @if( $all_input["discount_percentage"] ){{$all_input["discount_percentage"]}}@else - @endif
       </div>
     </div>
 

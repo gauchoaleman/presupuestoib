@@ -9,6 +9,7 @@
   <div class="card-body">
 
     @foreach( $result["paper_info"] as $paper_index => $paper )
+    <input type="hidden" name="paper_data[{{$paper_index}}]" value="{{$all_input["paper_data"][$paper_index]}}">
     <div class="card" style="width: 65rem;">
       <div class="card-header">
         @foreach($all_input["unique_papers"][$paper_index]["foil_list"] as $foil_number)
@@ -20,7 +21,7 @@
         @endforeach
       </div>
       <div class="card-body">
-        @include('budget.calculate.magazine.show_result.job_detail_card.paper_detail',
+        @include('budget.calculate.magazine.show_result.job_result_card.paper_detail',
         array("paper_all_input" => $all_input["unique_papers"][$paper_index],"paper_result" => $paper))
       </div>
     </div>

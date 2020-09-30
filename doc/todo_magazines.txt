@@ -8,7 +8,7 @@ FirstForm:
   [X]   Acabado: Abrochar o encuadernado o anillado
   [ ]   Envío
 
-  [ ]   Montaje (calcular x página no importa ctd. de tintas)
+  [X]   Montaje (calcular x página no importa ctd. de tintas)
     Ponder dropdown con opciones "simple" o "complicado"
   [ ]   Impresión (Ctd de tintas)
   [ ]     Interior
@@ -21,19 +21,19 @@ Tintas:
   Ctd. de colores cmyk y opcional Pantone
   Checkbox Pantone
 
-[ ] Máquina: por pliego, cambia en frente y dorso
+[X] Máquina: por pliego, cambia en frente y dorso
 
-  [ ]   Tipo de papel
-  [ ]     Interior
-  [ ]     Tapa
+  [X]   Tipo de papel
+  [X]     Interior
+  [X]     Tapa
 
 Impresión
-[ ]   Arreglo
+[X]   Arreglo
     Se cobra x ctd. de planchas y tamaño de plancha (máquina)
       (5 planchas es *5 según tamaño plancha)
-[ ]   Lavado de máquina (Fijo)
+[X]   Lavado de máquina (Fijo)
         Ingresar ctd. de lavados (todos los lavados valen lo mismo (350 x el momento))
-[ ]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
+[X]   Tinta: Gramos: SuperficiePliegos(con demasía)*ctd. de pliegos*0,005*colores_frente*(colores_dorso si es diferente de cero)
     Multiplicar por costo Kg CMYK o Pantone (precio varía)
 [ ]   Impresión en si
         Se cobra x
@@ -42,18 +42,18 @@ Impresión
         tamaño de plancha
         Frente o Frente y dorso
 Acabado
-[ ]   Compilar
+[X]   Compilar
         X ctd. de pliegos (x millar)
-[ ]   Abrochado o Encuadernar o Anillado (x unidad)
-[ ]   Corte (x millar de pliegos)
+[X]   Abrochado o Encuadernar o Anillado (x unidad)
+[?]   Corte (x millar de pliegos)
 
 Cuestiones
 [X] No hace validación de 1er formulario
 [X] Agregar lavados de máquina
-[ ] Poner <?php $magazine_finishing= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar"); ?> en archivo aparte, usarlo para mostrar acabado en español en job_detail y en first_form, etc
+[X] Poner <?php $magazine_finishing= array("Gramp"=>"Abrochar","Bind"=>"Encuadernar","Ring"=>"Anillar"); ?> en archivo aparte, usarlo para mostrar acabado en español en job_detail y en first_form, etc
 [ ] Probar si anda interseccion.
 [ ] Ver si anda función get_unique_papers de Controller ConfigPages.php
-[ ] Ctd de planchas par amas de un folio está mal.
+[ ] Falta detalle de los papeles seleccionados
 
 Preguntas:
 [ ] Die cantidad de colores bei der revista ist zwischen 1 und 4?  Oder kann es mehr Farben geben?  Pantone?
