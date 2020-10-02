@@ -6,10 +6,19 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Classes\\Calculation\\Calculation' => $baseDir . '/app/Classes/Calculation/Calculation.php',
+    'App\\Classes\\Calculation\\Common\\CommonCalculation' => $baseDir . '/app/Classes/Calculation/Common/CommonCalculation.php',
+    'App\\Classes\\Calculation\\Magazine\\MagazineCalculation' => $baseDir . '/app/Classes/Calculation/Magazine/MagazineCalculation.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
-    'App\\Http\\Controllers\\Budget\\Calculate\\Common\\FirstForm' => $baseDir . '/app/Http/Controllers/Budget/Calculate/Common/FirstForm.php',
+    'App\\Http\\Controllers\\Budget\\Calculate\\Common\\GetInput' => $baseDir . '/app/Http/Controllers/Budget/Calculate/Common/GetInput.php',
     'App\\Http\\Controllers\\Budget\\Calculate\\Common\\ShowResult' => $baseDir . '/app/Http/Controllers/Budget/Calculate/Common/ShowResult.php',
+    'App\\Http\\Controllers\\Budget\\Calculate\\Magazine\\ConfigPages' => $baseDir . '/app/Http/Controllers/Budget/Calculate/Magazine/ConfigPages.php',
+    'App\\Http\\Controllers\\Budget\\Calculate\\Magazine\\FirstForm' => $baseDir . '/app/Http/Controllers/Budget/Calculate/Magazine/FirstForm.php',
+    'App\\Http\\Controllers\\Budget\\Calculate\\Magazine\\SelectPapers' => $baseDir . '/app/Http/Controllers/Budget/Calculate/Magazine/SelectPapers.php',
+    'App\\Http\\Controllers\\Budget\\Calculate\\Magazine\\ShowResult' => $baseDir . '/app/Http/Controllers/Budget/Calculate/Magazine/ShowResult.php',
+    'App\\Http\\Controllers\\Budget\\View\\Common\\Listing' => $baseDir . '/app/Http/Controllers/Budget/View/Common/Listing.php',
+    'App\\Http\\Controllers\\Budget\\View\\Common\\ShowJob' => $baseDir . '/app/Http/Controllers/Budget/View/Common/ShowJob.php',
     'App\\Http\\Controllers\\Configuration\\AddClient' => $baseDir . '/app/Http/Controllers/Configuration/AddClient.php',
     'App\\Http\\Controllers\\Configuration\\LoadPaperPrices' => $baseDir . '/app/Http/Controllers/Configuration/LoadPaperPrices.php',
     'App\\Http\\Controllers\\Configuration\\SetDollarPrice' => $baseDir . '/app/Http/Controllers/Configuration/SetDollarPrice.php',
@@ -24,6 +33,7 @@ return array(
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\CheckForMaintenanceMode' => $baseDir . '/app/Http/Middleware/CheckForMaintenanceMode.php',
+    'App\\Http\\Middleware\\CheckLogin' => $baseDir . '/app/Http/Middleware/CheckLogin.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
     'App\\Http\\Middleware\\TrimStrings' => $baseDir . '/app/Http/Middleware/TrimStrings.php',

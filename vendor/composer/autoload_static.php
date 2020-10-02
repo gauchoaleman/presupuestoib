@@ -462,10 +462,19 @@ class ComposerStaticInit454912701e7e37791080ce5a4fd206c7
     );
 
     public static $classMap = array (
+        'App\\Classes\\Calculation\\Calculation' => __DIR__ . '/../..' . '/app/Classes/Calculation/Calculation.php',
+        'App\\Classes\\Calculation\\Common\\CommonCalculation' => __DIR__ . '/../..' . '/app/Classes/Calculation/Common/CommonCalculation.php',
+        'App\\Classes\\Calculation\\Magazine\\MagazineCalculation' => __DIR__ . '/../..' . '/app/Classes/Calculation/Magazine/MagazineCalculation.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Http\\Controllers\\Budget\\Calculate\\Common\\FirstForm' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/Calculate/Common/FirstForm.php',
+        'App\\Http\\Controllers\\Budget\\Calculate\\Common\\GetInput' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/Calculate/Common/GetInput.php',
         'App\\Http\\Controllers\\Budget\\Calculate\\Common\\ShowResult' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/Calculate/Common/ShowResult.php',
+        'App\\Http\\Controllers\\Budget\\Calculate\\Magazine\\ConfigPages' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/Calculate/Magazine/ConfigPages.php',
+        'App\\Http\\Controllers\\Budget\\Calculate\\Magazine\\FirstForm' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/Calculate/Magazine/FirstForm.php',
+        'App\\Http\\Controllers\\Budget\\Calculate\\Magazine\\SelectPapers' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/Calculate/Magazine/SelectPapers.php',
+        'App\\Http\\Controllers\\Budget\\Calculate\\Magazine\\ShowResult' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/Calculate/Magazine/ShowResult.php',
+        'App\\Http\\Controllers\\Budget\\View\\Common\\Listing' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/View/Common/Listing.php',
+        'App\\Http\\Controllers\\Budget\\View\\Common\\ShowJob' => __DIR__ . '/../..' . '/app/Http/Controllers/Budget/View/Common/ShowJob.php',
         'App\\Http\\Controllers\\Configuration\\AddClient' => __DIR__ . '/../..' . '/app/Http/Controllers/Configuration/AddClient.php',
         'App\\Http\\Controllers\\Configuration\\LoadPaperPrices' => __DIR__ . '/../..' . '/app/Http/Controllers/Configuration/LoadPaperPrices.php',
         'App\\Http\\Controllers\\Configuration\\SetDollarPrice' => __DIR__ . '/../..' . '/app/Http/Controllers/Configuration/SetDollarPrice.php',
@@ -480,6 +489,7 @@ class ComposerStaticInit454912701e7e37791080ce5a4fd206c7
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
+        'App\\Http\\Middleware\\CheckLogin' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckLogin.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\RedirectIfAuthenticated' => __DIR__ . '/../..' . '/app/Http/Middleware/RedirectIfAuthenticated.php',
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',

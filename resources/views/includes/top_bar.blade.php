@@ -141,12 +141,12 @@
                 </a>
               </li>
               <li>
-                <a href="/budget/view/book">
+                <a href="/budget/view/book/listing">
                   Libro
                 </a>
               </li>
               <li>
-                <a href="/budget/view/magazine">
+                <a href="/budget/view/magazine/listing">
                   Revista
                 </a>
               </li>
