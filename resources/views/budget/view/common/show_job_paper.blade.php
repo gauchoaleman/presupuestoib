@@ -12,7 +12,7 @@ $client_name = get_client_name($all_input["client_id"]);
       </div>
       <div class="card-body">
         <div class="form-group row">
-          <?php $date = new DateTime();?>
+          <?php $date = new DateTime($all_input["created_at"]);?>
           Fecha: {{$date->format('d/m/Y')}}
         </div>
         <div class="form-group row">

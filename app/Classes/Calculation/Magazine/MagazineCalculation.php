@@ -84,6 +84,8 @@ class MagazineCalculation extends Calculation
   // Get prices for each paper set
   private function get_paper_info($unique_paper,$copy_qty)
   {
+    print("Unique paper at paper_info:");
+    print_r($unique_paper);     //Bandera
     extract($unique_paper);
     //extract($paper_data);
     $pose_qty = $pose_width_qty*$pose_height_qty;
@@ -135,6 +137,7 @@ class MagazineCalculation extends Calculation
     print_r($result_input);     //Bandera
     extract($result_input);
     $ret = array();
+    $data = array();
     $total = 0;
 
     foreach( $unique_papers as $unique_paper )

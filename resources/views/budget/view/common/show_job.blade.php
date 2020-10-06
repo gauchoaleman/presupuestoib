@@ -7,6 +7,8 @@ $client_name = get_client_name($all_input["client_id"]);
   <br>
   <h1 align="center">{{$all_input["budget_name"]}}</h1>
   <h2 align="center">Cliente: {{$client_name}}</h2>
+  <?php $date = new DateTime($all_input["created_at"]);?>
+  <h2 align="center">Fecha: {{$date->format('d/m/Y')}}</h2>
   @if( !isset($_GET["actual_dollar"]))
     <a href="/budget/view/common/show_job/{{$all_input["common_job_id"]}}?actual_dollar=1">Ver con dólar actual</a><br>
     <form method="POST" action="/budget/view/common/show_job/{{$all_input["common_job_id"]}}" target="_blank">

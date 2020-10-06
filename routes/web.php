@@ -33,6 +33,7 @@ Route::any('budget/calculate/magazine/select_papers', 'Budget\Calculate\Magazine
 Route::any('budget/calculate/magazine/show_result', 'Budget\Calculate\Magazine\ShowResult');
 Route::any('budget/calculate/magazine/show_job_paper', 'Budget\Calculate\Magazine\ShowResult');
 Route::any('budget/view/magazine/listing', 'Budget\View\Magazine\Listing');
+Route::any('budget/view/magazine/show_job/{magazine_job_id}', 'Budget\View\Magazine\ShowJob');
 //Route::any('budget/calculate/common/select_paper', 'Budget\Calculate\Common\SelectPaper');
 
 //Route::any('budget/make', 'Budget\MakeBudget');

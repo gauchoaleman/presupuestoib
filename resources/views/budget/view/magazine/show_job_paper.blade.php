@@ -1,18 +1,18 @@
 <?php
-$paper_type = get_paper_type($all_input["paper_type_id"]);
-$paper_color = get_paper_color($all_input["paper_color_id"]);
+use App\Classes\Calculation\Magazine\MagazineCalculation;
+
 $client_name = get_client_name($all_input["client_id"]);
 ?>
 <div class="container">
   <br>
   <div style="font-size: 30px;">
-    <div class="card" style="width: 50rem;">
+    <div class="card" style="width: 70rem;">
       <div class="card-header">
         Hoja de trabajo
       </div>
       <div class="card-body">
         <div class="form-group row">
-          <?php $date = new DateTime();?>
+          <?php $date = new DateTime($all_input["created_at"]);?>
           Fecha: {{$date->format('d/m/Y')}}
         </div>
         <div class="form-group row">
@@ -28,21 +28,29 @@ $client_name = get_client_name($all_input["client_id"]);
           Formato: {{$all_input["pose_width"]}}x{{$all_input["pose_height"]}}
         </div>
         <div class="form-group row">
-          Colores: {{$all_input["front_color_qty"]}}-{{$all_input["back_color_qty"]}}
-          @if($all_input["pantone_1"]||$all_input["pantone_2"]||$all_input["pantone_3"])Pantone: {{$all_input["pantone_1"]}} {{$all_input["pantone_2"]}} {{$all_input["pantone_3"]}}@endif
+          <?php $magazine_calculation = new MagazineCalculation; ?>
+          Acabado: {{$magazine_calculation->finishing_array[$all_input["finishing"]]}}
         </div>
-        <div class="form-group row">
-          Papel: {{$result["sheet_qty_and_excess"]}} hojas. {{$paper_type}} {{$all_input["weight"]}}gr. {{$result["sheet_size"]["width"]}}x{{$result["sheet_size"]["height"]}}<br>
-          cortar a: {{$all_input["leaf_width"]}}x{{$all_input["leaf_height"]}}
-        </div>
-        <div class="form-group row">
-          Máquina: {{$all_input["machine"]}}
-        </div>
-        @if( $all_input["fold_qty"] || $all_input["punching_difficulty"] || $all_input["perforate"] || $all_input["tracing"] || $all_input["lac"] )
-          <div class="form-group row">
-            Acabado: @if($all_input["fold_qty"])Plegado @endif @if($all_input["punching_difficulty"])Troquelado @endif @if($all_input["perforate"])Perforado @endif @if($all_input["tracing"])Trazado @endif @if($all_input["lac"])Laca @endif
+
+        @foreach( $result["paper_info"] as $paper_index => $paper )
+        <div class="card" style="width: 65rem;">
+          <div class="card-header">
+            @foreach($all_input["unique_papers"][$paper_index]["foil_list"] as $foil_number)
+              @if($foil_number==0)
+                <b>Tapa/Contratapa y retiros:</b><br>
+              @else
+                <b>Folio {{$foil_number}}, Páginas {{$foil_number*2-1}}, {{$foil_number*2}}, {{$all_input["page_qty"]-2*($foil_number-1)-1}}, {{$all_input["page_qty"]-2*($foil_number-1)}}:</b><br>
+              @endif
+            @endforeach
           </div>
-        @endif
+          <div class="card-body">
+            @include('budget.view.magazine.show_job_paper.paper_detail',
+            array("paper_all_input" => $all_input["unique_papers"][$paper_index],"paper_result" => $paper))
+          </div>
+        </div>
+        @endforeach
+
+
       </div>
     </div>
   </div>

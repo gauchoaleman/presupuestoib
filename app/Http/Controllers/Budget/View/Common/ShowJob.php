@@ -45,3 +45,4 @@ class ShowJob extends Controller
       return $this->show_page_with_menubars("budget/view/common/show_job","",$data);
   }
 }
+?>

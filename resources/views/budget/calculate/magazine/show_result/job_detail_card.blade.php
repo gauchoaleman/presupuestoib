@@ -16,13 +16,13 @@
         <label class="col-md-6 col-form-label text-md-right">
           Ancho (mm):
         </label>
-        <input type="hidden" name="pose_width" value="{{$pose_width}}">
-        {{$pose_width}}
+        <input type="hidden" name="pose_width" value="{{$all_input["pose_width"]}}">
+        {{$all_input["pose_width"]}}
         <label class="col-md-6 col-form-label text-md-right">
           Alto (mm):
         </label>
-        <input type="hidden" name="pose_height" value="{{$pose_height}}">
-        {{$pose_height}}
+        <input type="hidden" name="pose_height" value="{{$all_input["pose_height"]}}">
+        {{$all_input["pose_height"]}}
       </div>
     </div>
     <div class="form-group row">
@@ -42,12 +42,12 @@
       <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Cantidad de páginas:') }}</b>
       </label>
-      <input type="hidden" name="page_qty" value="{{$page_qty}}">
+      <input type="hidden" name="page_qty" value="{{$all_input["page_qty"]}}">
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$page_qty}}
+        {{$all_input["page_qty"]}}
       </div>
     </div>
 
@@ -55,13 +55,13 @@
       <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Acabado:') }}</b>
       </label>
-      <input type="hidden" name="finishing" value="{{$finishing}}">
+      <input type="hidden" name="finishing" value="{{$all_input["finishing"]}}">
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
         <?php $magazine_calculation = new MagazineCalculation; ?>
-        {{$magazine_calculation->finishing_array[$finishing]}}
+        {{$magazine_calculation->finishing_array[$all_input["finishing"]]}}
       </div>
     </div>
 
@@ -82,13 +82,13 @@
       <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Montaje:') }}</b>
       </label>
-      <input type="hidden" name="mounting" value="{{$mounting}}">
+      <input type="hidden" name="mounting" value="{{$all_input["mounting"]}}">
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
         <?php $magazine_calculation = new MagazineCalculation; ?>
-        {{$magazine_calculation->mounting_array[$mounting]}}
+        {{$magazine_calculation->mounting_array[$all_input["mounting"]]}}
       </div>
     </div>
 
