@@ -21,6 +21,9 @@
         @endforeach
       </div>
       <div class="card-body">
+        <b>Tipo de papel:</b> {{get_paper_type($all_input["unique_papers"][$paper_index]["paper_type_id"])}}<br>
+        <b>Color:</b> {{get_paper_color($all_input["unique_papers"][$paper_index]["paper_color_id"])}}<br>
+        <b>Peso:</b> {{$all_input["unique_papers"][$paper_index]["weight"]}}<br>
         @include('budget.calculate.magazine.show_result.job_result_card.paper_detail',
         array("paper_all_input" => $all_input["unique_papers"][$paper_index],"paper_result" => $paper))
       </div>
