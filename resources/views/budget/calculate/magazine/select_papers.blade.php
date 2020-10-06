@@ -24,12 +24,17 @@ $plus_percentage = get_form_value("plus_percentage");
     <br>
     @foreach($unique_papers_with_sizes as $unique_paper_key => $unique_paper_with_sizes)
       @foreach($unique_paper_with_sizes["foil_list"] as $foil_number)
+      <b>
         @if($foil_number==0)
           Tapa/Contratapa y retiros:<br>
         @else
           Folio {{$foil_number}}, Páginas {{$foil_number*2-1}}, {{$foil_number*2}}, {{$page_qty-2*($foil_number-1)-1}}, {{$page_qty-2*($foil_number-1)}}:<br>
         @endif
+      </b>
       @endforeach
+      <b>Tipo de papel:</b> {{get_paper_type($unique_paper_with_sizes["paper_type_id"])}}<br>
+      <b>Color:</b> {{get_paper_color($unique_paper_with_sizes["paper_color_id"])}}<br>
+      <b>Peso:</b> {{$unique_paper_with_sizes["weight"]}}<br>
       @include('budget.calculate.magazine.select_papers.select_paper_card')
       <br>
     @endforeach
