@@ -200,22 +200,6 @@ class Calculation
         }
           //continue;
 
-        //If sheet is littler than min sheet size we continue
-        if( $leaf_width<$this->min_sizes[$machine]["width"] || $leaf_height<$this->min_sizes[$machine]["height"] ){
-          if( $this->continue_if_invalid_size )
-            continue;
-          else
-            $continue[] = "Sheet littler than min sheet";   //Bandera;
-        }
-
-        //If sheet is bigger than max sheet size we continue
-        if( $leaf_width>$this->max_sizes[$machine]["width"] || $leaf_height>$this->max_sizes[$machine]["height"] ){
-          if( $this->continue_if_invalid_size )
-            continue;
-          else
-            $continue[] = "Sheet bigger than max sheet";   //Bandera;
-        }
-
          //Calculate how many times the job fits in the sheet
         $pose_width_qty = floor($leaf_width_without_borders/$pose_width);
         $pose_height_qty = floor($leaf_height_without_borders/$pose_height);
@@ -278,6 +262,24 @@ class Calculation
             continue;
           else
             $continue[] = "Pose borders don't fit in sheet";   //Bandera;
+        }
+
+        //If sheet is bigger than max sheet size we continue
+        if( $all_aligned_pose_width_with_borders>$this->max_sizes[$machine]["width"] ||
+            $all_aligned_pose_height_with_borders>$this->max_sizes[$machine]["height"] ){
+          if( $this->continue_if_invalid_size )
+            continue;
+          else
+            $continue[] = "Sheet bigger than max sheet";   //Bandera;
+        }
+
+        //If sheet is littler than min sheet size we continue
+        if( $all_aligned_pose_width_with_borders<$this->min_sizes[$machine]["width"] ||
+            $all_aligned_pose_height_with_borders<$this->min_sizes[$machine]["height"] ){
+          if( $this->continue_if_invalid_size )
+            continue;
+          else
+            $continue[] = "Sheet littler than min sheet";   //Bandera;
         }
 
         $res["paper_price_id"] = $paper_price_id;
