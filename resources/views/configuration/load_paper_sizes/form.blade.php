@@ -2,7 +2,7 @@
   <br>
   <div class="card" style="width: 50rem;">
     <div class="card-header">
-      Agregar precios de papeles
+      Agregar tamaños de papeles
     </div>
     <div class="card-body">
       <form method="POST" enctype="multipart/form-data">

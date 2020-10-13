@@ -115,5 +115,13 @@ Comunes
     [X] Si da cero el width_qty o el height_qty hacer continue
     [ ] Comentar los print_r
     [X] No está guardando presupuesto a base de datos
-    [ ] Controlar que los pantone sean enteros de hasta 4 dígitos 
+    [ ] Controlar que los pantone sean enteros de hasta 4 dígitos
     [ ]
+
+
+
+--------------------------------------------------------------------------
+Nuevo sistema de tamaños:
+--------------------------
+[ ] Máquina frente y máquina dorso
+[ ] Seleccionar tamaños de tabla

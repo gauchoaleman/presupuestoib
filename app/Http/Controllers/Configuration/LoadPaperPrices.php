@@ -18,9 +18,9 @@ class LoadPaperPrices extends Controller
   {
     if( isset($_POST["_token"]) ) {
       $filename = time().'.'.$request->file->extension();
-      $request->file->move(public_path("uploads/paper_files"), $filename);
-      $csv_file = fopen("uploads/paper_files/".$filename,"r"); // For production
-      //$csv_file = fopen("uploads/paper_files/test_file.txt","r"); //For testing
+      $request->file->move(public_path("uploads/paper_prices"), $filename);
+      $csv_file = fopen("uploads/paper_prices/".$filename,"r"); // For production
+      //$csv_file = fopen("uploads/paper_prices/test_file.txt","r"); //For testing
       $header_row = fgetcsv($csv_file,10000,",",'"'); //Loading header row
       if( !$this->check_header_row($header_row) )
         return $this->show_page_with_menubars("configuration/load_paper_prices/form","Archivo cargado inválido");

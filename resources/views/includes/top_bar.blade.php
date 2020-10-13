@@ -49,6 +49,27 @@
           <li class="dropdown-submenu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <span class="nav-label">
+                Tamaños papeles
+              </span>
+              <span class="caret">
+              </span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="/configuration/load_paper_sizes">
+                  Cargar
+                </a>
+              </li>
+              <li>
+                <a href="/configuration/show_paper_sizes">
+                  Mostrar
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown-submenu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <span class="nav-label">
                 Precio dólar
               </span>
               <span class="caret">

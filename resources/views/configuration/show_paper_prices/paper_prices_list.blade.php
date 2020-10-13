@@ -19,10 +19,10 @@ $dollar_price = get_dollar_price();
               Tipo
             </th>
             <th scope="col">
-              Alto
+              Ancho
             </th>
             <th scope="col">
-              Ancho
+              Alto
             </th>
             <th scope="col">
               Peso
@@ -39,22 +39,22 @@ $dollar_price = get_dollar_price();
           @foreach($paper_prices as $paper_price)
             <tr>
               <td>
-                {{$paper_price->paper_type}}</a>
+                {{$paper_price->paper_type}}
               </td>
               <td>
-                {{$paper_price->height}}</a>
+                {{$paper_price->width}}
               </td>
               <td>
-                {{$paper_price->width}}</a>
+                {{$paper_price->height}}
               </td>
               <td>
-                {{$paper_price->weight}}</a>
+                {{$paper_price->weight}}
               </td>
               <td>
-                {{$paper_price->paper_color}}</a>
+                {{$paper_price->paper_color}}
               </td>
               <td>
-                {{$paper_price->sheet_price*$dollar_price}}</a>
+                {{$paper_price->sheet_price*$dollar_price}}
               </td>
             </tr>
           @endforeach

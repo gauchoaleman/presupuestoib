@@ -4,7 +4,7 @@ use DB;
 
 class Calculation
 {
-  public $continue_if_invalid_size = true;
+  public $continue_if_invalid_size = false;
 
   public $machine_list = array("Adast","GTO52","GTO46");
 
@@ -180,8 +180,8 @@ class Calculation
     if( $front_back == "front_back_height" )
       $pose_height *= 2;
 
-    for( $leaf_width_qty=2;$leaf_width_qty<=8;$leaf_width_qty++ ){
-      for( $leaf_height_qty=2;$leaf_height_qty<=8;$leaf_height_qty++ ){
+    for( $leaf_width_qty=1;$leaf_width_qty<=8;$leaf_width_qty++ ){
+      for( $leaf_height_qty=1;$leaf_height_qty<=8;$leaf_height_qty++ ){
         $continue = array(); //Bandera
         //This is the sheet cut out of the big ream
         $leaf_width = floor($sheet_width/$leaf_width_qty);
@@ -270,7 +270,7 @@ class Calculation
           if( $this->continue_if_invalid_size )
             continue;
           else
-            $continue[] = "Sheet bigger than max sheet";   //Bandera;
+            $continue[] = "Job bigger than max sheet";   //Bandera;
         }
 
         //If sheet is littler than min sheet size we continue
@@ -279,8 +279,12 @@ class Calculation
           if( $this->continue_if_invalid_size )
             continue;
           else
-            $continue[] = "Sheet littler than min sheet";   //Bandera;
+            $continue[] = "Job littler than min sheet";   //Bandera;
         }
+
+        //Bandera
+        if( ($sheet_width != 950 || $sheet_height != 650) || ($leaf_width_qty != 2 || $leaf_height_qty != 1) )
+          continue;
 
         $res["paper_price_id"] = $paper_price_id;
         $res["sheet_width"] = $sheet_width;
