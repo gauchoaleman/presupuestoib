@@ -20,7 +20,7 @@ class GetInput extends Controller
       return FALSE;
   }
 
-  public function calculate_papers($paper_type_id, $paper_color_id, $weight, $pose_width, $pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine)
+  public function calculate_papers($paper_type_id, $paper_color_id, $weight, $pose_width, $pose_height,$front_color_qty,$back_color_qty,$pose_qty,$front_machine,$back_machine)
   {
     $common_calculation = new CommonCalculation();
     $sizes_result = DB::table('paper_prices')->select('id','width','height')->
@@ -33,7 +33,7 @@ class GetInput extends Controller
     $size_res = array();
     $all_sizes = array();
     foreach ($sizes_result as $size) {
-      $size_res = $common_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine);    //calculate
+      $size_res = $common_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$front_machine,$back_machine);    //calculate
       //print($size->width."x".$size->height.": "); //Bandera
       //print_r($size_res); //Bandera
       $all_sizes = array_merge($size_res,$all_sizes);
@@ -41,7 +41,7 @@ class GetInput extends Controller
     //If there are no sizes, we calculate normal
     if( !sizeof($all_sizes) ){
       foreach ($sizes_result as $size) {
-        $size_res = $common_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$machine,false);    //calculate
+        $size_res = $common_calculation->calculate_size($size->id,$size->width,$size->height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$front_machine,$back_machine,false);    //calculate
         //print($size->width."x".$size->height.": "); //Bandera
         //print_r($size_res); //Bandera
         $all_sizes = array_merge($size_res,$all_sizes);
@@ -77,7 +77,8 @@ class GetInput extends Controller
         'copy_qty.integer' => 'La cantidad de ejemplares debe ser un entero.',
         'copy_qty.gt' => 'La cantidad de ejemplares debe ser mayor a cero.',
         'back_color_qty.integer' => 'La cantidad de colores de dorso debe ser un entero.',
-        'machine.required' => 'Debe ingresar la máquina.',
+        'front_machine.required' => 'Debe ingresar la máquina frente.',
+        'back_machine.required' => 'Debe ingresar la máquina dorso.',
         'fold_qty.integer' => 'La cantidad de pliegues debe ser un entero.',
         'client_id.required' => 'Debe seleccionar un cliente.',
         'budget_name.required' => 'Debe ingesar nombre de presupuesto.',
@@ -93,7 +94,8 @@ class GetInput extends Controller
         'front_color_qty' => 'required|integer|gt:0',
         'back_color_qty' => 'integer',
         'copy_qty' => 'required|integer|gt:0',
-        'machine' => 'required',
+        'front_machine' => 'required',
+        'back_machine' => 'required',
         'fold_qty' => 'integer',
         'client_id' => 'required',
         'budget_name' => 'required',
@@ -109,7 +111,7 @@ class GetInput extends Controller
         return redirect()->back()->withInput($request->input())->withErrors($v->errors());
       else{
         $result = $this->calculate_papers($_POST["paper_type_id"], $_POST["paper_color_id"], $_POST["weight"], $_POST["pose_width"], $_POST["pose_height"],
-        $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["machine"]);
+        $_POST["front_color_qty"],$_POST["back_color_qty"],$_POST["pose_qty"],$_POST["front_machine"],$_POST["back_machine"]);
         $data["result"]=$result;
         return $this->show_page_with_menubars("budget/calculate/common/select_paper","",$data);
       }

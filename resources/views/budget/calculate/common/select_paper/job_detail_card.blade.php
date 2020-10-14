@@ -105,14 +105,27 @@
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
-        <b>{{ __('Máquina:') }}</b>
+        <b>{{ __('Máquina frente:') }}</b>
       </label>
-      <input type="hidden" name="machine" value="{{$machine}}">
+      <input type="hidden" name="front_machine" value="{{$front_machine}}">
       <div class="col-md-6">
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        {{$machine}}
+        {{$front_machine}}
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Máquina dorso:') }}</b>
+      </label>
+      <input type="hidden" name="back_machine" value="{{$back_machine}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
+        </label>
+        {{$back_machine}}
       </div>
     </div>
 

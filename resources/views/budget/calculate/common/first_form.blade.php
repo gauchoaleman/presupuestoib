@@ -12,7 +12,8 @@ $pantone_2 = get_form_value("pantone_2");
 $pantone_3 = get_form_value("pantone_3");
 $pose_qty = get_form_value("pose_qty");
 $copy_qty = get_form_value("copy_qty");
-$machine = get_form_value("machine");
+$front_machine = get_form_value("front_machine");
+$back_machine = get_form_value("back_machine");
 $machine_washing_qty = get_form_value("machine_washing_qty");
 $fold_qty = get_form_value("fold_qty");
 $punching_difficulty = get_form_value("punching_difficulty");
@@ -253,18 +254,18 @@ if (!$plus_percentage) {
 
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">
-            <b>{{ __('Máquina:') }}</b>
+            <b>{{ __('Máquina frente:') }}</b>
           </label>
           <div class="col-md-6">
             <label class="col-md-6 col-form-label text-md-right">
               &nbsp;
             </label>
-            <select name="machine" id="machine">
+            <select name="front_machine" id="front_machine">
               <option value=""></option>
               <?php $common_calculation = new CommonCalculation; ?>
               @foreach($common_calculation->machine_list as $each_machine)
                 <option value="{{$each_machine}}"
-                  @if($machine == $each_machine)
+                  @if($front_machine == $each_machine)
                     selected
                   @endif
                 >
@@ -272,7 +273,36 @@ if (!$plus_percentage) {
                 </option>
               @endforeach
             </select>
-            @error('machine')
+            @error('front_machine')
+              <div class="alert alert-danger">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Máquina dorso:') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <select name="back_machine" id="front_machine">
+              <option value=""></option>
+              <?php $common_calculation = new CommonCalculation; ?>
+              @foreach($common_calculation->machine_list as $each_machine)
+                <option value="{{$each_machine}}"
+                  @if($back_machine == $each_machine)
+                    selected
+                  @endif
+                >
+                  {{$each_machine}}
+                </option>
+              @endforeach
+            </select>
+            @error('back_machine')
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
