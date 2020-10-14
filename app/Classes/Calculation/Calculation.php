@@ -180,154 +180,159 @@ class Calculation
     if( $front_back == "front_back_height" )
       $pose_height *= 2;
 
-    for( $leaf_width_qty=1;$leaf_width_qty<=8;$leaf_width_qty++ ){
-      for( $leaf_height_qty=1;$leaf_height_qty<=8;$leaf_height_qty++ ){
-        $continue = array(); //Bandera
-        //This is the sheet cut out of the big ream
-        $leaf_width = floor($sheet_width/$leaf_width_qty);
-        $leaf_height = floor($sheet_height/$leaf_height_qty);
+    $leaf_sizes = DB::table('paper_sizes')->select('leaf_width','leaf_height','leaf_qty_per_sheet')->
+    where('sheet_width', '=', $sheet_width)->
+    where('sheet_height', '=', $sheet_height)->
+    where('paper_sizes_set_id', '=', get_latest_paper_size_set_id())->
+    get();
 
-        //To calculate, we take out the borders
-        $leaf_width_without_borders = $leaf_width - $this->width_borders;
-        $leaf_height_without_borders = $leaf_height - $this->height_borders;
+    foreach( $leaf_sizes as $leaf_size ){
+      $continue = array(); //Bandera
+      //This is the sheet cut out of the big ream
+      $leaf_width = $leaf_size->leaf_width;
+      $leaf_height = $leaf_size->leaf_height;
 
-        //If job is greater than sheet we continue
-        if( $leaf_width_without_borders<$pose_width || $leaf_height_without_borders<$pose_height ){
-          if( $this->continue_if_invalid_size )
-            continue;
-          else
-            $continue[] = "Pose greater than sheet";   //Bandera;
-        }
-          //continue;
+      //To calculate, we take out the borders
+      $leaf_width_without_borders = $leaf_width - $this->width_borders;
+      $leaf_height_without_borders = $leaf_height - $this->height_borders;
 
-         //Calculate how many times the job fits in the sheet
-        $pose_width_qty = floor($leaf_width_without_borders/$pose_width);
-        $pose_height_qty = floor($leaf_height_without_borders/$pose_height);
-
-        if( $pose_qty ){
-          if( $front_back == "front_back_width" ){
-            if( $pose_width_qty*2*$pose_height_qty != $pose_qty ){
-              if( $this->continue_if_invalid_size )
-                continue;
-              else
-                $continue[] = "Pose Qty doesn't match";   //Bandera;
-            }
-          }
-          else if( $front_back == "front_back_height" ){
-            if( $pose_width_qty*$pose_height_qty*2 != $pose_qty ){
-              if( $this->continue_if_invalid_size )
-                continue;
-              else
-                $continue[] = "Pose Qty doesn't match";   //Bandera;
-            }
-          }
-          else{
-            if( $pose_width_qty*$pose_height_qty != $pose_qty ){
-              if( $this->continue_if_invalid_size )
-                continue;
-              else
-                $continue[] = "Pose Qty doesn't match";   //Bandera;
-            }
-          }
-        }
-        //If there fits no job (width_qty / height_qty equal cero) we continue
-        if( $pose_width_qty == 0 || $pose_height_qty == 0 ){
-          if( $this->continue_if_invalid_size )
-            continue;
-          else
-            $continue[] = "Pose doesn't fit in sheet";   //Bandera;
-        }
-        //Calculate the measure of the aligned jobs
-        $all_aligned_pose_width = $pose_width_qty*$pose_width;
-        $all_aligned_pose_height = $pose_height_qty*$pose_height;
-
-        //Add the borders to the aligned jobs
-        $all_aligned_pose_width_with_borders = $all_aligned_pose_width + $this->width_borders;
-        $all_aligned_pose_height_with_borders = $all_aligned_pose_height + $this->height_borders;
-
-         //if borders is greater than rest we continue
-         /* if( $this->width_borders>$simple_width_rest || $this->height_borders>$simple_height_rest )
-              $continue[] = "Borders greater than rest";    //Bandera*/
-          //continue;
-
-        //Calculate the rest and substracting borders
-        $width_rest = $leaf_width_without_borders%$pose_width;
-        $height_rest = $leaf_height_without_borders%$pose_height;
-        //Add the rests together
-        $total_rest = $width_rest*$height_rest+$all_aligned_pose_width*$height_rest+$all_aligned_pose_width*$width_rest;
-
-        //If job borders don't fit in sheet
-        if( $all_aligned_pose_width_with_borders>$leaf_width ||  $all_aligned_pose_height_with_borders>$leaf_height){
-          if( $this->continue_if_invalid_size )
-            continue;
-          else
-            $continue[] = "Pose borders don't fit in sheet";   //Bandera;
-        }
-
-        //If sheet is bigger than max sheet size we continue
-        if( $all_aligned_pose_width_with_borders>$this->max_sizes[$front_machine]["width"] ||
-            $all_aligned_pose_height_with_borders>$this->max_sizes[$front_machine]["height"] ||
-            $all_aligned_pose_width_with_borders>$this->max_sizes[$back_machine]["width"] ||
-            $all_aligned_pose_height_with_borders>$this->max_sizes[$back_machine]["height"] ){
-          if( $this->continue_if_invalid_size )
-            continue;
-          else
-            $continue[] = "Job bigger than max sheet";   //Bandera;
-        }
-
-        //If sheet is littler than min sheet size we continue
-        if( $all_aligned_pose_width_with_borders<$this->min_sizes[$front_machine]["width"] ||
-            $all_aligned_pose_height_with_borders<$this->min_sizes[$front_machine]["height"] ||
-            $all_aligned_pose_width_with_borders<$this->min_sizes[$back_machine]["width"] ||
-            $all_aligned_pose_height_with_borders<$this->min_sizes[$back_machine]["height"] ){
-          if( $this->continue_if_invalid_size )
-            continue;
-          else
-            $continue[] = "Job littler than min sheet";   //Bandera;
-        }
-
-
-        $res["paper_price_id"] = $paper_price_id;
-        $res["sheet_width"] = $sheet_width;
-        $res["sheet_height"] = $sheet_height;
-
-        $res["leaf_width_qty"] = $leaf_width_qty;
-        $res["leaf_height_qty"] = $leaf_height_qty;
-
-        $res["leaf_width"] = $leaf_width;
-        $res["leaf_height"] = $leaf_height;
-
-        $res["pose_width"] = $pose_width;
-        $res["pose_height"] = $pose_height;
-
-        $res["leaf_width_without_borders"] = $leaf_width_without_borders;
-        $res["leaf_height_without_borders"] = $leaf_height_without_borders;
-
-        $res["pose_width_qty"] = $pose_width_qty;
-        $res["pose_height_qty"] = $pose_height_qty;
-
-        $res["width_rest"] = $width_rest;      //Bandera
-        $res["height_rest"] = $height_rest;    //Bandera
-        $res["rest"] = $total_rest;
-
-        $res["position"] = $position;
-
-        $res["front_back"] = $front_back;
-        $res["continue"] = $continue;
-
-        if( $front_back == "front_back_width" ){
-          $res["pose_width"] /= 2;
-          $res["pose_width_qty"] *= 2;
-        }
-        if( $front_back == "front_back_height" ){
-          $res["pose_height"] /= 2;
-          $res["pose_height_qty"] *= 2;
-        }
-
-        $ret[] = $res;
+      //If job is greater than sheet we continue
+      if( $leaf_width_without_borders<$pose_width || $leaf_height_without_borders<$pose_height ){
+        if( $this->continue_if_invalid_size )
+          continue;
+        else
+          $continue[] = "Pose greater than sheet";   //Bandera;
       }
-    }
+        //continue;
 
+       //Calculate how many times the job fits in the sheet
+      $pose_width_qty = floor($leaf_width_without_borders/$pose_width);
+      $pose_height_qty = floor($leaf_height_without_borders/$pose_height);
+
+      if( $pose_qty ){
+        if( $front_back == "front_back_width" ){
+          if( $pose_width_qty*2*$pose_height_qty != $pose_qty ){
+            if( $this->continue_if_invalid_size )
+              continue;
+            else
+              $continue[] = "Pose Qty doesn't match";   //Bandera;
+          }
+        }
+        else if( $front_back == "front_back_height" ){
+          if( $pose_width_qty*$pose_height_qty*2 != $pose_qty ){
+            if( $this->continue_if_invalid_size )
+              continue;
+            else
+              $continue[] = "Pose Qty doesn't match";   //Bandera;
+          }
+        }
+        else{
+          if( $pose_width_qty*$pose_height_qty != $pose_qty ){
+            if( $this->continue_if_invalid_size )
+              continue;
+            else
+              $continue[] = "Pose Qty doesn't match";   //Bandera;
+          }
+        }
+      }
+      //If there fits no job (width_qty / height_qty equal cero) we continue
+      if( $pose_width_qty == 0 || $pose_height_qty == 0 ){
+        if( $this->continue_if_invalid_size )
+          continue;
+        else
+          $continue[] = "Pose doesn't fit in sheet";   //Bandera;
+      }
+      //Calculate the measure of the aligned jobs
+      $all_aligned_pose_width = $pose_width_qty*$pose_width;
+      $all_aligned_pose_height = $pose_height_qty*$pose_height;
+
+      //Add the borders to the aligned jobs
+      $all_aligned_pose_width_with_borders = $all_aligned_pose_width + $this->width_borders;
+      $all_aligned_pose_height_with_borders = $all_aligned_pose_height + $this->height_borders;
+
+       //if borders is greater than rest we continue
+       /* if( $this->width_borders>$simple_width_rest || $this->height_borders>$simple_height_rest )
+            $continue[] = "Borders greater than rest";    //Bandera*/
+        //continue;
+
+      //Calculate the rest and substracting borders
+      $width_rest = $leaf_width_without_borders%$pose_width;
+      $height_rest = $leaf_height_without_borders%$pose_height;
+      //Add the rests together
+      $total_rest = $width_rest*$height_rest+$all_aligned_pose_width*$height_rest+$all_aligned_pose_height*$width_rest;
+
+      //If job borders don't fit in sheet
+      if( $all_aligned_pose_width_with_borders>$leaf_width ||  $all_aligned_pose_height_with_borders>$leaf_height){
+        if( $this->continue_if_invalid_size )
+          continue;
+        else
+          $continue[] = "Pose borders don't fit in sheet";   //Bandera;
+      }
+
+      //If sheet is bigger than max sheet size we continue
+      if( $all_aligned_pose_width_with_borders>$this->max_sizes[$front_machine]["width"] ||
+          $all_aligned_pose_height_with_borders>$this->max_sizes[$front_machine]["height"] ||
+          $all_aligned_pose_width_with_borders>$this->max_sizes[$back_machine]["width"] ||
+          $all_aligned_pose_height_with_borders>$this->max_sizes[$back_machine]["height"] ){
+        if( $this->continue_if_invalid_size )
+          continue;
+        else
+          $continue[] = "Job bigger than max sheet";   //Bandera;
+      }
+
+      //If sheet is littler than min sheet size we continue
+      if( $all_aligned_pose_width_with_borders<$this->min_sizes[$front_machine]["width"] ||
+          $all_aligned_pose_height_with_borders<$this->min_sizes[$front_machine]["height"] ||
+          $all_aligned_pose_width_with_borders<$this->min_sizes[$back_machine]["width"] ||
+          $all_aligned_pose_height_with_borders<$this->min_sizes[$back_machine]["height"] ){
+        if( $this->continue_if_invalid_size )
+          continue;
+        else
+          $continue[] = "Job littler than min sheet";   //Bandera;
+      }
+
+
+      $res["paper_price_id"] = $paper_price_id;
+      $res["sheet_width"] = $sheet_width;
+      $res["sheet_height"] = $sheet_height;
+
+      //$res["leaf_width_qty"] = $leaf_width_qty;
+      //$res["leaf_height_qty"] = $leaf_height_qty;
+      $res["leaf_qty_per_sheet"] = $leaf_size->leaf_qty_per_sheet;
+
+      $res["leaf_width"] = $leaf_width;
+      $res["leaf_height"] = $leaf_height;
+
+      $res["pose_width"] = $pose_width;
+      $res["pose_height"] = $pose_height;
+
+      $res["leaf_width_without_borders"] = $leaf_width_without_borders;
+      $res["leaf_height_without_borders"] = $leaf_height_without_borders;
+
+      $res["pose_width_qty"] = $pose_width_qty;
+      $res["pose_height_qty"] = $pose_height_qty;
+
+      $res["width_rest"] = $width_rest;      //Bandera
+      $res["height_rest"] = $height_rest;    //Bandera
+      $res["rest"] = $total_rest;
+
+      $res["position"] = $position;
+
+      $res["front_back"] = $front_back;
+      $res["continue"] = $continue;
+
+      if( $front_back == "front_back_width" ){
+        $res["pose_width"] /= 2;
+        $res["pose_width_qty"] *= 2;
+      }
+      if( $front_back == "front_back_height" ){
+        $res["pose_height"] /= 2;
+        $res["pose_height_qty"] *= 2;
+      }
+
+      $ret[] = $res;
+
+    }
     return $ret;
   }
 

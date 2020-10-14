@@ -54,6 +54,12 @@ function get_latest_paper_price_set_id()
   return $max_id;
 }
 
+function get_latest_paper_size_set_id()
+{
+  $max_id = DB::table('paper_sizes_sets')->max('id');
+  return $max_id;
+}
+
 function get_paper_types()
 {
   $paper_types = DB::table('paper_prices')->
