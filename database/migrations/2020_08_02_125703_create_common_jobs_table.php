@@ -18,8 +18,7 @@ class CreateCommonJobsTable extends Migration
             $table->foreignId('paper_price_id');
             $table->float('leaf_width',8,2);
             $table->float('leaf_height',8,2);
-            $table->integer('leaf_width_qty');
-            $table->integer('leaf_height_qty');
+            $table->integer('leaf_qty_per_sheet');
             $table->integer('pose_width_qty');
             $table->integer('pose_height_qty');
             $table->string('position', 100);
@@ -27,7 +26,8 @@ class CreateCommonJobsTable extends Migration
             $table->integer('pose_width');
             $table->integer('pose_height');
             $table->integer('copy_qty');
-            $table->string('machine', 100);
+            $table->string('front_machine', 100);
+            $table->string('back_machine', 100);
             $table->integer('machine_washing_qty')->nullable()->default(NULL);
             $table->integer('front_color_qty');
             $table->integer('back_color_qty');

@@ -105,7 +105,7 @@ class MagazineCalculation extends Calculation
     if( $rest_foils )
       $total_copies_and_excess += $copy_qty/$rest_foils + $this->excess_leaves*$pose_qty/$rest_foils;     //Danger, watch this
     $sheet_size = $this->get_sheet_size($paper_price_id);
-    $sheet_qty_and_excess = $this->get_sheet_qty($total_copies_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+    $sheet_qty_and_excess = $this->get_sheet_qty($total_copies_and_excess,$leaf_qty_per_sheet,$pose_width_qty,$pose_height_qty);
     $leaf_qty_and_excess = $this->get_leaf_qty($total_copies_and_excess,$pose_width_qty,$pose_height_qty);
 
     $data["sheet_size"] = $sheet_size;
@@ -118,7 +118,7 @@ class MagazineCalculation extends Calculation
     $data["rest_foils"] = $rest_foils;
     $data["foil_qty"] = $foil_qty;
 
-    $data["paper_price"] = $this->get_paper_price($total_copies_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+    $data["paper_price"] = $this->get_paper_price($total_copies_and_excess,$paper_price_id,$leaf_qty_per_sheet,$pose_width_qty,$pose_height_qty);
     $data["guillotine_price"] = $this->get_guillotine_price($total_copies_and_excess,$pose_qty);
     $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,
     $front_color_qty,$back_color_qty);

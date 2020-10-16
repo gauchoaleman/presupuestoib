@@ -16,12 +16,11 @@ class ShowResult extends Controller
     $ret["paper_price_id"] = $extracted_paper_data[0];
     $ret["leaf_width"] = $extracted_paper_data[1];
     $ret["leaf_height"] = $extracted_paper_data[2];
-    $ret["leaf_width_qty"] = $extracted_paper_data[3];
-    $ret["leaf_height_qty"] = $extracted_paper_data[4];
-    $ret["pose_width_qty"] = $extracted_paper_data[5];
-    $ret["pose_height_qty"] = $extracted_paper_data[6];
-    $ret["position"] = $extracted_paper_data[7];
-    $ret["front_back"] = $extracted_paper_data[8];
+    $ret["leaf_qty_per_sheet"] = $extracted_paper_data[3];
+    $ret["pose_width_qty"] = $extracted_paper_data[4];
+    $ret["pose_height_qty"] = $extracted_paper_data[5];
+    $ret["position"] = $extracted_paper_data[6];
+    $ret["front_back"] = $extracted_paper_data[7];
     return $ret;
   }
 
@@ -46,14 +45,15 @@ class ShowResult extends Controller
     print("Input for database:");   //Bandera
     print_r($data);   //Bandera
 
-    $paper_data_input = $this->extract_paper_data($data["paper_data"]);             //Contains: paper_price_id, leaf_width, leaf_height, leaf_width_qty,        added
+    $paper_data_input = $this->extract_paper_data($data["paper_data"]);             //Contains: paper_price_id, leaf_width, leaf_height, leaf_qty_per_sheet,        added
                                                                                     //leaf_height_qty, pose_width_qty, pose_height_qty, position, front_back    added
     print("Paper Data input for database:");   //Bandera
     print_r($paper_data_input);   //Bandera
     $data_input["pose_width"] = $data["pose_width"];                                //Checked, added
     $data_input["pose_height"] = $data["pose_height"];                              //Checked, added
     $data_input["copy_qty"] = $data["copy_qty"];                                    //Checked, added
-    $data_input["machine"] = $data["machine"];                                      //Checked, added
+    $data_input["front_machine"] = $data["front_machine"];                                      //Checked, added
+    $data_input["back_machine"] = $data["back_machine"];                                      //Checked, added
     $data_input["front_color_qty"] = $data["front_color_qty"];                      //Checked, added
     $data_input["back_color_qty"] = $data["back_color_qty"];                        //Checked, added
     if($data["machine_washing_qty"]) $data_input["machine_washing_qty"] = $data["machine_washing_qty"];     //Checked, added

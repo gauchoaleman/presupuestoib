@@ -163,7 +163,7 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Máquina frente:
             </label>
-            <select name="job_data[{{$i}}][front_machine]" id="machine">
+            <select name="job_data[{{$i}}][front_machine]" id="front_machine">
               <?php $magazine_calculation = new MagazineCalculation; ?>
               <option value=""></option>
               @foreach($magazine_calculation->machine_list as $each_machine)
@@ -209,7 +209,7 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Máquina dorso:
             </label>
-            <select name="job_data[{{$i}}][back_machine]" id="machine">
+            <select name="job_data[{{$i}}][back_machine]" id="back_machine">
               <?php $magazine_calculation = new MagazineCalculation; ?>
               <option value=""></option>
               @foreach($magazine_calculation->machine_list as $each_machine)

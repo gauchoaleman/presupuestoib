@@ -172,7 +172,7 @@ function swap(&$x, &$y) {
 function sizes_compare($s1,$s2)
 {
   if( $s1["paper_price_id"] == $s2["paper_price_id"] && $s1["sheet_width"] == $s2["sheet_width"] && $s1["sheet_height"] == $s2["sheet_height"] &&
-      $s1["leaf_width_qty"] == $s2["leaf_width_qty"] && $s1["leaf_height_qty"] == $s2["leaf_height_qty"] && $s1["leaf_width"] == $s2["leaf_width"] &&
+      $s1["leaf_qty_per_sheet"] == $s2["leaf_qty_per_sheet"] && $s1["leaf_width"] == $s2["leaf_width"] &&
       $s1["leaf_height"] == $s2["leaf_height"] && $s1["pose_width"] == $s2["pose_width"] && $s1["pose_height"] == $s2["pose_height"] &&
       $s1["leaf_width_without_borders"] == $s2["leaf_width_without_borders"] && $s1["leaf_height_without_borders"] == $s2["leaf_height_without_borders"] &&
       $s1["pose_width_qty"] == $s2["pose_width_qty"] && $s1["pose_height_qty"] == $s2["pose_height_qty"] && $s1["rest"] == $s2["rest"] &&

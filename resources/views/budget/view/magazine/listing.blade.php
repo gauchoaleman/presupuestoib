@@ -1,10 +1,9 @@
 <?php
-use App\Classes\Calculation\Common\CommonCalculation;
+use App\Classes\Calculation\Magazine\MagazineCalculation;
 
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
 $copy_qty = get_form_value("copy_qty");
-$machine = get_form_value("machine");
 
 $where = array();
 if( $client_id )

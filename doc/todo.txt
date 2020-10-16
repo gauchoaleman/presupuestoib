@@ -17,3 +17,4 @@
 [X] Despues de agregar cliente en ventanita, debe aparecer en dropdown de clientes.
 [X] Dropdown de clientes ordenado x alfabeto
 [ ] No anda refresh al agregar cliente con popup
+[ ] Ver que pasa si se ingresa descuento & plus

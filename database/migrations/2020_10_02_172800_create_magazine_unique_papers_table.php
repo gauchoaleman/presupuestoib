@@ -19,8 +19,7 @@ class CreateMagazineUniquePapersTable extends Migration
           $table->foreignId('paper_price_id');
           $table->float('leaf_width',8,2);
           $table->float('leaf_height',8,2);
-          $table->integer('leaf_width_qty');
-          $table->integer('leaf_height_qty');
+          $table->integer('leaf_qty_per_sheet');
           $table->integer('pose_width_qty');
           $table->integer('pose_height_qty');
           $table->string('position', 100);

@@ -4,7 +4,8 @@ use App\Classes\Calculation\Common\CommonCalculation;
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
 $copy_qty = get_form_value("copy_qty");
-$machine = get_form_value("machine");
+$front_machine = get_form_value("front_machine");
+$back_machine = get_form_value("back_machine");
 
 $where = array();
 if( $client_id )
@@ -13,13 +14,15 @@ if( $budget_name )
   $where[] = ['common_jobs.budget_name','LIKE',"%".$budget_name."%"];
 if( $copy_qty )
   $where[] = ['common_jobs.copy_qty','=',$copy_qty];
-if( $machine )
-  $where[] = ['common_jobs.machine','=',$machine];
+if( $front_machine )
+  $where[] = ['common_jobs.front_machine','=',$front_machine];
+if( $back_machine )
+  $where[] = ['common_jobs.back_machine','=',$back_machine];
 
 $budgets = DB::table('common_jobs')
 ->join('clients', 'clients.id', '=', 'common_jobs.client_id')
 ->where($where)
-->select('clients.name as client_name','common_jobs.machine as machine','common_jobs.copy_qty as copy_qty','common_jobs.budget_name as budget_name','common_jobs.created_at as created_at',
+->select('clients.name as client_name','common_jobs.front_machine as front_machine','common_jobs.back_machine as back_machine','common_jobs.copy_qty as copy_qty','common_jobs.budget_name as budget_name','common_jobs.created_at as created_at',
         'common_jobs.id as common_job_id')->get();
 
 ?>
@@ -66,13 +69,13 @@ $budgets = DB::table('common_jobs')
                 @enderror
               </th>
               <th scope="col">
-                Máquina<br>
-                <select id="machine" name="machine" id="machine">
+                Máquina frente<br>
+                <select id="front_machine" name="front_machine">
                   <option value=""></option>
                   <?php $common_calculation = new CommonCalculation; ?>
                   @foreach($common_calculation->machine_list as $each_machine)
                     <option value="{{$each_machine}}"
-                      @if($machine == $each_machine)
+                      @if($front_machine == $each_machine)
                         selected
                       @endif
                     >
@@ -80,7 +83,28 @@ $budgets = DB::table('common_jobs')
                     </option>
                   @endforeach
                 </select>
-                @error('machine')
+                @error('front_machine')
+                  <div class="alert alert-danger">
+                    {{ $message }}
+                  </div>
+                @enderror
+              </th>
+              <th scope="col">
+                Máquina dorso<br>
+                <select id="back_machine" name="back_machine">
+                  <option value=""></option>
+                  <?php $common_calculation = new CommonCalculation; ?>
+                  @foreach($common_calculation->machine_list as $each_machine)
+                    <option value="{{$each_machine}}"
+                      @if($back_machine == $each_machine)
+                        selected
+                      @endif
+                    >
+                      {{$each_machine}}
+                    </option>
+                  @endforeach
+                </select>
+                @error('back_machine')
                   <div class="alert alert-danger">
                     {{ $message }}
                   </div>
@@ -108,7 +132,10 @@ $budgets = DB::table('common_jobs')
                 {{$budget->copy_qty}}
               </td>
               <td>
-                {{$budget->machine}}
+                {{$budget->front_machine}}
+              </td>
+              <td>
+                {{$budget->back_machine}}
               </td>
               <td>
                 <?php $date = new DateTime($budget->created_at); ?>

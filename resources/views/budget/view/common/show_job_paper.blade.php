@@ -36,7 +36,10 @@ $client_name = get_client_name($all_input["client_id"]);
           cortar a: {{$all_input["leaf_width"]}}x{{$all_input["leaf_height"]}}
         </div>
         <div class="form-group row">
-          Máquina: {{$all_input["machine"]}}
+          Máquina frente: {{$all_input["front_machine"]}}
+        </div>
+        <div class="form-group row">
+          Máquina dorso: {{$all_input["back_machine"]}}
         </div>
         @if( $all_input["fold_qty"] || $all_input["punching_difficulty"] || $all_input["perforate"] || $all_input["tracing"] || $all_input["lac"] )
           <div class="form-group row">

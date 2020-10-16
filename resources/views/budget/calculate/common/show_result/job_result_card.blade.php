@@ -21,13 +21,9 @@
         </label>
         {{$result["sheet_size"]["width"]}}x{{$result["sheet_size"]["height"]}}
         <label class="col-md-6 col-form-label text-md-right">
-          Pliegos ancho:
+          Pliegos en hoja:
         </label>
-        {{$all_input["leaf_width_qty"]}}
-        <label class="col-md-6 col-form-label text-md-right">
-          Pliegos alto:
-        </label>
-        {{$all_input["leaf_height_qty"]}}
+        {{$all_input["leaf_qty_per_sheet"]}}
         <label class="col-md-6 col-form-label text-md-right">
           Tamaño pliego:
         </label>

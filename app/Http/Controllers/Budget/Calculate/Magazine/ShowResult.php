@@ -16,12 +16,11 @@ class ShowResult extends Controller
     $ret["paper_price_id"] = $extracted_paper_data[0];
     $ret["leaf_width"] = $extracted_paper_data[1];
     $ret["leaf_height"] = $extracted_paper_data[2];
-    $ret["leaf_width_qty"] = $extracted_paper_data[3];
-    $ret["leaf_height_qty"] = $extracted_paper_data[4];
-    $ret["pose_width_qty"] = $extracted_paper_data[5];
-    $ret["pose_height_qty"] = $extracted_paper_data[6];
-    $ret["position"] = $extracted_paper_data[7];
-    $ret["front_back"] = $extracted_paper_data[8];
+    $ret["leaf_qty_per_sheet"] = $extracted_paper_data[3];
+    $ret["pose_width_qty"] = $extracted_paper_data[4];
+    $ret["pose_height_qty"] = $extracted_paper_data[5];
+    $ret["position"] = $extracted_paper_data[6];
+    $ret["front_back"] = $extracted_paper_data[7];
     return $ret;
   }
 
@@ -118,8 +117,7 @@ class ShowResult extends Controller
     $data_input["paper_price_id"] = $unique_paper["paper_price_id"];
     $data_input["leaf_width"] = $unique_paper["leaf_width"];
     $data_input["leaf_height"] = $unique_paper["leaf_height"];
-    $data_input["leaf_width_qty"] = $unique_paper["leaf_width_qty"];
-    $data_input["leaf_height_qty"] = $unique_paper["leaf_height_qty"];
+    $data_input["leaf_qty_per_sheet"] = $unique_paper["leaf_qty_per_sheet"];
     $data_input["pose_width_qty"] = $unique_paper["pose_width_qty"];
     $data_input["pose_height_qty"] = $unique_paper["pose_height_qty"];
     $data_input["position"] = $unique_paper["position"];

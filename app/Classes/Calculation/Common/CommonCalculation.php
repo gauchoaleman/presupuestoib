@@ -25,56 +25,36 @@ class CommonCalculation extends Calculation
     $ret["total"] = $ret["cmyk"] + $ret["pantone"];
     return $ret;
   }
-  
-  public function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back)
+
+  public function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,$front_color_qty,$back_color_qty,$front_back)
   {
     $total = 0;
-    if( $machine == "GTO52" ){
-      //echo "In GTO52";      //Bandera
-      if( $front_back == "front_back_width" || $front_back == "front_back_height" ){
-        $printing["qty"]["GTO52"] = 2*$leaf_qty_and_excess*$front_color_qty;
-        $printing["printing_prices"]["GTO52"] = 2*$leaf_qty_and_excess*$front_color_qty*$this->printing_prices["GTO52"]/$this->price_qty;
-        $printing["arrangement_prices"]["GTO52"] = $front_color_qty*$this->printing_arrangement_prices["GTO52"];
-        $plate["qty"]["GTO52"] = $front_color_qty;
-        $plate["prices"]["GTO52"] = $plate["qty"]["GTO52"]*$this->plate_prices["GTO52"];
-        $total += $printing["printing_prices"]["GTO52"]+$plate["prices"]["GTO52"]+$printing["arrangement_prices"]["GTO52"];
-      }
-      else{
-        //echo "fits_size:".$this->fits_size("GTO46",$leaf_width,$leaf_height);   //Bandera
-        if( $back_color_qty <= 2 && $back_color_qty > 0 && $this->fits_size("GTO46",$leaf_width,$leaf_height) ){
-          $printing["qty"]["GTO46"] = $leaf_qty_and_excess*$back_color_qty;
-          $printing["printing_prices"]["GTO46"] = $leaf_qty_and_excess*$back_color_qty*$this->printing_prices["GTO46"]/$this->price_qty;
-          $printing["arrangement_prices"]["GTO46"] = $back_color_qty*$this->printing_arrangement_prices["GTO46"];
-          $plate["qty"]["GTO46"] = $back_color_qty;
-          $plate["prices"]["GTO46"] = $plate["qty"]["GTO46"]*$this->plate_prices["GTO46"];
-          $total += $printing["printing_prices"]["GTO46"]+$plate["prices"]["GTO46"]+$printing["arrangement_prices"]["GTO46"];
-
-          $printing["qty"]["GTO52"] = $leaf_qty_and_excess*$front_color_qty;
-          $printing["printing_prices"]["GTO52"] = $leaf_qty_and_excess*$front_color_qty*$this->printing_prices["GTO52"]/$this->price_qty;
-          $printing["arrangement_prices"]["GTO52"] = $front_color_qty*$this->printing_arrangement_prices["GTO52"];
-          $plate["qty"]["GTO52"] = $front_color_qty;
-          $plate["prices"]["GTO52"] = $plate["qty"]["GTO52"]*$this->plate_prices["GTO52"];
-          $total += $printing["printingprices"]["GTO52"]+$plate["prices"]["GTO52"]+$printing["arrangement_prices"]["GTO52"];
-        }
-        else{
-          $printing["qty"]["GTO52"] = $leaf_qty_and_excess*($front_color_qty+$back_color_qty);
-          $printing["printing_prices"]["GTO52"] = $leaf_qty_and_excess*($front_color_qty+$back_color_qty)*$this->printing_prices["GTO52"]/$this->price_qty;
-          $printing["arrangement_prices"]["GTO52"] = ($front_color_qty+$back_color_qty)*$this->printing_arrangement_prices["GTO52"];
-          $plate["qty"]["GTO52"] = $front_color_qty+$back_color_qty;
-          $plate["prices"]["GTO52"] = $plate["qty"]["GTO52"]*$this->plate_prices["GTO52"];
-          $total += $printing["printing_prices"]["GTO52"]+$plate["prices"]["GTO52"]+$printing["arrangement_prices"]["GTO52"];
-        }
-      }
-    }
-    else if( $machine == "GTO46" || $machine == "Adast" ){
       //echo "In GTO46";      //Bandera
+    if( $front_machine == $back_machine ){
+      $machine = $front_machine;
       $printing["qty"][$machine] = $leaf_qty_and_excess*($front_color_qty+$back_color_qty);
-      $printing["printing_prices"][$machine] = $leaf_qty_and_excess*($front_color_qty+$back_color_qty)*$this->printing_prices[$machine]/$this->price_qty;
+      $printing["printing_prices"][$machine] = $printing["qty"][$machine]*$this->printing_prices[$machine]/$this->price_qty;
       $printing["arrangement_prices"][$machine] = ($front_color_qty+$back_color_qty)*$this->printing_arrangement_prices[$machine];
       $plate["qty"][$machine] = $front_color_qty+$back_color_qty;
       $plate["prices"][$machine] = $plate["qty"][$machine]*$this->plate_prices[$machine];
       $total += $printing["printing_prices"][$machine]+$plate["prices"][$machine]+$printing["arrangement_prices"][$machine];
     }
+    else {
+      $printing["qty"][$front_machine] = $leaf_qty_and_excess*$front_color_qty;
+      $printing["printing_prices"][$front_machine] = $printing["qty"][$front_machine]*$this->printing_prices[$front_machine]/$this->price_qty;
+      $printing["arrangement_prices"][$front_machine] = ($front_color_qty+$back_color_qty)*$this->printing_arrangement_prices[$front_machine];
+      $plate["qty"][$front_machine] = $front_color_qty;
+      $plate["prices"][$front_machine] = $plate["qty"][$front_machine]*$this->plate_prices[$front_machine];
+      $total += $printing["printing_prices"][$front_machine]+$plate["prices"][$front_machine]+$printing["arrangement_prices"][$front_machine];
+
+      $printing["qty"][$back_machine] = $leaf_qty_and_excess*$back_color_qty;
+      $printing["printing_prices"][$back_machine] = $printing["qty"][$back_machine]*$this->printing_prices[$back_machine]/$this->price_qty;
+      $printing["arrangement_prices"][$back_machine] = $back_color_qty*$this->printing_arrangement_prices[$back_machine];
+      $plate["qty"][$back_machine] = $back_color_qty;
+      $plate["prices"][$back_machine] = $plate["qty"][$back_machine]*$this->plate_prices[$back_machine];
+      $total += $printing["printing_prices"][$back_machine]+$plate["prices"][$back_machine]+$printing["arrangement_prices"][$back_machine];
+    }
+
     $ret["printing"] = $printing;
     $ret["plate"] = $plate;
     $ret["total"] = $total;
@@ -84,10 +64,11 @@ class CommonCalculation extends Calculation
   public function calculate_result($result_input)
   {
     extract($result_input);
+    //print_r($result_input);       //Bandera
 
     $pose_qty = $pose_width_qty*$pose_height_qty;
     $copy_qty_and_excess = $copy_qty+$this->excess_leaves*$pose_qty;
-    $sheet_qty_and_excess = $this->get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+    $sheet_qty_and_excess = $this->get_sheet_qty($copy_qty_and_excess,$leaf_qty_per_sheet,$pose_width_qty,$pose_height_qty);
     $sheet_size = $this->get_sheet_size($paper_price_id);
     $leaf_qty_and_excess = $this->get_leaf_qty($copy_qty_and_excess,$pose_width_qty,$pose_height_qty);
     /*
@@ -97,9 +78,9 @@ class CommonCalculation extends Calculation
     $data["sheet_size"] = $sheet_size;
     $data["sheet_qty_and_excess"] = $sheet_qty_and_excess;
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
-    $data["paper_price"] = $this->get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+    $data["paper_price"] = $this->get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_qty_per_sheet,$pose_width_qty,$pose_height_qty);
     $data["guillotine_price"] = $this->get_guillotine_price($copy_qty_and_excess,$pose_qty);
-    $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$machine,$front_color_qty,$back_color_qty,$front_back);
+    $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,$front_color_qty,$back_color_qty,$front_back);
     $data["ink_prices"] = $this->get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$pantone_1,$pantone_2,$pantone_3);
     $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["ink_prices"]["total"];
 

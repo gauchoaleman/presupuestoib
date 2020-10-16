@@ -143,9 +143,9 @@ class Calculation
     return $this->max_sizes[$machine]["width"]>=$leaf_width && $this->max_sizes[$machine]["height"]>=$leaf_height;
   }
 
-  public function get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
+  public function get_sheet_qty($copy_qty_and_excess,$leaf_qty_per_sheet,$pose_width_qty,$pose_height_qty)
   {
-    $sheet_qty = ceil($copy_qty_and_excess/($leaf_width_qty*$leaf_height_qty*$pose_width_qty*$pose_height_qty));
+    $sheet_qty = ceil($copy_qty_and_excess/($leaf_qty_per_sheet*$pose_width_qty*$pose_height_qty));
     return $sheet_qty;
   }
 
@@ -155,7 +155,7 @@ class Calculation
     return $leaf_qty;
   }
 
-  public function get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty)
+  public function get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_qty_per_sheet,$pose_width_qty,$pose_height_qty)
   {
     $paper_price_get = DB::table('paper_prices')->
     select('paper_prices.sheet_price')->
@@ -163,7 +163,7 @@ class Calculation
     first();
 
     $sheet_price = $paper_price_get->sheet_price;
-    $paper_price = $sheet_price*$this->get_sheet_qty($copy_qty_and_excess,$leaf_width_qty,$leaf_height_qty,$pose_width_qty,$pose_height_qty);
+    $paper_price = $sheet_price*$this->get_sheet_qty($copy_qty_and_excess,$leaf_qty_per_sheet,$pose_width_qty,$pose_height_qty);
 
     return $paper_price;
   }
@@ -259,7 +259,7 @@ class Calculation
       $width_rest = $leaf_width_without_borders%$pose_width;
       $height_rest = $leaf_height_without_borders%$pose_height;
       //Add the rests together
-      $total_rest = $width_rest*$height_rest+$all_aligned_pose_width*$height_rest+$all_aligned_pose_height*$width_rest;
+      $total_rest = $width_rest*$height_rest+$all_aligned_pose_width_with_borders*$height_rest+$all_aligned_pose_height_with_borders*$width_rest;
 
       //If job borders don't fit in sheet
       if( $all_aligned_pose_width_with_borders>$leaf_width ||  $all_aligned_pose_height_with_borders>$leaf_height){
@@ -296,8 +296,6 @@ class Calculation
       $res["sheet_width"] = $sheet_width;
       $res["sheet_height"] = $sheet_height;
 
-      //$res["leaf_width_qty"] = $leaf_width_qty;
-      //$res["leaf_height_qty"] = $leaf_height_qty;
       $res["leaf_qty_per_sheet"] = $leaf_size->leaf_qty_per_sheet;
 
       $res["leaf_width"] = $leaf_width;

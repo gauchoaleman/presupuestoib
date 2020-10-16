@@ -112,7 +112,7 @@
                 checked
                 @endif
 
-                id="paper_data" name="paper_data[{{$unique_paper_key}}]" value="{{$size['paper_price_id']}}/{{$size["leaf_width"]}}/{{$size["leaf_height"]}}/{{$size["leaf_width_qty"]}}/{{$size["leaf_height_qty"]}}/{{$size["pose_width_qty"]}}/{{$size["pose_height_qty"]}}/{{$size["position"]}}/{{$size["front_back"]}}">
+                id="paper_data" name="paper_data[{{$unique_paper_key}}]" value="{{$size['paper_price_id']}}/{{$size["leaf_width"]}}/{{$size["leaf_height"]}}/{{$size["leaf_qty_per_sheet"]}}/{{$size["pose_width_qty"]}}/{{$size["pose_height_qty"]}}/{{$size["position"]}}/{{$size["front_back"]}}">
               </div>
             </td>
             <td>
@@ -127,12 +127,7 @@
             </td>
             <td>
               <div align="center">
-                {{$size["leaf_width_qty"]}}
-              </div>
-            </td>
-            <td>
-              <div align="center">
-                {{$size["leaf_height_qty"]}}
+                {{$size["leaf_qty_per_sheet"]}}
               </div>
             </td>
             <td>
