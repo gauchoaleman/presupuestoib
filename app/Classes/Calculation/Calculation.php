@@ -180,10 +180,10 @@ class Calculation
     if( $front_back == "front_back_height" )
       $pose_height *= 2;
 
-    $leaf_sizes = DB::table('paper_sizes')->select('leaf_width','leaf_height','leaf_qty_per_sheet')->
+    $leaf_sizes = DB::table('leaf_sizes')->select('leaf_width','leaf_height','leaf_qty_per_sheet')->
     where('sheet_width', '=', $sheet_width)->
     where('sheet_height', '=', $sheet_height)->
-    where('paper_sizes_set_id', '=', get_latest_paper_size_set_id())->
+    where('leaf_sizes_set_id', '=', get_latest_leaf_size_set_id())->
     get();
 
     foreach( $leaf_sizes as $leaf_size ){

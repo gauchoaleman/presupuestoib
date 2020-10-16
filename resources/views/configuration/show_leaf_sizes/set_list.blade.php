@@ -1,5 +1,5 @@
 <?php
-$paper_sizes_sets = DB::table('paper_sizes_sets')->orderBy('id', 'desc')->select('*')->get();
+$leaf_sizes_sets = DB::table('leaf_sizes_sets')->orderBy('id', 'desc')->select('*')->get();
 ?>
 <div class="container">
   <br>
@@ -20,10 +20,10 @@ $paper_sizes_sets = DB::table('paper_sizes_sets')->orderBy('id', 'desc')->select
           </tr>
         </thead>
         <tbody>
-          @foreach($paper_sizes_sets as $set)
+          @foreach($leaf_sizes_sets as $set)
             <tr>
               <td>
-                <a href='/configuration/show_paper_sizes?paper_sizes_set_id={{$set->id}}'>{{$set->id}}</a>
+                <a href='/configuration/show_leaf_sizes?leaf_sizes_set_id={{$set->id}}'>{{$set->id}}</a>
               </td>
               <td>
                 <?php $date = new DateTime($set->created_at); ?>

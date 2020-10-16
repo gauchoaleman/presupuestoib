@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Configuration;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ShowPaperSizes extends Controller
+class ShowLeafSizes extends Controller
 {
   /**
    * Handle the incoming request.
@@ -15,9 +15,9 @@ class ShowPaperSizes extends Controller
    */
   public function __invoke(Request $request)
   {
-    if( isset($_GET["paper_sizes_set_id"]))
-      return $this->show_page_with_menubars("configuration/show_paper_sizes/paper_sizes_list");
+    if( isset($_GET["leaf_sizes_set_id"]))
+      return $this->show_page_with_menubars("configuration/show_leaf_sizes/leaf_sizes_list");
     else
-      return $this->show_page_with_menubars("configuration/show_paper_sizes/set_list");
+      return $this->show_page_with_menubars("configuration/show_leaf_sizes/set_list");
   }
 }

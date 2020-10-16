@@ -280,7 +280,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        @if( $all_input["discount_percentage"] ){{$all_input["discount_percentage"]*$result["dollar_price"]}}@else - @endif
+        @if( $all_input["discount_percentage"] ){{$all_input["discount_percentage"]}}@else - @endif
       </div>
     </div>
 
@@ -293,7 +293,7 @@
         <label class="col-md-6 col-form-label text-md-right">
           &nbsp;
         </label>
-        @if( $all_input["plus_percentage"] ){{$all_input["plus_percentage"]*$result["dollar_price"]}}@else - @endif
+        @if( $all_input["plus_percentage"] ){{$all_input["plus_percentage"]}}@else - @endif
       </div>
     </div>
 

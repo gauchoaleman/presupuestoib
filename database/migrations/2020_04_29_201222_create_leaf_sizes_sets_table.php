@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaperSizesSetsTable extends Migration
+class CreateLeafSizesSetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePaperSizesSetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('paper_sizes_sets', function (Blueprint $table) {
+        Schema::create('leaf_sizes_sets', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreatePaperSizesSetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('paper_sizes_sets');
+        Schema::dropIfExists('leaf_sizes_sets');
     }
 }

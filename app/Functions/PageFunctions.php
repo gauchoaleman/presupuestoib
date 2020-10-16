@@ -54,9 +54,9 @@ function get_latest_paper_price_set_id()
   return $max_id;
 }
 
-function get_latest_paper_size_set_id()
+function get_latest_leaf_size_set_id()
 {
-  $max_id = DB::table('paper_sizes_sets')->max('id');
+  $max_id = DB::table('leaf_sizes_sets')->max('id');
   return $max_id;
 }
 

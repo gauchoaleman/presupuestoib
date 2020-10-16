@@ -1,6 +1,6 @@
 <?php
-$paper_sizes = DB::table('paper_sizes')
-->where('paper_sizes_set_id', $_GET["paper_sizes_set_id"])
+$leaf_sizes = DB::table('leaf_sizes')
+->where('leaf_sizes_set_id', $_GET["leaf_sizes_set_id"])
 ->select('*')->get();
 $dollar_price = get_dollar_price();
 ?>
@@ -30,22 +30,22 @@ $dollar_price = get_dollar_price();
           </tr>
         </thead>
         <tbody>
-          @foreach($paper_sizes as $paper_size)
+          @foreach($leaf_sizes as $leaf_size)
             <tr>
               <td>
-                {{$paper_size->sheet_width}}
+                {{$leaf_size->sheet_width}}
               </td>
               <td>
-                {{$paper_size->sheet_height}}
+                {{$leaf_size->sheet_height}}
               </td>
               <td>
-                {{$paper_size->leaf_width}}
+                {{$leaf_size->leaf_width}}
               </td>
               <td>
-                {{$paper_size->leaf_height}}
+                {{$leaf_size->leaf_height}}
               </td>
               <td>
-                {{$paper_size->leaf_qty_per_sheet}}
+                {{$leaf_size->leaf_qty_per_sheet}}
               </td>
             </tr>
           @endforeach

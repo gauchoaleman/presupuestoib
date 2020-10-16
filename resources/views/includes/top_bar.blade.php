@@ -56,12 +56,12 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a href="/configuration/load_paper_sizes">
+                <a href="/configuration/load_leaf_sizes">
                   Cargar
                 </a>
               </li>
               <li>
-                <a href="/configuration/show_paper_sizes">
+                <a href="/configuration/show_leaf_sizes">
                   Mostrar
                 </a>
               </li>
