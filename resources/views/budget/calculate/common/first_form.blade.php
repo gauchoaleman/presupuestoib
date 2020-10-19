@@ -20,6 +20,7 @@ $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");
 $tracing = get_form_value("tracing");
 $lac = get_form_value("lac");
+$compile = get_form_value("compile");
 $client_id = get_form_value("client_id");
 $budget_name = get_form_value("budget_name");
 $various_finishing = get_form_value("various_finishing");
@@ -426,6 +427,22 @@ if (!$plus_percentage) {
             </label>
             <input type="checkbox" name="lac" value="1" id="lac"
               @if($lac == "1")
+                checked
+              @endif
+            >
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">
+            <b>{{ __('Compilar:') }}</b>
+          </label>
+          <div class="col-md-6">
+            <label class="col-md-6 col-form-label text-md-right">
+              &nbsp;
+            </label>
+            <input type="checkbox" name="compile" value="1" id="compile"
+              @if($compile == "1")
                 checked
               @endif
             >

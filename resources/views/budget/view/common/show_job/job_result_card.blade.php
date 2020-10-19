@@ -216,6 +216,20 @@
       </div>
     @endif
 
+    @if( $all_input["compile"] )
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">
+          <b>{{ __('Compile:') }}</b>
+        </label>
+        <div class="col-md-6">
+          <label class="col-md-6 col-form-label text-md-right">
+            Por cantidad:
+          </label>
+          ${{number_format($result["compile"]["per_qty_price"]*$result["dollar_price"],2)}}
+        </div>
+      </div>
+    @endif
+
     @if( $all_input["various_finishing"] )
       <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">

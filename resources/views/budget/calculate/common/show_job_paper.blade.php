@@ -41,9 +41,9 @@ $client_name = get_client_name($all_input["client_id"]);
         <div class="form-group row">
           Máquina dorso: {{$all_input["back_machine"]}}
         </div>
-        @if( $all_input["fold_qty"] || $all_input["punching_difficulty"] || $all_input["perforate"] || $all_input["tracing"] || $all_input["lac"] )
+        @if( $all_input["fold_qty"] || $all_input["punching_difficulty"] || $all_input["perforate"] || $all_input["tracing"] || $all_input["lac"] || $all_input["compile"] )
           <div class="form-group row">
-            Acabado: @if($all_input["fold_qty"])Plegado @endif @if($all_input["punching_difficulty"])Troquelado @endif @if($all_input["perforate"])Perforado @endif @if($all_input["tracing"])Trazado @endif @if($all_input["lac"])Laca @endif
+            Acabado: @if($all_input["fold_qty"])Plegado @endif @if($all_input["punching_difficulty"])Troquelado @endif @if($all_input["perforate"])Perforado @endif @if($all_input["tracing"])Trazado @endif @if($all_input["lac"])Laca @endif @if($all_input["compile"])Compilar @endif
           </div>
         @endif
       </div>

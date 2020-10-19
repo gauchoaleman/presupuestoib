@@ -120,6 +120,11 @@ class CommonCalculation extends Calculation
       $total += $data["lac"]["arrangement_price"]+$data["lac"]["per_qty_price"];
     }
 
+    if( $compile ){
+      $data["compile"]["per_qty_price"] = $this->get_compile_per_qty_price($copy_qty_and_excess);
+      $total += $data["compile"]["per_qty_price"];
+    }
+
     $total += $various_finishing+$mounting+$shipping;
 
     if( $discount_percentage ){

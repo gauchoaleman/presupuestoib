@@ -67,6 +67,7 @@ class ShowResult extends Controller
     $data_input["perforate"] = $data["perforate"]?true:false;                                  //Checked, added
     $data_input["tracing"] = $data["tracing"]?true:false;                                      //Checked, added
     $data_input["lac"] = $data["lac"]?true:false;                                              //Checked, added
+    $data_input["compile"] = $data["compile"]?true:false;
     $data_input["various_finishing"] = pesos_to_dollars($data["various_finishing"]);//Checked, added
     $data_input["mounting"] = pesos_to_dollars($data["mounting"]);                  //Checked, added
     $data_input["shipping"] = pesos_to_dollars($data["shipping"]);                  //Checked, added

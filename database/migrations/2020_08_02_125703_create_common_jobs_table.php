@@ -40,6 +40,7 @@ class CreateCommonJobsTable extends Migration
             $table->boolean('perforate');
             $table->boolean('tracing');
             $table->boolean('lac');
+            $table->boolean('compile');
             $table->float('various_finishing',18,13);
             $table->float('mounting',18,13);
             $table->float('shipping',18,13);

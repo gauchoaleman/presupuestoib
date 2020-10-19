@@ -22,6 +22,7 @@ $punching_difficulty = get_form_value("punching_difficulty");
 $perforate = get_form_value("perforate");
 $tracing = get_form_value("tracing");
 $lac = get_form_value("lac");
+$compile = get_form_value("compile");
 $client_id = get_form_value("client_id");
 $client_name = get_client_name($client_id);
 $budget_name = get_form_value("budget_name");

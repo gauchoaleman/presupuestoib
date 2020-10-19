@@ -209,6 +209,19 @@
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Compilar:') }}</b>
+      </label>
+      <input type="hidden" name="compile" value="{{$all_input["compile"]}}">
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
+        </label>
+        @if( $all_input["compile"] ) Si @else No @endif
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
         <b>{{ __('Cliente:') }}</b>
       </label>
       <input type="hidden" name="client_id" value="{{$all_input["client_id"]}}">

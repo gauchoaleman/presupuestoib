@@ -55,6 +55,8 @@ class Calculation
   public $lac_arrangement_price = 123;
   public $lac_per_qty_price = 123;
 
+  public $compile_per_qty_price = 123;
+
   public $width_borders = 5+5;
   public $height_borders = 15+5;
 
@@ -121,6 +123,11 @@ class Calculation
   public function get_lac_per_qty_price($copy_qty_and_excess)
   {
     return $this->lac_per_qty_price*($copy_qty_and_excess/$this->price_qty);
+  }
+
+  public function get_compile_per_qty_price($copy_qty_and_excess)
+  {
+    return $this->compile_per_qty_price*($copy_qty_and_excess/$this->price_qty);
   }
 
   public function get_sheet_size($paper_price_id)
