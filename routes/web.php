@@ -19,6 +19,8 @@ Route::any('configuration/load_paper_prices', 'Configuration\LoadPaperPrices');
 Route::get('configuration/show_paper_prices', 'Configuration\ShowPaperPrices');
 Route::any('configuration/load_leaf_sizes', 'Configuration\LoadLeafSizes');
 Route::get('configuration/show_leaf_sizes', 'Configuration\ShowLeafSizes');
+Route::any('configuration/load_work_prices', 'Configuration\LoadWorkPrices');
+Route::get('configuration/show_work_prices', 'Configuration\ShowWorkPrices');
 Route::any('configuration/set_dollar_price', 'Configuration\SetDollarPrice');
 Route::any('configuration/show_dollar_prices', 'Configuration\ShowDollarPrices');
 Route::any('configuration/add_client', 'Configuration\AddClient');

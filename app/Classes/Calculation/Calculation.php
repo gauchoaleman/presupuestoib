@@ -22,43 +22,77 @@ class Calculation
 
   public $machine_washing_price = 5;
 
-  public $printing_prices = array("Adast"=>123,
-                                  "GTO52"=>234,
-                                  "GTO46"=>345);
+  public $printing_prices = NULL;
 
-  public $printing_arrangement_prices = array("Adast"=>123,
-                                              "GTO52"=>234,
-                                              "GTO46"=>345);
+  public $printing_arrangement_prices = NULL;
 
-  public $plate_prices = array("Adast"=>12,
-                               "GTO52"=>23,
-                               "GTO46"=>34);
+  public $plate_prices = NULL;
 
-  public $cmyk_ink_kilo_price = 10;
-  public $pantone_ink_kilo_price = 20;
+  public $cmyk_ink_kilo_price = NULL;
+  public $pantone_ink_kilo_price = NULL;
 
-  public $guillotine_price = 123;
+  public $guillotine_price = NULL;
 
-  public $folding_arrangement_price = 123;
-  public $folding_per_qty_price = 123;
+  public $folding_arrangement_price = NULL;
+  public $folding_per_qty_price = NULL;
 
-  public $punching_arrangement_prices = array(1=>10,2=>20,3=>30,4=>40);
-  public $punching_per_qty_prices = array(1=>10,2=>20,3=>30,4=>40);
-  public $break_out_price = 123;
+  public $punching_arrangement_price = NULL;
+  public $punching_per_qty_price = NULL;
+  public $break_out_price = NULL;
 
-  public $perforating_arrangement_price = 123;
-  public $perforating_per_qty_price = 123;
+  public $perforating_arrangement_price = NULL;
+  public $perforating_per_qty_price = NULL;
 
-  public $tracing_arrangement_price = 100;
-  public $tracing_per_qty_price = 100;
+  public $tracing_arrangement_price = NULL;
+  public $tracing_per_qty_price = NULL;
 
-  public $lac_arrangement_price = 123;
-  public $lac_per_qty_price = 123;
+  public $lac_arrangement_price = NULL;
+  public $lac_per_qty_price = NULL;
 
-  public $compile_per_qty_price = 123;
+  public $compile_per_qty_price = NULL;
 
   public $width_borders = 5+5;
   public $height_borders = 15+5;
+
+  public function __construct()
+  {
+    $this->machine_washing_price = $this->get_work_price("machine washing");
+    $this->printing_prices = array("Adast"=>$this->get_work_price("Adast printing"),
+                                   "GTO52"=>$this->get_work_price("GTO52 printing"),
+                                   "GTO46"=>$this->get_work_price("GTO46 printing"));
+    $this->printing_arrangement_prices = array("Adast"=>$this->get_work_price("Adast printing arrangement"),
+                                               "GTO52"=>$this->get_work_price("GTO52 printing arrangement"),
+                                               "GTO46"=>$this->get_work_price("GTO46 printing arrangement"));
+    $this->plate_prices = array("Adast"=>$this->get_work_price("Adast plate"),
+                                "GTO52"=>$this->get_work_price("GTO52 plate"),
+                                "GTO46"=>$this->get_work_price("GTO46 plate"));
+    $this->pantone_ink_kilo_price = $this->get_work_price("pantone ink kilo");
+    $this->cmyk_ink_kilo_price = $this->get_work_price("cmyk ink kilo");
+    $this->guillotine_price = $this->get_work_price("guillotine");
+    $this->folding_arrangement_price = $this->get_work_price("folding arrangement");
+    $this->folding_per_qty_price = $this->get_work_price("folding per qty");
+    $this->punching_arrangement_price = $this->get_work_price("punching arrangement");
+    $this->punching_per_qty_price = $this->get_work_price("punching per qty");
+    $this->break_out_per_qty_price = $this->get_work_price("break out per qty");
+    $this->tracing_arrangement_price = $this->get_work_price("tracing arrangement");
+    $this->tracing_per_qty_price = $this->get_work_price("tracing per qty");
+    $this->lac_arrangement_price = $this->get_work_price("lac arrangement");
+    $this->lac_per_qty_price = $this->get_work_price("lac per qty");
+    $this->compile_per_qty_price = $this->get_work_price("compile per qty");
+  }
+
+  public function get_work_price($name)
+  {
+    $work_price = DB::table('work_prices')->
+    select('price')->
+    orderBy('work_prices_set_id', 'desc')->
+    where('work_prices.name','=', $name)->
+    first();
+    if( !$work_price )
+      echo "Not found $name price";
+    else
+      return $work_price->price;
+  }
 
   public function get_guillotine_price($copy_qty_and_excess,$pose_qty)
   {
@@ -82,12 +116,12 @@ class Calculation
 
   public function get_punching_arrangement_price($difficulty)
   {
-    return $this->punching_arrangement_prices[$difficulty];
+    return $this->punching_arrangement_price*$difficulty;
   }
 
   public function get_punching_per_qty_price($copy_qty_and_excess,$difficulty)
   {
-    return $this->punching_arrangement_prices[$difficulty]*($copy_qty_and_excess/$this->price_qty);
+    return $this->punching_per_qty_price*$difficulty*($copy_qty_and_excess/$this->price_qty);
   }
 
   public function get_break_out_per_qty_price($copy_qty_and_excess)

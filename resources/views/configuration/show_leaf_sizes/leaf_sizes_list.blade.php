@@ -2,7 +2,6 @@
 $leaf_sizes = DB::table('leaf_sizes')
 ->where('leaf_sizes_set_id', $_GET["leaf_sizes_set_id"])
 ->select('*')->get();
-$dollar_price = get_dollar_price();
 ?>
 <div class="container">
   <br>

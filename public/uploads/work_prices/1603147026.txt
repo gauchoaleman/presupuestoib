@@ -1,0 +1,26 @@
+"nombre","precio"
+"guillotine",3
+"Adast plate",10
+"GTO52 plate",6
+"GTO46 plate",6
+"Adast printing arrangement","4,4"
+"GTO52 printing arrangement","2,8"
+"GTO46 printing arrangement","2,8"
+"machine washing",5
+"cmyk ink","15,25"
+"pantone ink",35
+"folding arrangement","4,5"
+"folding per qty","4,5"
+"punching arrangement",5
+"punching per qty",5
+"break out",4
+"perforating arrangement",4
+"perforating per qty",4
+"tracing arrangement",4
+"tracing per qty",4
+"lac arrangement","4,4"
+"lac per qty",5
+"compile","4,5"
+"Adast printing",10
+"GTO52 printing",4
+"GTO46 printing",6

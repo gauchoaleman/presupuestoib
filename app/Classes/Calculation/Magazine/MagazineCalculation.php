@@ -13,6 +13,11 @@ class MagazineCalculation extends Calculation
                                             "Bind"=>20,
                                             "Ring"=>30);
 
+  public function __construct()
+  {
+     parent::__construct();
+  }
+  
   private function get_mounting_price($total_pages,$mounting)
   {
     return $total_pages*$this->mounting_per_page_prices[$mounting];

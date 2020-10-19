@@ -5,6 +5,11 @@ use DB;
 
 class CommonCalculation extends Calculation
 {
+  public function __construct()
+   {
+     parent::__construct();
+   }
+
   public function get_pantone_color_qty($pantone_1,$pantone_2,$pantone_3)
   {
     $ret = 0;
