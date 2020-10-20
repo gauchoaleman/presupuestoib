@@ -20,7 +20,8 @@ class Calculation
 
   public $excess_leaves = 100;
 
-  public $machine_washing_price = 5;
+  /*
+  public $machine_washing_price = NULL;
 
   public $printing_prices = NULL;
 
@@ -50,7 +51,7 @@ class Calculation
   public $lac_per_qty_price = NULL;
 
   public $compile_per_qty_price = NULL;
-
+*/
   public $width_borders = 5+5;
   public $height_borders = 15+5;
 
@@ -74,6 +75,8 @@ class Calculation
     $this->punching_arrangement_price = $this->get_work_price("punching arrangement");
     $this->punching_per_qty_price = $this->get_work_price("punching per qty");
     $this->break_out_per_qty_price = $this->get_work_price("break out per qty");
+    $this->perforating_arrangement_price = $this->get_work_price("perforating arrangement");
+    $this->perforating_per_qty_price = $this->get_work_price("perforating per qty");
     $this->tracing_arrangement_price = $this->get_work_price("tracing arrangement");
     $this->tracing_per_qty_price = $this->get_work_price("tracing per qty");
     $this->lac_arrangement_price = $this->get_work_price("lac arrangement");
@@ -106,7 +109,7 @@ class Calculation
 
   public function get_folding_arrangement_price($fold_qty)
   {
-    return $this->folding_arrangement_price*$this->price_qty*$fold_qty;
+    return $this->folding_arrangement_price*$fold_qty;
   }
 
   public function get_folding_per_qty_price($copy_qty_and_excess,$fold_qty)
@@ -126,7 +129,7 @@ class Calculation
 
   public function get_break_out_per_qty_price($copy_qty_and_excess)
   {
-    return $this->break_out_price*($copy_qty_and_excess/$this->price_qty);
+    return $this->break_out_per_qty_price*($copy_qty_and_excess/$this->price_qty);
   }
 
   public function get_perforating_arrangement_price()
