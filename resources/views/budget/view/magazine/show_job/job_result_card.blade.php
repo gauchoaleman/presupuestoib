@@ -56,6 +56,17 @@
       </div>
     </div>
 
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">
+        <b>{{ __('Compilado:') }}</b>
+      </label>
+      <div class="col-md-6">
+        <label class="col-md-6 col-form-label text-md-right">
+          &nbsp;
+        </label>
+        ${{number_format($result["compile"]*$result["dollar_price"],2)}}
+      </div>
+    </div>
 
     <div class="form-group row">
       <label class="col-md-4 col-form-label text-md-right">

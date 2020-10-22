@@ -380,6 +380,7 @@ class Calculation
 
   public function calculate_size($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$front_color_qty,$back_color_qty,$pose_qty,$front_machine,$back_machine,$front_back=true)
   {
+    //print("$front_machine/$back_machine");
     if( !$back_color_qty || !$front_back) { //If there is no printing on back ew calculate normal positions
       $normal_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$front_machine,$back_machine,"normal","normal");
       $lying_normal = $this->calculate_position($paper_price_id,$sheet_width,$sheet_height,$pose_width,$pose_height,$pose_qty,$front_machine,$back_machine,"lying","normal");

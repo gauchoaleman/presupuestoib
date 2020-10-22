@@ -155,6 +155,11 @@ class MagazineCalculation extends Calculation
       $total += $data["washing_machine_price"];
     }
 
+    $foil_qty = ($page_qty+4)/4;
+    $total_foils_and_excess = $foil_qty*($copy_qty+$this->excess_leaves);
+    $data["compile"] = $this->get_compile_per_qty_price($total_foils_and_excess);
+    $total += $data["compile"];
+
     $data["mounting"] = $this->get_mounting_price($page_qty+4,$mounting);
     $total += $data["mounting"];
 

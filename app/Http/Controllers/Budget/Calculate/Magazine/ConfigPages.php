@@ -87,18 +87,8 @@ class ConfigPages extends Controller
     $sizes_res = array();
     $all_sizes = array();
     foreach ($sizes_result as $size) {
-      if( $unique_paper["front_machine"] == $unique_paper["back_machine"] )
-        $sizes_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$foil_width,$pose_height,$unique_paper["front_color_qty"],
-                     $unique_paper["back_color_qty"],FALSE,$unique_paper["front_machine"],FALSE);    //calculate
-      else {
-        $front_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$foil_width,$pose_height,$unique_paper["front_color_qty"],
-                       $unique_paper["back_color_qty"],FALSE,$unique_paper["front_machine"],FALSE);    //calculate
-        $back_sizes = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$foil_width,$pose_height,$unique_paper["front_color_qty"],
-                      $unique_paper["back_color_qty"],FALSE,$unique_paper["back_machine"],FALSE);    //calculate
-        $sizes_res = $this->sizes_intersection($front_sizes,$back_sizes);
-      }
-      //print($size->width."x".$size->height.": "); //Bandera
-      //print_r($size_res); //Bandera
+      $sizes_res = $magazine_calculation->calculate_size($size->id,$size->width,$size->height,$foil_width,$pose_height,$unique_paper["front_color_qty"],
+                     $unique_paper["back_color_qty"],FALSE,$unique_paper["front_machine"],$unique_paper["back_machine"],FALSE);    //calculate
       $all_sizes = array_merge($sizes_res,$all_sizes);
     }
     aasort($all_sizes,"rest");
