@@ -118,10 +118,10 @@ class ConfigPages extends Controller
   {
     if( $this->config_pages_form_complete($_POST) ){
       $unique_papers = $this->get_unique_papers($_POST["job_data"]);
-      print_r($unique_papers);    //Bandera
+      //print_r($unique_papers);    //Bandera
 
       $unique_papers_with_sizes = $this->calculate_papers($unique_papers,$_POST["pose_width"],$_POST["pose_height"]);
-      print_r($unique_papers_with_sizes);     //Bandera
+      //print_r($unique_papers_with_sizes);     //Bandera
       $form_data = array();
       $form_data["unique_papers_with_sizes"] = $unique_papers_with_sizes;
       return $this->show_page_with_menubars("budget/calculate/magazine/select_papers","",$form_data);

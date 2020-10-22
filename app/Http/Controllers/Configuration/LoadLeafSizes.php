@@ -42,7 +42,7 @@ class LoadLeafSizes extends Controller
 
   private function save_leaf_size_row($leaf_sizes_set_id,$leaf_size_data)
   {
-    print_r($leaf_size_data);      //Bandera
+    //print_r($leaf_size_data);      //Bandera
     $insert_array["leaf_sizes_set_id"] = $leaf_sizes_set_id;
 
     $insert_array["sheet_width"] = str_replace(',', '.',$leaf_size_data[0])*10; //goes in mm

@@ -4,7 +4,7 @@ use DB;
 
 class Calculation
 {
-  public $continue_if_invalid_size = false;
+  public $continue_if_invalid_size = true;
 
   public $machine_list = array("Adast","GTO52","GTO46");
 

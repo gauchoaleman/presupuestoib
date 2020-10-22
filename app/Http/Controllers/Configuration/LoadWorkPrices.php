@@ -42,7 +42,7 @@ class LoadWorkPrices extends Controller
 
   private function save_work_price_row($work_prices_set_id,$work_price_data)
   {
-    print_r($work_price_data);      //Bandera
+    //print_r($work_price_data);      //Bandera
     $insert_array["work_prices_set_id"] = $work_prices_set_id;
 
     $insert_array["name"] = $work_price_data[0]; //goes in mm

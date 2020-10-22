@@ -87,8 +87,8 @@ class ShowResult extends Controller
     $data_input["budget_name"] = $data["budget_name"];
     $data_input["dollar_price_id"] = get_actual_dollar_price_id();
     $data_input["created_at"] = date('Y-m-d H:i:s');
-    print("Insert array:");     //Bandera
-    print_r($data_input);     //Bandera
+    //print("Insert array:");     //Bandera
+    //print_r($data_input);     //Bandera
 
     DB::table('magazine_jobs')->insert($data_input);
     return DB::getPdo()->lastInsertId();
@@ -111,8 +111,8 @@ class ShowResult extends Controller
 
   public function save_unique_paper_to_database($unique_paper,$magazine_job_id)
   {
-    print("Unique paper for database:");    //Bandera
-    print_r($unique_paper);                 //Bandera
+    //print("Unique paper for database:");    //Bandera
+    //print_r($unique_paper);                 //Bandera
     $data_input["magazine_job_id"] = $magazine_job_id;
     $data_input["paper_price_id"] = $unique_paper["paper_price_id"];
     $data_input["leaf_width"] = $unique_paper["leaf_width"];
@@ -136,8 +136,8 @@ class ShowResult extends Controller
 
   public function save_unique_papers_to_database($unique_papers,$magazine_job_id)
   {
-    print("Input for unique papers save to database:");   //Bandera
-    print_r($unique_papers);   //Bandera
+    //print("Input for unique papers save to database:");   //Bandera
+    //print_r($unique_papers);   //Bandera
 
     foreach($unique_papers as $unique_paper)
       $this->save_unique_paper_to_database($unique_paper,$magazine_job_id);
@@ -156,10 +156,10 @@ class ShowResult extends Controller
    */
   public function __invoke(Request $request)
   {
-    print("_POST:");       //Bandera
-    print_r($_POST);      //Bandera
+    //print("_POST:");       //Bandera
+    //print_r($_POST);      //Bandera
     $data = $this->get_result_from_post($_POST);
-    print_r($data);
+    //print_r($data);
 
     if( $_POST["button_action"] == "show_job_paper" )
       return $this->show_page_without_menubars("budget/calculate/magazine/show_job_paper","",$data);

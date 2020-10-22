@@ -21,8 +21,8 @@ class ShowJob extends Controller
     foreach($foil_numbers_result as $foil_number_tuple )
       $ret[] = $foil_number_tuple->foil_number;
 
-    print("foil_numbers_ret");    //Bandera
-    print_r($ret);    //Bandera
+    //print("foil_numbers_ret");    //Bandera
+    //print_r($ret);    //Bandera
     return $ret;
   }
 
@@ -31,8 +31,8 @@ class ShowJob extends Controller
     $unique_papers = DB::table('magazine_unique_papers')->
     join('paper_prices', 'magazine_unique_papers.paper_price_id', '=', 'paper_prices.id')->
     select('magazine_unique_papers.*','paper_prices.paper_type_id','paper_prices.paper_color_id','paper_prices.weight')->where('magazine_job_id','=', $magazine_job_id)->get();
-    print("unique papers in get_magazine_unique_papers_from_db");      //Bandera
-    print_r($unique_papers);     //Bandera
+    //print("unique papers in get_magazine_unique_papers_from_db");      //Bandera
+    //print_r($unique_papers);     //Bandera
     $unique_papers_ret = array();
     foreach($unique_papers as $unique_paper_array_position => $unique_paper){
       $unique_papers_ret[$unique_paper_array_position] = (array) $unique_paper;
@@ -75,8 +75,8 @@ class ShowJob extends Controller
       $actual_dollar = false;
 
     $data = $this->get_result_from_db($magazine_job_id,$actual_dollar);
-    print("get_result_from_db return");     //Bandera
-    print_r($data);
+    //print("get_result_from_db return");     //Bandera
+    //print_r($data);
     if( isset($_POST["button_action"]) && $_POST["button_action"] == "show_job_paper" )
       return $this->show_page_without_menubars("budget/view/magazine/show_job_paper","",$data);
     else

@@ -17,7 +17,7 @@ class MagazineCalculation extends Calculation
   {
      parent::__construct();
   }
-  
+
   private function get_mounting_price($total_pages,$mounting)
   {
     return $total_pages*$this->mounting_per_page_prices[$mounting];
@@ -89,8 +89,8 @@ class MagazineCalculation extends Calculation
   // Get prices for each paper set
   private function get_paper_info($unique_paper,$copy_qty)
   {
-    print("Unique paper at paper_info:");
-    print_r($unique_paper);     //Bandera
+    //print("Unique paper at paper_info:");
+    //print_r($unique_paper);     //Bandera
     extract($unique_paper);
     //extract($paper_data);
     $pose_qty = $pose_width_qty*$pose_height_qty;
@@ -139,7 +139,7 @@ class MagazineCalculation extends Calculation
   //Here I call root prices and call get_paper_info for each paper set
   public function calculate_result($result_input)
   {
-    print_r($result_input);     //Bandera
+    //print_r($result_input);     //Bandera
     extract($result_input);
     $ret = array();
     $data = array();
@@ -181,8 +181,8 @@ class MagazineCalculation extends Calculation
     else
       $data["dollar_price"] = get_dollar_price();
     $data["total"] = $total;
-    print("Result data:");      //Bandera
-    print_r($data);     //Bandera
+    //print("Result data:");      //Bandera
+    //print_r($data);     //Bandera
     return $data;
 
   }

@@ -25,8 +25,8 @@ class CommonCalculation extends Calculation
     $cmyk_color_qty = $front_color_qty+$back_color_qty-$pantone_color_qty;
     //print("pantone_color_qty:".$pantone_color_qty);     //Bandera
     //print("cmyk_color_qty:".$cmyk_color_qty);        //Bandera
-    $ret["cmyk"] = $cmyk_color_qty*($leaf_width/1000)*($leaf_height/1000)*$leaf_qty_and_excess*0.005*$this->cmyk_ink_kilo_price;
-    $ret["pantone"] = $pantone_color_qty*($leaf_width/1000)*($leaf_height/1000)*$leaf_qty_and_excess*0.005*$this->pantone_ink_kilo_price;
+    $ret["cmyk"] = $cmyk_color_qty*($leaf_width /1000)*($leaf_height/1000)*$leaf_qty_and_excess*0.0005*$this->cmyk_ink_kilo_price;
+    $ret["pantone"] = $pantone_color_qty*($leaf_width/1000)*($leaf_height/1000)*$leaf_qty_and_excess*0.0005*$this->pantone_ink_kilo_price;
     $ret["total"] = $ret["cmyk"] + $ret["pantone"];
     return $ret;
   }

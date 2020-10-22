@@ -42,13 +42,13 @@ class ShowResult extends Controller
 
   public function save_budget_to_database($data)
   {
-    print("Input for database:");   //Bandera
-    print_r($data);   //Bandera
+    //print("Input for database:");   //Bandera
+    //print_r($data);   //Bandera
 
     $paper_data_input = $this->extract_paper_data($data["paper_data"]);             //Contains: paper_price_id, leaf_width, leaf_height, leaf_qty_per_sheet,        added
                                                                                     //leaf_height_qty, pose_width_qty, pose_height_qty, position, front_back    added
-    print("Paper Data input for database:");   //Bandera
-    print_r($paper_data_input);   //Bandera
+    //print("Paper Data input for database:");   //Bandera
+    //print_r($paper_data_input);   //Bandera
     $data_input["pose_width"] = $data["pose_width"];                                //Checked, added
     $data_input["pose_height"] = $data["pose_height"];                              //Checked, added
     $data_input["copy_qty"] = $data["copy_qty"];                                    //Checked, added
@@ -78,8 +78,8 @@ class ShowResult extends Controller
     $data_input["dollar_price_id"] = get_actual_dollar_price_id();                         //Checked, added
     $data_input["created_at"] = date('Y-m-d H:i:s');
     $insert_array = array_merge($data_input,$paper_data_input);
-    print("Insert array:");     //Bandera
-    print_r($insert_array);     //Bandera
+    //print("Insert array:");     //Bandera
+    //print_r($insert_array);     //Bandera
 
     DB::table('common_jobs')->insert($insert_array);
   }

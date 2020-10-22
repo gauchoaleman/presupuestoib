@@ -17,3 +17,4 @@ class ShowRoot extends Controller
     return $this->show_page_with_menubars("home_page",$message = "");
   }
 }
+?>

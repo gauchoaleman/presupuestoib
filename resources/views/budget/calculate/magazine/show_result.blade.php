@@ -1,7 +1,7 @@
 <?php
 $client_name = get_client_name($all_input["client_id"]);
-print("All input:");      //Bandera
-print_r($all_input);      //Bandera
+//print("All input:");      //Bandera
+//print_r($all_input);      //Bandera
 ?>
 <div class="container">
   <br>
