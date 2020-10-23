@@ -31,7 +31,8 @@ class CommonCalculation extends Calculation
     return $ret;
   }
 
-  public function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,$front_color_qty,$back_color_qty,$front_back)
+  public function get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,
+                  $front_color_qty,$back_color_qty,$front_back,$pantone_color_qty)
   {
     $total = 0;
       //echo "In GTO46";      //Bandera
@@ -40,7 +41,12 @@ class CommonCalculation extends Calculation
       $printing["qty"][$machine] = $leaf_qty_and_excess*($front_color_qty+$back_color_qty);
       $printing["printing_prices"][$machine] = $printing["qty"][$machine]*$this->printing_prices[$machine]/$this->price_qty;
       $printing["arrangement_prices"][$machine] = ($front_color_qty+$back_color_qty)*$this->printing_arrangement_prices[$machine];
-      $plate["qty"][$machine] = $front_color_qty+$back_color_qty;
+      // If there is front-back, use max color_qty and add pantone_qty
+      echo "Front back: $front_back";
+      if( !$pantone_color_qty && ($front_back == "front_back_width" || $front_back == "front_back_height") )
+        $plate["qty"][$machine] = max($front_color_qty,$back_color_qty);
+      else
+        $plate["qty"][$machine] = $front_color_qty+$back_color_qty;
       $plate["prices"][$machine] = $plate["qty"][$machine]*$this->plate_prices[$machine];
       $total += $printing["printing_prices"][$machine]+$plate["prices"][$machine]+$printing["arrangement_prices"][$machine];
     }
@@ -85,7 +91,8 @@ class CommonCalculation extends Calculation
     $data["leaf_qty_and_excess"] = $leaf_qty_and_excess;
     $data["paper_price"] = $this->get_paper_price($copy_qty_and_excess,$paper_price_id,$leaf_qty_per_sheet,$pose_width_qty,$pose_height_qty);
     $data["guillotine_price"] = $this->get_guillotine_price($copy_qty_and_excess,$pose_qty);
-    $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,$front_color_qty,$back_color_qty,$front_back);
+    $data["printing_and_plate_info"] = $this->get_printing_and_plate_info($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_machine,$back_machine,
+                                       $front_color_qty,$back_color_qty,$front_back,$this->get_pantone_color_qty($pantone_1,$pantone_2,$pantone_3));
     $data["ink_prices"] = $this->get_ink_price($leaf_qty_and_excess,$leaf_width,$leaf_height,$front_color_qty,$back_color_qty,$pantone_1,$pantone_2,$pantone_3);
     $total = $data["paper_price"]+$data["guillotine_price"]+$data["printing_and_plate_info"]["total"]+$data["ink_prices"]["total"];
 
