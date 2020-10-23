@@ -40,13 +40,16 @@ class CommonCalculation extends Calculation
       $machine = $front_machine;
       $printing["qty"][$machine] = $leaf_qty_and_excess*($front_color_qty+$back_color_qty);
       $printing["printing_prices"][$machine] = $printing["qty"][$machine]*$this->printing_prices[$machine]/$this->price_qty;
-      $printing["arrangement_prices"][$machine] = ($front_color_qty+$back_color_qty)*$this->printing_arrangement_prices[$machine];
       // If there is front-back, use max color_qty and add pantone_qty
-      echo "Front back: $front_back";
-      if( !$pantone_color_qty && ($front_back == "front_back_width" || $front_back == "front_back_height") )
+      //echo "Front back: $front_back";     //Bandera
+      if( !$pantone_color_qty && ($front_back == "front_back_width" || $front_back == "front_back_height") ){
+        $printing["arrangement_prices"][$machine] = max($front_color_qty,$back_color_qty)*$this->printing_arrangement_prices[$machine];
         $plate["qty"][$machine] = max($front_color_qty,$back_color_qty);
-      else
+      }
+      else{
+        $printing["arrangement_prices"][$machine] = ($front_color_qty+$back_color_qty)*$this->printing_arrangement_prices[$machine];
         $plate["qty"][$machine] = $front_color_qty+$back_color_qty;
+      }
       $plate["prices"][$machine] = $plate["qty"][$machine]*$this->plate_prices[$machine];
       $total += $printing["printing_prices"][$machine]+$plate["prices"][$machine]+$printing["arrangement_prices"][$machine];
     }
