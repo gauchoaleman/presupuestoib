@@ -287,12 +287,12 @@ class Calculation
           $continue[] = "Pose doesn't fit in sheet";   //Bandera;
       }
       //Calculate the measure of the aligned jobs
-      $all_aligned_pose_width = $pose_width_qty*$pose_width;
-      $all_aligned_pose_height = $pose_height_qty*$pose_height;
+      $all_aligned_poses_width = $pose_width_qty*$pose_width;
+      $all_aligned_poses_width = $pose_height_qty*$pose_height;
 
       //Add the borders to the aligned jobs
-      $all_aligned_pose_width_with_borders = $all_aligned_pose_width + $this->width_borders;
-      $all_aligned_pose_height_with_borders = $all_aligned_pose_height + $this->height_borders;
+      $all_aligned_poses_width_with_borders = $all_aligned_poses_width + $this->width_borders;
+      $all_aligned_poses_width_with_borders = $all_aligned_poses_width + $this->height_borders;
 
        //if borders is greater than rest we continue
        /* if( $this->width_borders>$simple_width_rest || $this->height_borders>$simple_height_rest )
@@ -303,10 +303,10 @@ class Calculation
       $width_rest = $leaf_width_without_borders%$pose_width;
       $height_rest = $leaf_height_without_borders%$pose_height;
       //Add the rests together
-      $total_rest = $width_rest*$height_rest+$all_aligned_pose_width_with_borders*$height_rest+$all_aligned_pose_height_with_borders*$width_rest;
+      $total_rest = $width_rest*$height_rest+$all_aligned_poses_width_with_borders*$height_rest+$all_aligned_poses_width_with_borders*$width_rest;
 
       //If job borders don't fit in sheet
-      if( $all_aligned_pose_width_with_borders>$leaf_width ||  $all_aligned_pose_height_with_borders>$leaf_height){
+      if( $all_aligned_poses_width_with_borders>$leaf_width ||  $all_aligned_poses_width_with_borders>$leaf_height){
         if( $this->continue_if_invalid_size )
           continue;
         else
@@ -314,10 +314,10 @@ class Calculation
       }
 
       //If sheet is bigger than max sheet size we continue
-      if( $all_aligned_pose_width_with_borders>$this->max_sizes[$front_machine]["width"] ||
-          $all_aligned_pose_height_with_borders>$this->max_sizes[$front_machine]["height"] ||
-          $all_aligned_pose_width_with_borders>$this->max_sizes[$back_machine]["width"] ||
-          $all_aligned_pose_height_with_borders>$this->max_sizes[$back_machine]["height"] ){
+      if( $all_aligned_poses_width_with_borders>$this->max_sizes[$front_machine]["width"] ||
+          $all_aligned_poses_width_with_borders>$this->max_sizes[$front_machine]["height"] ||
+          $all_aligned_poses_width_with_borders>$this->max_sizes[$back_machine]["width"] ||
+          $all_aligned_poses_width_with_borders>$this->max_sizes[$back_machine]["height"] ){
         if( $this->continue_if_invalid_size )
           continue;
         else
@@ -325,10 +325,10 @@ class Calculation
       }
 
       //If sheet is littler than min sheet size we continue
-      if( $all_aligned_pose_width_with_borders<$this->min_sizes[$front_machine]["width"] ||
-          $all_aligned_pose_height_with_borders<$this->min_sizes[$front_machine]["height"] ||
-          $all_aligned_pose_width_with_borders<$this->min_sizes[$back_machine]["width"] ||
-          $all_aligned_pose_height_with_borders<$this->min_sizes[$back_machine]["height"] ){
+      if( $all_aligned_poses_width_with_borders<$this->min_sizes[$front_machine]["width"] ||
+          $all_aligned_poses_width_with_borders<$this->min_sizes[$front_machine]["height"] ||
+          $all_aligned_poses_width_with_borders<$this->min_sizes[$back_machine]["width"] ||
+          $all_aligned_poses_width_with_borders<$this->min_sizes[$back_machine]["height"] ){
         if( $this->continue_if_invalid_size )
           continue;
         else
