@@ -22,12 +22,7 @@
             </th>
             <th scope="col">
               <div align="center">
-                Ctd. pliegos ancho
-              </div>
-            </th>
-            <th scope="col">
-              <div align="center">
-                Ctd. pliegos alto
+                Ctd. pliegos
               </div>
             </th>
             <th scope="col">
