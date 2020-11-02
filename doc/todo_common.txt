@@ -113,7 +113,7 @@ Comunes
     [X] Button height on listing
     [ ]  Cambiar llamados a funciones showpage en todo el sitio (sacar $this->)
     [X] Si da cero el width_qty o el height_qty hacer continue
-    [ ] Comentar los print_r
+    [X] Comentar los print_r
     [X] No está guardando presupuesto a base de datos
     [ ] Controlar que los pantone sean enteros de hasta 4 dígitos
     [ ]

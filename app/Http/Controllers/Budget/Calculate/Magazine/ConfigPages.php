@@ -44,10 +44,10 @@ class ConfigPages extends Controller
   //Checks out if job form is completed
   private function check_job_data_completion($job_data,$page_qty)
   {
-    for( $i=0;$i<=$page_qty/4;$i++ ){
+    for( $foil_number=0;$foil_number<=$page_qty/4;$foil_number++ ){
       //By foil
-      $paper_completed = $job_data[$i]["paper_type_id"] && $job_data[$i]["paper_color_id"] && $job_data[$i]["weight"];
-      $machines_completed = $job_data[$i]["front_machine"] && $job_data[$i]["back_machine"];
+      $paper_completed = $job_data[$foil_number]["paper_type_id"] && $job_data[$foil_number]["paper_color_id"] && $job_data[$foil_number]["weight"];
+      $machines_completed = $job_data[$foil_number]["front_machine"] && $job_data[$foil_number]["back_machine"];
       if( !( $paper_completed && $machines_completed) )
         return FALSE;
     }

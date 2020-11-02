@@ -14,21 +14,21 @@ $shipping = get_form_value("shipping");
 $discount_percentage = get_form_value("discount_percentage");
 $plus_percentage = get_form_value("plus_percentage");
 
-for( $i=0;$i<=$page_qty/4;$i++ ){
+for( $foil_number=0;$foil_number<=$page_qty/4;$foil_number++ ){
   //By foil
-  $job_data[$i]["paper_type_id"] = get_form_sub_array_value("job_data",$i,"paper_type_id");
-  $job_data[$i]["paper_color_id"] = get_form_sub_array_value("job_data",$i,"paper_color_id");
-  $job_data[$i]["weight"] = get_form_sub_array_value("job_data",$i,"weight");
+  $job_data[$foil_number]["paper_type_id"] = get_form_sub_array_value("job_data",$foil_number,"paper_type_id");
+  $job_data[$foil_number]["paper_color_id"] = get_form_sub_array_value("job_data",$foil_number,"paper_color_id");
+  $job_data[$foil_number]["weight"] = get_form_sub_array_value("job_data",$foil_number,"weight");
   //Color blanco x defecto
-  if ($job_data[$i]["paper_type_id"] && !$job_data[$i]["paper_color_id"])
-      $job_data[$i]["paper_color_id"] = 1;
+  if ($job_data[$foil_number]["paper_type_id"] && !$job_data[$foil_number]["paper_color_id"])
+      $job_data[$foil_number]["paper_color_id"] = 1;
   //By foil_front & foil_back
-  $job_data[$i]["front_color_qty"] = get_form_sub_array_value("job_data",$i,"front_color_qty");
-  $job_data[$i]["front_pantone"] = get_form_sub_array_value("job_data",$i,"front_pantone");
-  $job_data[$i]["front_machine"] = get_form_sub_array_value("job_data",$i,"front_machine");
-  $job_data[$i]["back_color_qty"] = get_form_sub_array_value("job_data",$i,"back_color_qty");
-  $job_data[$i]["back_pantone"] = get_form_sub_array_value("job_data",$i,"back_pantone");
-  $job_data[$i]["back_machine"] = get_form_sub_array_value("job_data",$i,"back_machine");
+  $job_data[$foil_number]["front_color_qty"] = get_form_sub_array_value("job_data",$foil_number,"front_color_qty");
+  $job_data[$foil_number]["front_pantone"] = get_form_sub_array_value("job_data",$foil_number,"front_pantone");
+  $job_data[$foil_number]["front_machine"] = get_form_sub_array_value("job_data",$foil_number,"front_machine");
+  $job_data[$foil_number]["back_color_qty"] = get_form_sub_array_value("job_data",$foil_number,"back_color_qty");
+  $job_data[$foil_number]["back_pantone"] = get_form_sub_array_value("job_data",$foil_number,"back_pantone");
+  $job_data[$foil_number]["back_machine"] = get_form_sub_array_value("job_data",$foil_number,"back_machine");
 }
 /*
 if (!$front_color_qty) {
@@ -51,14 +51,14 @@ if (!$back_color_qty) {
         Configurar páginas
       </div>
       <div class="card-body">
-        @for ($i = 0; $i <= $page_qty/4; $i++)
+        @for ($foil_number = 0; $foil_number <= $page_qty/4; $foil_number++)
         <div class="form-group row">
           <label class="col-md-4 col-form-label text-md-right">
             <b>
-              @if($i==0)
+              @if($foil_number==0)
                 Tapa/Contratapa y retiros:
               @else
-                Folio {{$i}}, Páginas {{$i*2-1}}, {{$i*2}}, {{$page_qty-2*($i-1)-1}}, {{$page_qty-2*($i-1)}} :
+                Folio {{$foil_number}}, Páginas {{$foil_number*2-1}}, {{$foil_number*2}}, {{$page_qty-2*($foil_number-1)-1}}, {{$page_qty-2*($foil_number-1)}} :
               @endif
             </b>
           </label>
@@ -67,11 +67,11 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Tipo:
             </label>
-            <select id="paper_type_id" name="job_data[{{$i}}][paper_type_id]" onchange="this.form.submit()">
+            <select id="paper_type_id" name="job_data[{{$foil_number}}][paper_type_id]" onchange="this.form.submit()">
               <option value=""></option>
               @foreach(get_paper_types() as $paper_type)
                 <option value="{{$paper_type->id}}"
-                  @if($job_data[$i]['paper_type_id'] == $paper_type->id )
+                  @if($job_data[$foil_number]['paper_type_id'] == $paper_type->id )
                     selected
                   @endif
                 >
@@ -79,7 +79,7 @@ if (!$back_color_qty) {
                 </option>
               @endforeach
             </select>
-            @error($job_data[$i]["paper_type_id"])
+            @error($job_data[$foil_number]["paper_type_id"])
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
@@ -88,12 +88,12 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Color:
             </label>
-            <select id="paper_color_id" name="job_data[{{$i}}][paper_color_id]" onchange="this.form.submit()">
+            <select id="paper_color_id" name="job_data[{{$foil_number}}][paper_color_id]" onchange="this.form.submit()">
               <option value=""></option>
-              @if(isset($job_data[$i]["paper_type_id"]))
-                @foreach(get_paper_colors($job_data[$i]["paper_type_id"]) as $paper_color)
+              @if(isset($job_data[$foil_number]["paper_type_id"]))
+                @foreach(get_paper_colors($job_data[$foil_number]["paper_type_id"]) as $paper_color)
                   <option value="{{$paper_color->id}}"
-                    @if($job_data[$i]["paper_color_id"]==$paper_color->id)
+                    @if($job_data[$foil_number]["paper_color_id"]==$paper_color->id)
                       selected
                     @endif
                   >
@@ -102,7 +102,7 @@ if (!$back_color_qty) {
                 @endforeach
               @endif
             </select>
-            @error($job_data[$i]["paper_color_id"])
+            @error($job_data[$foil_number]["paper_color_id"])
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
@@ -111,12 +111,12 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Peso:
             </label>
-            <select id="weight" name="job_data[{{$i}}][weight]">
+            <select id="weight" name="job_data[{{$foil_number}}][weight]">
               <option value=""></option>
-              @if(isset($job_data[$i]["paper_type_id"]) && isset($job_data[$i]["paper_color_id"]))
-                @foreach(get_paper_weights($job_data[$i]["paper_type_id"],$job_data[$i]["paper_color_id"]) as $paper_weight)
+              @if(isset($job_data[$foil_number]["paper_type_id"]) && isset($job_data[$foil_number]["paper_color_id"]))
+                @foreach(get_paper_weights($job_data[$foil_number]["paper_type_id"],$job_data[$foil_number]["paper_color_id"]) as $paper_weight)
                   <option value="{{$paper_weight->weight}}"
-                    @if($job_data[$i]["weight"] == $paper_weight->weight)
+                    @if($job_data[$foil_number]["weight"] == $paper_weight->weight)
                       selected
                     @endif
                   >
@@ -125,7 +125,7 @@ if (!$back_color_qty) {
                 @endforeach
               @endif
             </select>
-            @error($job_data[$i]["weight"])
+            @error($job_data[$foil_number]["weight"])
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
@@ -134,10 +134,10 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Ctd de colores frente:
             </label>
-            <select name="job_data[{{$i}}][front_color_qty]" id="back_color_qty">
+            <select name="job_data[{{$foil_number}}][front_color_qty]" id="back_color_qty">
               @foreach(array(0,1,2,3,4,5) as $each_color_qty)
                 <option value="{{$each_color_qty}}"
-                  @if($job_data[$i]["front_color_qty"] == $each_color_qty)
+                  @if($job_data[$foil_number]["front_color_qty"] == $each_color_qty)
                     selected
                   @endif
                 >
@@ -145,7 +145,7 @@ if (!$back_color_qty) {
                 </option>
               @endforeach
             </select>
-            @error($job_data[$i]["front_color_qty"])
+            @error($job_data[$foil_number]["front_color_qty"])
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
@@ -154,8 +154,8 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Pantone frente:
             </label>
-            <input type="checkbox" name="job_data[{{$i}}][front_pantone]" value="1" id="front_pantone"
-              @if($job_data[$i]["front_pantone"] == "1")
+            <input type="checkbox" name="job_data[{{$foil_number}}][front_pantone]" value="1" id="front_pantone"
+              @if($job_data[$foil_number]["front_pantone"] == "1")
               checked
               @endif
             >
@@ -163,12 +163,12 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Máquina frente:
             </label>
-            <select name="job_data[{{$i}}][front_machine]" id="front_machine">
+            <select name="job_data[{{$foil_number}}][front_machine]" id="front_machine">
               <?php $magazine_calculation = new MagazineCalculation; ?>
               <option value=""></option>
               @foreach($magazine_calculation->machine_list as $each_machine)
                 <option value="{{$each_machine}}"
-                  @if($job_data[$i]["front_machine"] == $each_machine)
+                  @if($job_data[$foil_number]["front_machine"] == $each_machine)
                     selected
                   @endif
                 >
@@ -180,10 +180,10 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Ctd de colores dorso:
             </label>
-            <select name="job_data[{{$i}}][back_color_qty]" id="back_color_qty">
+            <select name="job_data[{{$foil_number}}][back_color_qty]" id="back_color_qty">
               @foreach(array(0,1,2,3,4,5) as $each_color_qty)
                 <option value="{{$each_color_qty}}"
-                  @if($job_data[$i]["back_color_qty"] == $each_color_qty)
+                  @if($job_data[$foil_number]["back_color_qty"] == $each_color_qty)
                     selected
                   @endif
                 >
@@ -191,7 +191,7 @@ if (!$back_color_qty) {
                 </option>
               @endforeach
             </select>
-            @error($job_data[$i]["back_color_qty"])
+            @error($job_data[$foil_number]["back_color_qty"])
               <div class="alert alert-danger">
                 {{ $message }}
               </div>
@@ -200,8 +200,8 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Pantone dorso:
             </label>
-            <input type="checkbox" name="job_data[{{$i}}][back_pantone]" value="1" id="back_pantone"
-              @if($job_data[$i]["back_pantone"] == "1")
+            <input type="checkbox" name="job_data[{{$foil_number}}][back_pantone]" value="1" id="back_pantone"
+              @if($job_data[$foil_number]["back_pantone"] == "1")
               checked
               @endif
             >
@@ -209,12 +209,12 @@ if (!$back_color_qty) {
             <label class="col-md-6 col-form-label text-md-right">
               Máquina dorso:
             </label>
-            <select name="job_data[{{$i}}][back_machine]" id="back_machine">
+            <select name="job_data[{{$foil_number}}][back_machine]" id="back_machine">
               <?php $magazine_calculation = new MagazineCalculation; ?>
               <option value=""></option>
               @foreach($magazine_calculation->machine_list as $each_machine)
                 <option value="{{$each_machine}}"
-                  @if($job_data[$i]["back_machine"] == $each_machine)
+                  @if($job_data[$foil_number]["back_machine"] == $each_machine)
                     selected
                   @endif
                 >
