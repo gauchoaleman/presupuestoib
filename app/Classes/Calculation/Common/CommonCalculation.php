@@ -61,12 +61,14 @@ class CommonCalculation extends Calculation
       $plate["prices"][$front_machine] = $plate["qty"][$front_machine]*$this->plate_prices[$front_machine];
       $total += $printing["printing_prices"][$front_machine]+$plate["prices"][$front_machine]+$printing["arrangement_prices"][$front_machine];
 
-      $printing["qty"][$back_machine] = $leaf_qty_and_excess*$back_color_qty;
-      $printing["printing_prices"][$back_machine] = $printing["qty"][$back_machine]*$this->printing_prices[$back_machine]/$this->price_qty;
-      $printing["arrangement_prices"][$back_machine] = $back_color_qty*$this->printing_arrangement_prices[$back_machine];
-      $plate["qty"][$back_machine] = $back_color_qty;
-      $plate["prices"][$back_machine] = $plate["qty"][$back_machine]*$this->plate_prices[$back_machine];
-      $total += $printing["printing_prices"][$back_machine]+$plate["prices"][$back_machine]+$printing["arrangement_prices"][$back_machine];
+      if( $back_machine ){
+        $printing["qty"][$back_machine] = $leaf_qty_and_excess*$back_color_qty;
+        $printing["printing_prices"][$back_machine] = $printing["qty"][$back_machine]*$this->printing_prices[$back_machine]/$this->price_qty;
+        $printing["arrangement_prices"][$back_machine] = $back_color_qty*$this->printing_arrangement_prices[$back_machine];
+        $plate["qty"][$back_machine] = $back_color_qty;
+        $plate["prices"][$back_machine] = $plate["qty"][$back_machine]*$this->plate_prices[$back_machine];
+        $total += $printing["printing_prices"][$back_machine]+$plate["prices"][$back_machine]+$printing["arrangement_prices"][$back_machine];
+      }
     }
 
     $ret["printing"] = $printing;

@@ -47,7 +47,11 @@ class ConfigPages extends Controller
     for( $foil_number=0;$foil_number<=$page_qty/4;$foil_number++ ){
       //By foil
       $paper_completed = $job_data[$foil_number]["paper_type_id"] && $job_data[$foil_number]["paper_color_id"] && $job_data[$foil_number]["weight"];
-      $machines_completed = $job_data[$foil_number]["front_machine"] && $job_data[$foil_number]["back_machine"];
+      //If there is no back color qty, there is no need to have set back_machine
+      if( $job_data[$foil_number]["back_color_qty"] )
+        $machines_completed = $job_data[$foil_number]["front_machine"] && $job_data[$foil_number]["back_machine"];
+      else
+        $machines_completed = $job_data[$foil_number]["front_machine"];
       if( !( $paper_completed && $machines_completed) )
         return FALSE;
     }

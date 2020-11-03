@@ -313,28 +313,41 @@ class Calculation
           $continue[] = "Pose borders don't fit in sheet";   //Bandera;
       }
 
-      //If sheet is bigger than max sheet size we continue
+      //If sheet is bigger than max sheet on front_machine size we continue
       if( $all_aligned_poses_width_with_borders>$this->max_sizes[$front_machine]["width"] ||
-          $all_aligned_poses_width_with_borders>$this->max_sizes[$front_machine]["height"] ||
-          $all_aligned_poses_width_with_borders>$this->max_sizes[$back_machine]["width"] ||
-          $all_aligned_poses_width_with_borders>$this->max_sizes[$back_machine]["height"] ){
+          $all_aligned_poses_width_with_borders>$this->max_sizes[$front_machine]["height"]){
         if( $this->continue_if_invalid_size )
           continue;
         else
-          $continue[] = "Job bigger than max sheet";   //Bandera;
+          $continue[] = "Job bigger than max sheet on front_machine";   //Bandera;
       }
 
       //If sheet is littler than min sheet size we continue
       if( $all_aligned_poses_width_with_borders<$this->min_sizes[$front_machine]["width"] ||
-          $all_aligned_poses_width_with_borders<$this->min_sizes[$front_machine]["height"] ||
-          $all_aligned_poses_width_with_borders<$this->min_sizes[$back_machine]["width"] ||
-          $all_aligned_poses_width_with_borders<$this->min_sizes[$back_machine]["height"] ){
+          $all_aligned_poses_width_with_borders<$this->min_sizes[$front_machine]["height"]){
         if( $this->continue_if_invalid_size )
           continue;
         else
-          $continue[] = "Job littler than min sheet";   //Bandera;
+          $continue[] = "Job littler than min sheet on front machine";   //Bandera;
       }
 
+      //If sheet is bigger than max sheet on back_machine size we continue
+      if( $back_machine ){
+        if( $all_aligned_poses_width_with_borders>$this->max_sizes[$back_machine]["width"] ||
+            $all_aligned_poses_width_with_borders>$this->max_sizes[$back_machine]["height"]){
+              if( $this->continue_if_invalid_size )
+                continue;
+              else
+                $continue[] = "Job bigger than max sheet on back machine";   //Bandera;
+        }
+        if( $all_aligned_poses_width_with_borders<$this->min_sizes[$back_machine]["width"] ||
+            $all_aligned_poses_width_with_borders<$this->min_sizes[$back_machine]["height"]){
+          if( $this->continue_if_invalid_size )
+            continue;
+          else
+            $continue[] = "Job littler than min sheet on back machine";   //Bandera;
+        }
+      }
 
       $res["paper_price_id"] = $paper_price_id;
       $res["sheet_width"] = $sheet_width;

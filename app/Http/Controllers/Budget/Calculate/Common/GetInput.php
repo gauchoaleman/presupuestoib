@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use App\Classes\Calculation\Common\CommonCalculation;
 
 class GetInput extends Controller
@@ -95,7 +96,9 @@ class GetInput extends Controller
         'back_color_qty' => 'integer',
         'copy_qty' => 'required|integer|gt:0',
         'front_machine' => 'required',
-        'back_machine' => 'required',
+        'back_machine' => Rule::requiredIf(function () use ($request) {
+        return $request->back_color_qty;
+        }),
         'fold_qty' => 'integer',
         'client_id' => 'required',
         'budget_name' => 'required',
